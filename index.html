@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UiTM RIDE</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .box {
+            background: white;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .fare {
+            background: #eeeeee;
+        }
+
+        .book {
+            background: #ff7a00;
+            color: white;
+        }
+
+        .cancel {
+            background: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🚕 UiTM RIDE</h1>
+
+    <div class="box">
+        <label>📍 Pickup</label>
+        <input type="text" id="pickup" placeholder="Masukkan lokasi pickup">
+    </div>
+
+    <div class="box">
+        <label>🏁 Dropoff</label>
+        <input type="text" id="dropoff" placeholder="Masukkan lokasi dropoff">
+    </div>
+
+    <div class="box">
+        <label>👥 Penumpang</label>
+        <select id="pax">
+            <option value="">Pilih jumlah penumpang</option>
+            <option value="1">1 orang</option>
+            <option value="2">2 orang</option>
+            <option value="3">3 orang</option>
+            <option value="4">4 orang</option>
+            <option value="5">5 orang</option>
+            <option value="6">6 orang</option>
+        </select>
+    </div>
+
+    <div class="box">
+        <label>⏰ Masa</label>
+        <input type="time" id="time">
+    </div>
+
+    <div class="box">
+        <label>📅 Tarikh</label>
+        <input type="date" id="date">
+    </div>
+
+    <div class="box">
+        <label>📝 Nota</label>
+        <textarea id="notes" placeholder="Nota tambahan (pilihan)"></textarea>
+    </div>
+
+    <button class="fare" onclick="calculateFare()">
+        💰 Kira Tambang
+    </button>
+
+    <button class="book" onclick="bookRide()">
+        🚕 Tempah Sekarang
+    </button>
+
+    <button class="cancel" onclick="cancelBooking()">
+        ❌ Batal
+    </button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+function calculateFare() {
+
+    const pickup = document.getElementById("pickup").value;
+    const dropoff = document.getElementById("dropoff").value;
+    const pax = document.getElementById("pax").value;
+    const time = document.getElementById("time").value;
+
+    if (!pickup || !dropoff || !pax || !time) {
+        document.getElementById("result").innerHTML =
+            "<p>⚠️ Sila lengkapkan maklumat tempahan.</p>";
+        return;
+    }
+
+    document.getElementById("result").innerHTML =
+        "<p>🔍 Maklumat lengkap. Kiraan tambang akan disambungkan kepada sistem kemudian.</p>";
+}
+
+function bookRide() {
+
+    const pickup = document.getElementById("pickup").value;
+    const dropoff = document.getElementById("dropoff").value;
+
+    if (!pickup || !dropoff) {
+        alert("⚠️ Sila lengkapkan Pickup dan Dropoff.");
+        return;
+    }
+
+    alert("🚕 Tempahan akan dihantar kepada sistem UiTM RIDE.");
+}
+
+function cancelBooking() {
+
+    document.getElementById("pickup").value = "";
+    document.getElementById("dropoff").value = "";
+    document.getElementById("pax").value = "";
+    document.getElementById("time").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("notes").value = "";
+
+    document.getElementById("result").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>
