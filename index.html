@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UiTM RIDE - Ujian Jarak & Tambang</title>
+  <title>UiTM RIDE - Ujian Tempahan</title>
 
   <style>
     * {
@@ -64,12 +64,20 @@
       border: 1px solid #ccc;
       border-radius: 10px;
       font-size: 16px;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
+      font-family: Arial, sans-serif;
     }
 
     textarea {
-      min-height: 90px;
+      min-height: 80px;
       resize: vertical;
+    }
+
+    .note-label {
+      font-size: 14px;
+      font-weight: normal;
+      color: #666;
+      margin-top: 4px;
     }
 
     button {
@@ -80,7 +88,7 @@
       font-size: 17px;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 5px;
+      margin-top: 8px;
     }
 
     .btn-main {
@@ -99,24 +107,29 @@
       border: 1px solid #ffd8b0;
       border-radius: 14px;
       padding: 18px;
-      margin-top: 16px;
+      margin-top: 18px;
     }
 
     .result-row {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
       padding: 10px 0;
       border-bottom: 1px solid #eee;
     }
 
-    .result-row:last-child {
-      border-bottom: none;
+    .result-row span {
+      flex-shrink: 0;
+    }
+
+    .result-row strong {
+      text-align: right;
     }
 
     .total {
       font-size: 22px;
       font-weight: bold;
+      border-bottom: none;
     }
 
     .status {
@@ -138,11 +151,30 @@
       color: #166534;
     }
 
+    .info {
+      background: #e0f2fe;
+      color: #075985;
+    }
+
     .small {
       font-size: 12px;
       color: #666;
-      margin-top: -8px;
-      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    .charge-box {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -153,26 +185,71 @@
 
   <div class="header">
     <h1>🚕 UiTM RIDE</h1>
-    <p>Ujian Jarak & Tambang</p>
+    <p>Ujian Tempahan Manual</p>
   </div>
+
+
+  <!-- =========================
+       BORANG TEMPAHAN
+  ========================== -->
 
   <div class="card">
 
-    <label for="pickup">📍 Pickup</label>
+    <div class="section-title">
+      📋 Maklumat Tempahan
+    </div>
+
+
+    <!-- PICKUP -->
+
+    <label for="pickup">
+      📍 Pickup
+    </label>
+
     <input
       id="pickup"
       type="text"
       placeholder="Contoh: Universiti Teknologi MARA Shah Alam"
     >
 
-    <label for="dropoff">🏁 Drop-off</label>
+    <div class="note-label">
+      📝 Nota Pickup
+    </div>
+
+    <textarea
+      id="pickupNote"
+      placeholder="Contoh: Kolej Mawar, pintu belakang..."
+    ></textarea>
+
+
+    <!-- DROP-OFF -->
+
+    <label for="dropoff">
+      🏁 Drop-off
+    </label>
+
     <input
       id="dropoff"
       type="text"
       placeholder="Contoh: Setia Alam, Selangor"
     >
 
-    <label for="pax">👥 Bilangan Penumpang</label>
+    <div class="note-label">
+      📝 Nota Drop-off
+    </div>
+
+    <textarea
+      id="dropoffNote"
+      placeholder="Contoh: Hadapan masjid / blok / kedai..."
+    ></textarea>
+
+
+    <!-- PENUMPANG -->
+
+    <label for="pax">
+      👥 Bilangan Penumpang
+    </label>
+
     <select id="pax">
       <option value="1">1 penumpang</option>
       <option value="2">2 penumpang</option>
@@ -182,19 +259,40 @@
       <option value="6">6 penumpang</option>
     </select>
 
-    <button id="calculateBtn" class="btn-main">
+
+    <button
+      id="calculateBtn"
+      class="btn-main"
+    >
       📏 Kira Jarak & Tambang
     </button>
 
-    <div id="status" class="status">
+
+    <div
+      id="status"
+      class="status"
+    >
       Masukkan Pickup dan Drop-off kemudian tekan butang di atas.
     </div>
 
-    <div id="result" class="result">
+
+    <!-- =========================
+         HASIL
+    ========================== -->
+
+    <div
+      id="result"
+      class="result"
+    >
 
       <div class="result-row">
         <span>📍 Pickup</span>
         <strong id="resultPickup">-</strong>
+      </div>
+
+      <div class="result-row">
+        <span>📝 Nota Pickup</span>
+        <strong id="resultPickupNote">-</strong>
       </div>
 
       <div class="result-row">
@@ -203,13 +301,38 @@
       </div>
 
       <div class="result-row">
+        <span>📝 Nota Drop-off</span>
+        <strong id="resultDropoffNote">-</strong>
+      </div>
+
+      <div class="result-row">
+        <span>👥 Penumpang</span>
+        <strong id="resultPax">-</strong>
+      </div>
+
+      <div class="result-row">
         <span>📏 Jarak</span>
         <strong id="resultDistance">-</strong>
       </div>
 
       <div class="result-row">
-        <span>💰 Tambang</span>
-        <strong id="resultFare">-</strong>
+        <span>🏫 Status Kawasan</span>
+        <strong id="resultArea">-</strong>
+      </div>
+
+      <div class="result-row">
+        <span>💰 Tambang Asas</span>
+        <strong id="resultBaseFare">-</strong>
+      </div>
+
+      <div class="result-row">
+        <span>🏫 Caj Kawasan</span>
+        <strong id="resultAreaCharge">-</strong>
+      </div>
+
+      <div class="result-row">
+        <span>🚗 Caj 6-Seater</span>
+        <strong id="resultVehicleCharge">-</strong>
       </div>
 
       <div class="result-row">
@@ -231,40 +354,139 @@
 
   </div>
 
+
+  <!-- =========================
+       NOTA SISTEM
+  ========================== -->
+
   <div class="card">
-    <strong>🧪 Nota Ujian</strong>
-    <p class="small" style="margin-top:10px;">
-      Ini masih versi ujian. Jarak dipaparkan supaya kita boleh
-      menyemak pengiraan sistem. Dalam versi penumpang sebenar,
-      jarak boleh disembunyikan.
+
+    <strong>ℹ️ Peraturan Caj Kawasan</strong>
+
+    <div class="charge-box">
+      🏫 Dalam UiTM → Dalam UiTM<br>
+      <strong>Tiada caj kawasan</strong>
+    </div>
+
+    <div class="charge-box">
+      🏫 UiTM → Luar UiTM<br>
+      <strong>+RM1</strong>
+    </div>
+
+    <div class="charge-box">
+      🌍 Luar UiTM → UiTM<br>
+      <strong>+RM1</strong>
+    </div>
+
+    <div class="charge-box">
+      🌍 Luar UiTM → Luar UiTM<br>
+      ≤ 2.0 km = RM0<br>
+      ≥ 2.1 km = <strong>+RM1</strong>
+    </div>
+
+    <p class="small">
+      Kawasan UiTM yang digunakan sekarang ialah kawasan ujian.
+      Sempadan sebenar akan ditetapkan kemudian.
     </p>
+
   </div>
 
 </div>
 
+
 <script>
 
-const pickupInput = document.getElementById("pickup");
-const dropoffInput = document.getElementById("dropoff");
-const paxInput = document.getElementById("pax");
+/* =====================================================
+   ELEMEN
+===================================================== */
 
-const calculateBtn = document.getElementById("calculateBtn");
+const pickupInput =
+  document.getElementById("pickup");
 
-const statusBox = document.getElementById("status");
-const resultBox = document.getElementById("result");
+const pickupNoteInput =
+  document.getElementById("pickupNote");
 
-const resultPickup = document.getElementById("resultPickup");
-const resultDropoff = document.getElementById("resultDropoff");
-const resultDistance = document.getElementById("resultDistance");
-const resultFare = document.getElementById("resultFare");
-const resultToll = document.getElementById("resultToll");
-const resultVehicle = document.getElementById("resultVehicle");
-const resultTotal = document.getElementById("resultTotal");
+const dropoffInput =
+  document.getElementById("dropoff");
+
+const dropoffNoteInput =
+  document.getElementById("dropoffNote");
+
+const paxInput =
+  document.getElementById("pax");
+
+const calculateBtn =
+  document.getElementById("calculateBtn");
+
+const statusBox =
+  document.getElementById("status");
+
+const resultBox =
+  document.getElementById("result");
+
+const resultPickup =
+  document.getElementById("resultPickup");
+
+const resultPickupNote =
+  document.getElementById("resultPickupNote");
+
+const resultDropoff =
+  document.getElementById("resultDropoff");
+
+const resultDropoffNote =
+  document.getElementById("resultDropoffNote");
+
+const resultPax =
+  document.getElementById("resultPax");
+
+const resultDistance =
+  document.getElementById("resultDistance");
+
+const resultArea =
+  document.getElementById("resultArea");
+
+const resultBaseFare =
+  document.getElementById("resultBaseFare");
+
+const resultAreaCharge =
+  document.getElementById("resultAreaCharge");
+
+const resultVehicleCharge =
+  document.getElementById("resultVehicleCharge");
+
+const resultToll =
+  document.getElementById("resultToll");
+
+const resultVehicle =
+  document.getElementById("resultVehicle");
+
+const resultTotal =
+  document.getElementById("resultTotal");
 
 
-/* ================================
-   PAPAR STATUS
-================================ */
+/* =====================================================
+   KONFIGURASI KAWASAN UITM
+===================================================== */
+
+/*
+   Koordinat anggaran pusat UiTM Shah Alam
+   digunakan untuk UJIAN sahaja.
+
+   Radius boleh diubah kemudian apabila kita sudah
+   menetapkan sempadan rasmi kawasan UiTM.
+*/
+
+const UITM_CENTER = {
+  latitude: 3.0718,
+  longitude: 101.5038
+};
+
+const UITM_RADIUS_KM = 1.5;
+
+
+/* =====================================================
+   STATUS
+===================================================== */
 
 function showStatus(message, type = "") {
 
@@ -279,12 +501,16 @@ function showStatus(message, type = "") {
   if (type === "success") {
     statusBox.classList.add("success");
   }
+
+  if (type === "info") {
+    statusBox.classList.add("info");
+  }
 }
 
 
-/* ================================
+/* =====================================================
    CARI LOKASI
-================================ */
+===================================================== */
 
 async function searchLocation(place) {
 
@@ -302,28 +528,110 @@ async function searchLocation(place) {
   });
 
   if (!response.ok) {
-    throw new Error("Gagal mendapatkan lokasi.");
+    throw new Error(
+      "Gagal mendapatkan lokasi."
+    );
   }
 
-  const data = await response.json();
+  const data =
+    await response.json();
 
-  if (!data || data.length === 0) {
+  if (
+    !data ||
+    data.length === 0
+  ) {
     throw new Error(
-      "Lokasi tidak dapat dikenal pasti: " + place
+      "Lokasi tidak dapat dikenal pasti: " +
+      place
     );
   }
 
   return {
-    latitude: parseFloat(data[0].lat),
-    longitude: parseFloat(data[0].lon),
-    name: data[0].display_name
+
+    latitude:
+      parseFloat(data[0].lat),
+
+    longitude:
+      parseFloat(data[0].lon),
+
+    name:
+      data[0].display_name
   };
 }
 
 
-/* ================================
-   KIRA JARAK JALAN OSRM
-================================ */
+/* =====================================================
+   KIRA JARAK ANTARA DUA KOORDINAT
+   HAVERSINE
+===================================================== */
+
+function distanceBetweenPoints(
+  lat1,
+  lon1,
+  lat2,
+  lon2
+) {
+
+  const earthRadius = 6371;
+
+  const dLat =
+    (lat2 - lat1) *
+    Math.PI / 180;
+
+  const dLon =
+    (lon2 - lon1) *
+    Math.PI / 180;
+
+  const a =
+    Math.sin(dLat / 2) *
+    Math.sin(dLat / 2) +
+
+    Math.cos(
+      lat1 * Math.PI / 180
+    ) *
+
+    Math.cos(
+      lat2 * Math.PI / 180
+    ) *
+
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
+
+  const c =
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    );
+
+  return earthRadius * c;
+}
+
+
+/* =====================================================
+   SEMAK KAWASAN UITM
+===================================================== */
+
+function isInsideUitm(location) {
+
+  const distance =
+    distanceBetweenPoints(
+      UITM_CENTER.latitude,
+      UITM_CENTER.longitude,
+      location.latitude,
+      location.longitude
+    );
+
+  return {
+    inside: distance <= UITM_RADIUS_KM,
+    distanceFromCenter: distance
+  };
+}
+
+
+/* =====================================================
+   KIRA JARAK JALAN MENGGUNAKAN OSRM
+===================================================== */
 
 async function calculateRoute(
   pickup,
@@ -332,57 +640,69 @@ async function calculateRoute(
 
   const url =
     "https://router.project-osrm.org/route/v1/driving/" +
-    pickup.longitude + "," +
-    pickup.latitude + ";" +
-    dropoff.longitude + "," +
+
+    pickup.longitude +
+    "," +
+    pickup.latitude +
+
+    ";" +
+
+    dropoff.longitude +
+    "," +
     dropoff.latitude +
+
     "?overview=false";
 
-  const response = await fetch(url);
+  const response =
+    await fetch(url);
 
   if (!response.ok) {
-    throw new Error("Gagal mendapatkan laluan.");
+    throw new Error(
+      "Gagal mendapatkan laluan."
+    );
   }
 
-  const data = await response.json();
+  const data =
+    await response.json();
 
   if (
     data.code !== "Ok" ||
     !data.routes ||
     data.routes.length === 0
   ) {
-    throw new Error("Laluan tidak dapat dikira.");
+    throw new Error(
+      "Laluan tidak dapat dikira."
+    );
   }
 
   return data.routes[0].distance / 1000;
 }
 
 
-/* ================================
+/* =====================================================
    ROUND HALF UP
-================================ */
+===================================================== */
 
 function roundHalfUp(value) {
 
-  return Math.floor(value + 0.5);
+  return Math.floor(
+    value + 0.5
+  );
 }
 
 
-/* ================================
-   KIRA TAMBANG
-================================ */
+/* =====================================================
+   KIRA TAMBANG ASAS
+===================================================== */
 
-function calculateFare(
-  distanceKm,
-  pax
+function calculateBaseFare(
+  distanceKm
 ) {
 
   let fare = 0;
 
-  /*
-    0 - 3.0 km
-    RM5
-  */
+
+  /* 3 km pertama */
 
   if (distanceKm <= 3) {
 
@@ -390,77 +710,156 @@ function calculateFare(
 
   }
 
-  /*
-    Lebih 3 km sehingga 7 km
 
-    3.0  = RM5
-    3.5  = RM5
-    3.6  = RM6
-    4.0  = RM6
-    4.5  = RM6
-    4.6  = RM7
-    ...
-    7.0  = RM9
-  */
+  /* 3.1 km - 7 km */
 
   else if (distanceKm <= 7) {
 
-    const extraDistance = distanceKm - 3;
+    const extraDistance =
+      distanceKm - 3;
 
     const extraCharge =
-      Math.ceil((extraDistance - 0.5) / 1);
+      Math.ceil(
+        (extraDistance - 0.5) / 1
+      );
 
-    fare = 5 + Math.max(0, extraCharge);
+    fare =
+      5 +
+      Math.max(
+        0,
+        extraCharge
+      );
 
   }
 
-  /*
-    Lebih 7 km
 
-    7 km = RM9
-
-    Selepas 7 km:
-    RM0.80 / km
-  */
+  /* Lebih 7 km */
 
   else {
 
-    fare = 9 + ((distanceKm - 7) * 0.80);
+    fare =
+      9 +
+      (
+        (distanceKm - 7) *
+        0.80
+      );
+
+  }
+
+
+  return roundHalfUp(fare);
+}
+
+
+/* =====================================================
+   KIRA CAJ KAWASAN
+===================================================== */
+
+function calculateAreaCharge(
+  pickupInside,
+  dropoffInside,
+  distanceKm
+) {
+
+  /*
+    Kedua-dua dalam UiTM
+    = tiada caj
+  */
+
+  if (
+    pickupInside &&
+    dropoffInside
+  ) {
+
+    return {
+      charge: 0,
+      reason:
+        "Dalam UiTM → Dalam UiTM"
+    };
 
   }
 
 
   /*
-    6-seater surcharge
+    Salah satu lokasi berada
+    dalam kawasan UiTM.
+
+    Keluar / masuk
+    = +RM1
   */
 
-  let vehicle = "Sedan";
+  if (
+    pickupInside ||
+    dropoffInside
+  ) {
 
-  if (pax >= 5) {
-
-    vehicle = "6-Seater";
-
-    fare += 2;
+    return {
+      charge: 1,
+      reason:
+        "Keluar / masuk kawasan UiTM"
+    };
 
   }
 
 
   /*
-    Pembundaran akhir
+    Kedua-dua lokasi di luar UiTM.
+
+    Caj hanya bermula
+    selepas 2.0 km.
+
+    2.1 km dan ke atas
+    = +RM1
   */
 
-  fare = roundHalfUp(fare);
+  if (
+    distanceKm >= 2.1
+  ) {
+
+    return {
+      charge: 1,
+      reason:
+        "Luar UiTM > 2 km"
+    };
+
+  }
+
 
   return {
-    fare,
-    vehicle
+    charge: 0,
+    reason:
+      "Luar UiTM ≤ 2 km"
   };
 }
 
 
-/* ================================
+/* =====================================================
+   KIRA KENDERAAN
+===================================================== */
+
+function calculateVehicle(
+  pax
+) {
+
+  if (pax >= 5) {
+
+    return {
+      vehicle: "6-Seater",
+      charge: 2
+    };
+
+  }
+
+  return {
+    vehicle: "Sedan",
+    charge: 0
+  };
+}
+
+
+/* =====================================================
    BUTANG KIRA
-================================ */
+===================================================== */
 
 calculateBtn.addEventListener(
   "click",
@@ -469,12 +868,24 @@ calculateBtn.addEventListener(
     const pickupText =
       pickupInput.value.trim();
 
+    const pickupNote =
+      pickupNoteInput.value.trim();
+
     const dropoffText =
       dropoffInput.value.trim();
 
-    const pax =
-      parseInt(paxInput.value);
+    const dropoffNote =
+      dropoffNoteInput.value.trim();
 
+    const pax =
+      parseInt(
+        paxInput.value
+      );
+
+
+    /* =====================
+       VALIDASI
+    ===================== */
 
     if (!pickupText) {
 
@@ -502,35 +913,53 @@ calculateBtn.addEventListener(
     }
 
 
-    calculateBtn.disabled = true;
+    calculateBtn.disabled =
+      true;
 
-    resultBox.style.display = "none";
+    resultBox.style.display =
+      "none";
 
 
     try {
 
-      showStatus(
-        "🔎 Sedang mengenal pasti lokasi Pickup..."
-      );
+      /* =====================
+         PICKUP
+      ===================== */
 
+      showStatus(
+        "🔎 Sedang mengenal pasti lokasi Pickup...",
+        "info"
+      );
 
       const pickup =
-        await searchLocation(pickupText);
+        await searchLocation(
+          pickupText
+        );
 
+
+      /* =====================
+         DROP-OFF
+      ===================== */
 
       showStatus(
-        "🔎 Sedang mengenal pasti lokasi Drop-off..."
+        "🔎 Sedang mengenal pasti lokasi Drop-off...",
+        "info"
       );
-
 
       const dropoff =
-        await searchLocation(dropoffText);
+        await searchLocation(
+          dropoffText
+        );
 
+
+      /* =====================
+         JARAK
+      ===================== */
 
       showStatus(
-        "📏 Sedang mengira jarak perjalanan..."
+        "📏 Sedang mengira jarak jalan...",
+        "info"
       );
-
 
       const distance =
         await calculateRoute(
@@ -539,50 +968,175 @@ calculateBtn.addEventListener(
         );
 
 
-      showStatus(
-        "💰 Sedang mengira tambang..."
-      );
+      /* =====================
+         KAWASAN
+      ===================== */
+
+      const pickupArea =
+        isInsideUitm(
+          pickup
+        );
+
+      const dropoffArea =
+        isInsideUitm(
+          dropoff
+        );
 
 
-      const fareResult =
-        calculateFare(
-          distance,
+      /* =====================
+         TAMBANG ASAS
+      ===================== */
+
+      const baseFare =
+        calculateBaseFare(
+          distance
+        );
+
+
+      /* =====================
+         CAJ KAWASAN
+      ===================== */
+
+      const areaResult =
+        calculateAreaCharge(
+          pickupArea.inside,
+          dropoffArea.inside,
+          distance
+        );
+
+
+      /* =====================
+         KENDERAAN
+      ===================== */
+
+      const vehicleResult =
+        calculateVehicle(
           pax
         );
 
 
+      /* =====================
+         TOL
+      ===================== */
+
       /*
-        Tol buat masa ini RM0.
-        Kita akan masukkan sistem tol
+        Buat masa ini RM0.
+        Sistem tol sebenar akan dimasukkan
         kemudian.
       */
 
       const toll = 0;
 
-      const total =
-        fareResult.fare + toll;
 
+      /* =====================
+         JUMLAH
+      ===================== */
+
+      const total =
+        baseFare +
+        areaResult.charge +
+        vehicleResult.charge +
+        toll;
+
+
+      /* =====================
+         PAPAR HASIL
+      ===================== */
 
       resultPickup.textContent =
         pickupText;
 
+      resultPickupNote.textContent =
+        pickupNote ||
+        "—";
+
       resultDropoff.textContent =
         dropoffText;
 
-      resultDistance.textContent =
-        distance.toFixed(2) + " km";
+      resultDropoffNote.textContent =
+        dropoffNote ||
+        "—";
 
-      resultFare.textContent =
-        "RM" + fareResult.fare.toFixed(2);
+      resultPax.textContent =
+        pax +
+        " penumpang";
+
+      resultDistance.textContent =
+        distance.toFixed(2) +
+        " km";
+
+
+      let areaText = "";
+
+      if (
+        pickupArea.inside &&
+        dropoffArea.inside
+      ) {
+
+        areaText =
+          "🏫 Dalam UiTM → Dalam UiTM";
+
+      }
+
+      else if (
+        pickupArea.inside &&
+        !dropoffArea.inside
+      ) {
+
+        areaText =
+          "🚗 Keluar dari UiTM";
+
+      }
+
+      else if (
+        !pickupArea.inside &&
+        dropoffArea.inside
+      ) {
+
+        areaText =
+          "🚗 Masuk ke UiTM";
+
+      }
+
+      else {
+
+        areaText =
+          "🌍 Kedua-duanya luar UiTM";
+
+      }
+
+
+      resultArea.textContent =
+        areaText;
+
+
+      resultBaseFare.textContent =
+        "RM" +
+        baseFare.toFixed(2);
+
+
+      resultAreaCharge.textContent =
+        "RM" +
+        areaResult.charge.toFixed(2);
+
+
+      resultVehicleCharge.textContent =
+        "RM" +
+        vehicleResult.charge.toFixed(2);
+
 
       resultToll.textContent =
-        "RM" + toll.toFixed(2);
+        "RM" +
+        toll.toFixed(2);
+
 
       resultVehicle.textContent =
-        fareResult.vehicle;
+        vehicleResult.vehicle;
+
 
       resultTotal.textContent =
-        "RM" + total.toFixed(2);
+        "RM" +
+        total.toFixed(2);
 
 
       resultBox.style.display =
@@ -601,7 +1155,8 @@ calculateBtn.addEventListener(
       console.error(error);
 
       showStatus(
-        "❌ " + error.message,
+        "❌ " +
+        error.message,
         "error"
       );
 
@@ -609,7 +1164,8 @@ calculateBtn.addEventListener(
 
     finally {
 
-      calculateBtn.disabled = false;
+      calculateBtn.disabled =
+        false;
 
     }
 
