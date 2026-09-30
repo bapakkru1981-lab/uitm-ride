@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UiTM RIDE - Ujian</title>
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <title>UiTM RIDE - Ujian Lokasi</title>
 
   <style>
     * {
@@ -73,11 +72,16 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 5px;
+      margin-top: 6px;
     }
 
     .location-btn {
       background: #222;
+      color: white;
+    }
+
+    .confirm-btn {
+      background: #178a3b;
       color: white;
     }
 
@@ -88,10 +92,11 @@
 
     .result {
       background: #f1f1f1;
-      padding: 12px;
+      padding: 14px;
       border-radius: 10px;
-      margin-top: 10px;
+      margin-top: 12px;
       word-break: break-word;
+      line-height: 1.5;
     }
 
     .success {
@@ -107,6 +112,21 @@
     .small {
       font-size: 13px;
       color: #777;
+      line-height: 1.4;
+    }
+
+    .location-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .address {
+      color: #555;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
@@ -116,7 +136,13 @@
 <div class="container">
 
   <h1>🚕 UiTM RIDE</h1>
-  <div class="subtitle">Ujian Current Location & Nota</div>
+
+  <div class="subtitle">
+    Ujian Current Location & Nota
+  </div>
+
+
+  <!-- PICKUP -->
 
   <div class="card">
 
@@ -136,10 +162,23 @@
       📍 Guna Current Location
     </button>
 
-    <div id="locationResult" class="result" style="display:none;"></div>
+    <div
+      id="locationResult"
+      class="result hidden"
+    ></div>
+
+    <button
+      type="button"
+      class="confirm-btn hidden"
+      id="confirmLocationBtn"
+    >
+      ✅ Gunakan Lokasi Ini
+    </button>
 
   </div>
 
+
+  <!-- DROP OFF -->
 
   <div class="card">
 
@@ -154,6 +193,8 @@
   </div>
 
 
+  <!-- NOTES -->
+
   <div class="card">
 
     <label>📝 Nota</label>
@@ -164,11 +205,13 @@
     ></textarea>
 
     <div class="small">
-      Nota ini akan digunakan sebagai arahan tambahan untuk perjalanan.
+      Nota ini boleh digunakan untuk arahan tambahan kepada pemandu.
     </div>
 
   </div>
 
+
+  <!-- TEST -->
 
   <div class="card">
 
@@ -182,8 +225,7 @@
 
     <div
       id="testResult"
-      class="result"
-      style="display:none;"
+      class="result hidden"
     ></div>
 
   </div>
@@ -193,21 +235,23 @@
 
 <script>
 
-const tg = window.Telegram.WebApp;
+const pickupInput =
+  document.getElementById("pickup");
 
-tg.ready();
-tg.expand();
+const dropoffInput =
+  document.getElementById("dropoff");
 
-
-const pickupInput = document.getElementById("pickup");
-const dropoffInput = document.getElementById("dropoff");
-const notesInput = document.getElementById("notes");
+const notesInput =
+  document.getElementById("notes");
 
 const locationButton =
   document.getElementById("currentLocationBtn");
 
 const locationResult =
   document.getElementById("locationResult");
+
+const confirmLocationButton =
+  document.getElementById("confirmLocationBtn");
 
 const testButton =
   document.getElementById("testBtn");
@@ -216,180 +260,414 @@ const testResult =
   document.getElementById("testResult");
 
 
+let detectedLatitude = null;
+let detectedLongitude = null;
+let detectedAddress = "";
+
+
 /*
- * CURRENT LOCATION
- */
+========================================
+CURRENT LOCATION
+========================================
+*/
 
-locationButton.addEventListener("click", function () {
+locationButton.addEventListener(
+  "click",
+  function () {
 
-  locationResult.style.display = "block";
-  locationResult.innerHTML =
-    "⏳ Meminta kebenaran lokasi...";
+    locationResult.classList.remove("hidden");
 
-  /*
-   * Telegram LocationManager
-   */
+    locationResult.innerHTML =
+      "⏳ Sedang mendapatkan lokasi semasa...";
 
-  if (
-    tg.LocationManager &&
-    typeof tg.LocationManager.init === "function"
-  ) {
+    confirmLocationButton.classList.add("hidden");
 
-    tg.LocationManager.init(function () {
 
-      if (!tg.LocationManager.isLocationAvailable) {
+    if (!navigator.geolocation) {
+
+      locationResult.innerHTML =
+        '<span class="error">' +
+        '❌ Telefon/browser tidak menyokong GPS.' +
+        '</span>';
+
+      return;
+    }
+
+
+    navigator.geolocation.getCurrentPosition(
+
+      function (position) {
+
+        detectedLatitude =
+          position.coords.latitude;
+
+        detectedLongitude =
+          position.coords.longitude;
+
+
+        locationResult.innerHTML =
+          "⏳ Lokasi GPS berjaya diperoleh.<br>" +
+          "🔎 Sedang mengenal pasti alamat...";
+
+
+        reverseGeocode(
+          detectedLatitude,
+          detectedLongitude
+        );
+
+      },
+
+
+      function (error) {
+
+        let message =
+          "❌ Tidak dapat mendapatkan lokasi.";
+
+
+        if (error.code === 1) {
+
+          message =
+            "❌ Kebenaran lokasi tidak dibenarkan. " +
+            "Sila benarkan Location untuk browser.";
+
+        }
+
+        else if (error.code === 2) {
+
+          message =
+            "❌ Lokasi tidak dapat dikenal pasti.";
+
+        }
+
+        else if (error.code === 3) {
+
+          message =
+            "❌ Masa mendapatkan lokasi tamat.";
+
+        }
+
 
         locationResult.innerHTML =
           '<span class="error">' +
-          '❌ Fungsi lokasi tidak tersedia pada peranti ini.' +
+          message +
           '</span>';
 
-        return;
+      },
+
+
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0
       }
 
+    );
 
-      tg.LocationManager.getLocation(function (location) {
+  }
+);
 
-        if (!location) {
 
-          locationResult.innerHTML =
-            '<span class="error">' +
-            '❌ Lokasi tidak diberikan. Pastikan kebenaran lokasi dibenarkan.' +
-            '</span>';
+/*
+========================================
+REVERSE GEOCODING
+========================================
+*/
 
-          return;
+async function reverseGeocode(
+  latitude,
+  longitude
+) {
+
+  try {
+
+    const url =
+      "https://nominatim.openstreetmap.org/reverse" +
+      "?format=jsonv2" +
+      "&lat=" +
+      encodeURIComponent(latitude) +
+      "&lon=" +
+      encodeURIComponent(longitude) +
+      "&zoom=18" +
+      "&addressdetails=1";
+
+
+    const response =
+      await fetch(url, {
+        headers: {
+          "Accept": "application/json"
         }
-
-
-        const latitude =
-          Number(location.latitude);
-
-        const longitude =
-          Number(location.longitude);
-
-
-        if (
-          !Number.isFinite(latitude) ||
-          !Number.isFinite(longitude)
-        ) {
-
-          locationResult.innerHTML =
-            '<span class="error">' +
-            '❌ Data lokasi tidak sah.' +
-            '</span>';
-
-          return;
-        }
-
-
-        /*
-         * Masukkan koordinat ke Pickup
-         */
-
-        pickupInput.value =
-          "Current Location (" +
-          latitude.toFixed(6) +
-          ", " +
-          longitude.toFixed(6) +
-          ")";
-
-
-        locationResult.innerHTML =
-          '<span class="success">' +
-          '✅ Current Location berjaya diperoleh.' +
-          '</span><br><br>' +
-
-          'Latitude: ' +
-          latitude.toFixed(6) +
-
-          '<br>Longitude: ' +
-          longitude.toFixed(6);
-
-
       });
 
-    });
 
-  } else {
+    if (!response.ok) {
+
+      throw new Error(
+        "Reverse geocoding gagal"
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if (!data || !data.display_name) {
+
+      throw new Error(
+        "Alamat tidak dijumpai"
+      );
+
+    }
+
+
+    detectedAddress =
+      data.display_name;
+
+
+    const address =
+      data.address || {};
+
+
+    /*
+     * Cuba bina nama lokasi yang lebih mudah dibaca
+     */
+
+    const placeName =
+      address.amenity ||
+      address.building ||
+      address.shop ||
+      address.tourism ||
+      address.road ||
+      address.neighbourhood ||
+      address.suburb ||
+      address.city_district ||
+      address.town ||
+      address.city ||
+      "Lokasi semasa";
+
 
     locationResult.innerHTML =
-      '<span class="error">' +
-      '❌ Telegram LocationManager tidak tersedia.' +
-      '</span>';
+
+      '<div class="success">' +
+      '✅ Lokasi berjaya dikenal pasti' +
+      '</div>' +
+
+      '<br>' +
+
+      '<div class="location-name">' +
+      escapeHtml(placeName) +
+      '</div>' +
+
+      '<div class="address">' +
+      escapeHtml(detectedAddress) +
+      '</div>' +
+
+      '<br>' +
+
+      '<div class="small">' +
+      '📍 GPS: ' +
+      latitude.toFixed(6) +
+      ', ' +
+      longitude.toFixed(6) +
+      '</div>';
+
+
+    confirmLocationButton.classList.remove(
+      "hidden"
+    );
+
 
   }
 
-});
+  catch (error) {
+
+    console.error(error);
+
+
+    /*
+     * Jika alamat tidak dapat diperoleh,
+     * koordinat masih boleh digunakan.
+     */
+
+    locationResult.innerHTML =
+
+      '<span class="error">' +
+      '⚠️ Lokasi GPS berjaya diperoleh, ' +
+      'tetapi nama alamat tidak dapat dikenal pasti.' +
+      '</span>' +
+
+      '<br><br>' +
+
+      '<div class="small">' +
+      'Latitude: ' +
+      latitude.toFixed(6) +
+      '<br>' +
+      'Longitude: ' +
+      longitude.toFixed(6) +
+      '</div>';
+
+
+    confirmLocationButton.classList.remove(
+      "hidden"
+    );
+
+  }
+
+}
 
 
 /*
- * UJI MAKLUMAT
- */
+========================================
+GUNAKAN LOKASI INI
+========================================
+*/
 
-testButton.addEventListener("click", function () {
+confirmLocationButton.addEventListener(
+  "click",
+  function () {
 
-  const pickup =
-    pickupInput.value.trim();
+    if (!detectedLatitude ||
+        !detectedLongitude) {
 
-  const dropoff =
-    dropoffInput.value.trim();
+      return;
 
-  const notes =
-    notesInput.value.trim();
+    }
 
 
-  if (!pickup) {
+    if (detectedAddress) {
 
-    testResult.style.display = "block";
+      pickupInput.value =
+        detectedAddress;
 
-    testResult.innerHTML =
-      '<span class="error">' +
-      '⚠️ Sila masukkan Pickup.' +
+    }
+
+    else {
+
+      pickupInput.value =
+        "Current Location (" +
+        detectedLatitude.toFixed(6) +
+        ", " +
+        detectedLongitude.toFixed(6) +
+        ")";
+
+    }
+
+
+    locationResult.innerHTML +=
+      '<br><br>' +
+      '<span class="success">' +
+      '✅ Lokasi telah dipilih sebagai Pickup.' +
       '</span>';
 
-    return;
+
+    confirmLocationButton.classList.add(
+      "hidden"
+    );
+
   }
+);
 
 
-  if (!dropoff) {
+/*
+========================================
+UJI MAKLUMAT
+========================================
+*/
 
-    testResult.style.display = "block";
+testButton.addEventListener(
+  "click",
+  function () {
+
+    const pickup =
+      pickupInput.value.trim();
+
+    const dropoff =
+      dropoffInput.value.trim();
+
+    const notes =
+      notesInput.value.trim();
+
+
+    if (!pickup) {
+
+      showTestError(
+        "⚠️ Sila masukkan Pickup."
+      );
+
+      return;
+    }
+
+
+    if (!dropoff) {
+
+      showTestError(
+        "⚠️ Sila masukkan Drop-off."
+      );
+
+      return;
+    }
+
+
+    testResult.classList.remove(
+      "hidden"
+    );
+
 
     testResult.innerHTML =
-      '<span class="error">' +
-      '⚠️ Sila masukkan Drop-off.' +
-      '</span>';
 
-    return;
+      '<span class="success">' +
+      '✅ Maklumat diterima.' +
+      '</span>' +
+
+      '<br><br>' +
+
+      '📍 <b>Pickup:</b><br>' +
+      escapeHtml(pickup) +
+
+      '<br><br>' +
+
+      '🏁 <b>Drop-off:</b><br>' +
+      escapeHtml(dropoff) +
+
+      '<br><br>' +
+
+      '📝 <b>Nota:</b><br>' +
+      (
+        notes
+        ? escapeHtml(notes)
+        : "Tiada nota"
+      );
+
   }
+);
 
 
-  testResult.style.display = "block";
+/*
+========================================
+ERROR
+========================================
+*/
+
+function showTestError(message) {
+
+  testResult.classList.remove(
+    "hidden"
+  );
 
   testResult.innerHTML =
-    '<span class="success">✅ Maklumat diterima.</span>' +
-    '<br><br>' +
+    '<span class="error">' +
+    message +
+    '</span>';
 
-    '📍 <b>Pickup:</b><br>' +
-    escapeHtml(pickup) +
-
-    '<br><br>' +
-
-    '🏁 <b>Drop-off:</b><br>' +
-    escapeHtml(dropoff) +
-
-    '<br><br>' +
-
-    '📝 <b>Nota:</b><br>' +
-    (notes ? escapeHtml(notes) : "Tiada nota");
-
-
-});
+}
 
 
 /*
- * Lindungi paparan teks pengguna
- */
+========================================
+SECURITY
+========================================
+*/
 
 function escapeHtml(text) {
 
