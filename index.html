@@ -188,7 +188,7 @@
   </div>
 
 
-  <!-- REGISTRATION -->
+  <!-- PENDAFTARAN -->
   <div id="registerScreen">
 
     <div class="card">
@@ -215,17 +215,14 @@
         📝 Daftar
       </button>
 
-      <div
-        id="registerMessage"
-        class="small">
-      </div>
+      <div id="registerMessage"></div>
 
     </div>
 
   </div>
 
 
-  <!-- MAIN MENU -->
+  <!-- MENU UTAMA -->
   <div id="mainScreen" class="hidden">
 
     <div class="card">
@@ -265,7 +262,7 @@
   </div>
 
 
-  <!-- BOOKING -->
+  <!-- TEMPAHAN -->
   <div id="bookingScreen" class="hidden">
 
     <div class="card">
@@ -317,8 +314,7 @@
 
       <textarea
         id="notesInput"
-        placeholder="Contoh: Tunggu di pintu utama">
-      </textarea>
+        placeholder="Contoh: Tunggu di pintu utama"></textarea>
 
       <button
         class="primary"
@@ -334,16 +330,14 @@
         ↩️ Kembali
       </button>
 
-      <div
-        id="bookingMessage">
-      </div>
+      <div id="bookingMessage"></div>
 
     </div>
 
   </div>
 
 
-  <!-- BOOKING SUMMARY -->
+  <!-- RINGKASAN TEMPAHAN -->
   <div id="summaryScreen" class="hidden">
 
     <div class="card">
@@ -380,10 +374,7 @@
         <strong id="summaryNotes"></strong>
       </div>
 
-      <div class="summary-row">
-        📏 Jarak:
-        <strong id="summaryDistance"></strong>
-      </div>
+      <!-- JARAK TIDAK DIPAPARKAN KEPADA PENUMPANG -->
 
       <div class="summary-row">
         🚗 Kenderaan:
@@ -433,7 +424,7 @@
   </div>
 
 
-  <!-- BOOKINGS -->
+  <!-- TEMPAHAN SAYA -->
   <div id="bookingsScreen" class="hidden">
 
     <div class="card">
@@ -456,7 +447,7 @@
   </div>
 
 
-  <!-- PROFILE -->
+  <!-- PROFIL -->
   <div id="profileScreen" class="hidden">
 
     <div class="card">
@@ -494,7 +485,7 @@
   </div>
 
 
-  <!-- ADMIN CONTACT -->
+  <!-- HUBUNGI ADMIN -->
   <div id="adminScreen" class="hidden">
 
     <div class="card">
@@ -521,15 +512,12 @@
 
   </div>
 
-
 </div>
 
 
 <script>
 
-  /* =========================
-     TELEGRAM
-  ========================= */
+  /* TELEGRAM */
 
   const tg = window.Telegram?.WebApp || {
     ready: function(){},
@@ -541,28 +529,32 @@
   tg.expand();
 
 
-  /* =========================
-     DATA PENGGUNA
-  ========================= */
+  /* DATA */
 
-  let telegramUser = tg.initDataUnsafe?.user || null;
+  let telegramUser =
+    tg.initDataUnsafe?.user || null;
 
   let currentUser =
-    JSON.parse(localStorage.getItem("uitmRideUser") || "null");
+    JSON.parse(
+      localStorage.getItem("uitmRideUser") || "null"
+    );
 
   let bookings =
-    JSON.parse(localStorage.getItem("uitmRideBookings") || "[]");
+    JSON.parse(
+      localStorage.getItem("uitmRideBookings") || "[]"
+    );
 
 
-  /* =========================
-     MULA SISTEM
-  ========================= */
+  /* MULA */
 
   window.addEventListener("load", function(){
 
     document
       .getElementById("registerButton")
-      .addEventListener("click", registerUser);
+      .addEventListener(
+        "click",
+        registerUser
+      );
 
     if(currentUser){
 
@@ -577,9 +569,7 @@
   });
 
 
-  /* =========================
-     PAPARAN
-  ========================= */
+  /* PAPARAN */
 
   function hideAll(){
 
@@ -638,7 +628,8 @@
       document
         .getElementById("welcomeText")
         .textContent =
-        "👋 Selamat datang, " + currentUser.name;
+        "👋 Selamat datang, " +
+        currentUser.name;
 
     }
 
@@ -656,9 +647,7 @@
   }
 
 
-  /* =========================
-     PENDAFTARAN
-  ========================= */
+  /* PENDAFTARAN */
 
   function registerUser(){
 
@@ -669,13 +658,16 @@
         .trim();
 
     const message =
-      document.getElementById("registerMessage");
+      document
+        .getElementById("registerMessage");
 
 
     if(!name){
 
       message.innerHTML =
-        '<div class="notice error">❌ Sila masukkan nama anda.</div>';
+        '<div class="notice error">' +
+        '❌ Sila masukkan nama anda.' +
+        '</div>';
 
       return;
 
@@ -706,21 +698,20 @@
 
 
     message.innerHTML =
-      '<div class="notice success">✅ Pendaftaran berjaya.</div>';
+      '<div class="notice success">' +
+      '✅ Pendaftaran berjaya.' +
+      '</div>';
 
 
-    setTimeout(function(){
-
-      showMain();
-
-    }, 500);
+    setTimeout(
+      showMain,
+      500
+    );
 
   }
 
 
-  /* =========================
-     TEMPAHAN
-  ========================= */
+  /* TEMPAHAN */
 
   async function calculateBooking(){
 
@@ -761,13 +752,17 @@
 
 
     const message =
-      document.getElementById("bookingMessage");
+      document.getElementById(
+        "bookingMessage"
+      );
 
 
     if(!pickup || !dropoff){
 
       message.innerHTML =
-        '<div class="notice error">❌ Sila masukkan lokasi pickup dan dropoff.</div>';
+        '<div class="notice error">' +
+        '❌ Sila masukkan lokasi pickup dan dropoff.' +
+        '</div>';
 
       return;
 
@@ -777,17 +772,9 @@
     if(!date || !time){
 
       message.innerHTML =
-        '<div class="notice error">❌ Sila pilih tarikh dan masa.</div>';
-
-      return;
-
-    }
-
-
-    if(pax < 1 || pax > 6){
-
-      message.innerHTML =
-        '<div class="notice error">❌ Bilangan penumpang mestilah 1 hingga 6.</div>';
+        '<div class="notice error">' +
+        '❌ Sila pilih tarikh dan masa.' +
+        '</div>';
 
       return;
 
@@ -795,7 +782,9 @@
 
 
     message.innerHTML =
-      '<div class="loading">⏳ Sedang mengenal pasti lokasi dan mengira jarak...</div>';
+      '<div class="loading">' +
+      '⏳ Sedang mengenal pasti lokasi dan mengira tambang...' +
+      '</div>';
 
 
     try{
@@ -807,7 +796,10 @@
         await geocode(dropoff);
 
 
-      if(!pickupLocation || !dropoffLocation){
+      if(
+        !pickupLocation ||
+        !dropoffLocation
+      ){
 
         throw new Error(
           "Lokasi tidak dapat dikenal pasti."
@@ -848,9 +840,8 @@
 
 
       /*
-        Prototype:
-        Tol belum ditentukan secara automatik.
-        Buat masa ini RM0.
+        Buat masa ini tol RM0.
+        Sistem tol sebenar akan dibina kemudian.
       */
 
       const toll = 0;
@@ -859,7 +850,12 @@
         fare + toll;
 
 
-      const booking = {
+      /*
+        Jarak masih disimpan secara dalaman.
+        Ia TIDAK dipaparkan kepada penumpang.
+      */
+
+      window.currentBooking = {
 
         pickup: pickup,
 
@@ -886,11 +882,9 @@
       };
 
 
-      window.currentBooking =
-        booking;
-
-
-      showSummary(booking);
+      showSummary(
+        window.currentBooking
+      );
 
 
     }catch(error){
@@ -908,29 +902,28 @@
   }
 
 
-  /* =========================
-     GEOCODING
-  ========================= */
+  /* GEOCODING */
 
   async function geocode(place){
 
     const url =
       "https://nominatim.openstreetmap.org/search?" +
       "format=json&limit=1&q=" +
-      encodeURIComponent(place + ", Malaysia");
+      encodeURIComponent(
+        place + ", Malaysia"
+      );
 
 
     const response =
-      await fetch(url, {
-
-        headers: {
-
-          "Accept":
-            "application/json"
-
+      await fetch(
+        url,
+        {
+          headers: {
+            "Accept":
+              "application/json"
+          }
         }
-
-      });
+      );
 
 
     if(!response.ok){
@@ -946,7 +939,10 @@
       await response.json();
 
 
-    if(!data || data.length === 0){
+    if(
+      !data ||
+      data.length === 0
+    ){
 
       return null;
 
@@ -956,19 +952,21 @@
     return {
 
       lat:
-        parseFloat(data[0].lat),
+        parseFloat(
+          data[0].lat
+        ),
 
       lon:
-        parseFloat(data[0].lon)
+        parseFloat(
+          data[0].lon
+        )
 
     };
 
   }
 
 
-  /* =========================
-     ROUTING OSRM
-  ========================= */
+  /* ROUTING */
 
   async function getRouteDistance(
     pickup,
@@ -1013,14 +1011,15 @@
     }
 
 
-    return data.routes[0].distance / 1000;
+    return (
+      data.routes[0].distance /
+      1000
+    );
 
   }
 
 
-  /* =========================
-     KIRA TAMBANG
-  ========================= */
+  /* TAMBANG */
 
   function calculateFare(
     distance,
@@ -1032,67 +1031,49 @@
     let fare;
 
 
-    /*
-      3.0 km = RM5
-
-      3.5 km = RM5
-      3.6 km = RM6
-      4.5 km = RM6
-      4.6 km = RM7
-
-      Selepas 7 km:
-      RM0.80 setiap km tambahan.
-    */
-
-
     if(distance <= 3){
 
       fare = 5;
 
     }
-
     else if(distance <= 3.5){
 
       fare = 5;
 
     }
-
     else if(distance <= 4.5){
 
       fare = 6;
 
     }
-
     else if(distance <= 5.5){
 
       fare = 7;
 
     }
-
     else if(distance <= 6.5){
 
       fare = 8;
 
     }
-
     else if(distance <= 7){
 
       fare = 9;
 
     }
-
     else{
 
       fare =
         9 +
-        ((distance - 7) * 0.80);
+        (
+          (distance - 7) *
+          0.80
+        );
 
     }
 
 
-    /*
-      6-SEATER
-    */
+    /* 6-SEATER */
 
     if(pax === 6){
 
@@ -1101,9 +1082,7 @@
     }
 
 
-    /*
-      PEAK TIME
-    */
+    /* PEAK */
 
     const hour =
       parseInt(
@@ -1121,20 +1100,19 @@
     }
 
 
-    /*
-      NIGHT
-    */
+    /* MALAM */
 
-    if(hour >= 0 && hour < 6){
+    if(
+      hour >= 0 &&
+      hour < 6
+    ){
 
       fare += 2;
 
     }
 
 
-    /*
-      ROUNDING HALF-UP
-    */
+    /* ROUNDING */
 
     fare =
       Math.floor(
@@ -1147,95 +1125,109 @@
   }
 
 
-  /* =========================
-     RINGKASAN
-  ========================= */
+  /* RINGKASAN */
 
-  function showSummary(booking){
+  function showSummary(
+    booking
+  ){
 
     hideAll();
 
 
     document
-      .getElementById("summaryPickup")
+      .getElementById(
+        "summaryPickup"
+      )
       .textContent =
       booking.pickup;
 
 
     document
-      .getElementById("summaryDropoff")
+      .getElementById(
+        "summaryDropoff"
+      )
       .textContent =
       booking.dropoff;
 
 
     document
-      .getElementById("summaryPax")
+      .getElementById(
+        "summaryPax"
+      )
       .textContent =
       booking.pax;
 
 
     document
-      .getElementById("summaryDate")
+      .getElementById(
+        "summaryDate"
+      )
       .textContent =
       booking.date;
 
 
     document
-      .getElementById("summaryTime")
+      .getElementById(
+        "summaryTime"
+      )
       .textContent =
       booking.time;
 
 
     document
-      .getElementById("summaryNotes")
+      .getElementById(
+        "summaryNotes"
+      )
       .textContent =
       booking.notes || "—";
 
 
     document
-      .getElementById("summaryDistance")
-      .textContent =
-      booking.distanceKm.toFixed(2)
-      + " km";
-
-
-    document
-      .getElementById("summaryVehicle")
+      .getElementById(
+        "summaryVehicle"
+      )
       .textContent =
       booking.vehicle;
 
 
     document
-      .getElementById("summaryFare")
+      .getElementById(
+        "summaryFare"
+      )
       .textContent =
       "RM" +
       booking.fare;
 
 
     document
-      .getElementById("summaryToll")
+      .getElementById(
+        "summaryToll"
+      )
       .textContent =
       "RM" +
       booking.toll;
 
 
     document
-      .getElementById("summaryTotal")
+      .getElementById(
+        "summaryTotal"
+      )
       .textContent =
       "RM" +
       booking.total;
 
 
     document
-      .getElementById("summaryScreen")
-      .classList.remove("hidden");
+      .getElementById(
+        "summaryScreen"
+      )
+      .classList
+      .remove("hidden");
 
   }
 
 
-  /* =========================
-     SAHKAN TEMPAHAN
-  ========================= */
+  /* SAHKAN TEMPAHAN */
 
   function confirmBooking(){
 
@@ -1268,35 +1260,38 @@
     };
 
 
-    bookings.push(booking);
+    bookings.push(
+      booking
+    );
 
 
     localStorage.setItem(
       "uitmRideBookings",
-      JSON.stringify(bookings)
+      JSON.stringify(
+        bookings
+      )
     );
 
 
     document
-      .getElementById("summaryMessage")
+      .getElementById(
+        "summaryMessage"
+      )
       .innerHTML =
       '<div class="notice success">' +
       '✅ Tempahan berjaya dihantar.' +
       '</div>';
 
 
-    setTimeout(function(){
-
-      showBookings();
-
-    }, 800);
+    setTimeout(
+      showBookings,
+      800
+    );
 
   }
 
 
-  /* =========================
-     TEMPAHAN SAYA
-  ========================= */
+  /* TEMPAHAN SAYA */
 
   function showBookings(){
 
@@ -1304,15 +1299,20 @@
 
 
     const box =
-      document.getElementById("myBookings");
+      document.getElementById(
+        "myBookings"
+      );
 
 
-    if(bookings.length === 0){
+    if(
+      bookings.length === 0
+    ){
 
       box.innerHTML =
         "Belum ada tempahan.";
 
-    }else{
+    }
+    else{
 
       box.innerHTML = "";
 
@@ -1320,74 +1320,94 @@
       bookings
         .slice()
         .reverse()
-        .forEach(function(booking){
+        .forEach(
+          function(booking){
 
-          const card =
-            document.createElement("div");
-
-          card.className =
-            "booking-card";
-
-
-          card.innerHTML =
-
-            "<strong>🚕 " +
-            escapeHtml(booking.id) +
-            "</strong><br><br>" +
-
-            "📍 " +
-            escapeHtml(booking.pickup) +
-            "<br>" +
-
-            "🏁 " +
-            escapeHtml(booking.dropoff) +
-            "<br>" +
-
-            "📅 " +
-            escapeHtml(booking.date) +
-            "<br>" +
-
-            "⏰ " +
-            escapeHtml(booking.time) +
-            "<br>" +
-
-            "📏 " +
-            booking.distanceKm.toFixed(2) +
-            " km<br>" +
-
-            "💰 Tambang: RM" +
-            booking.fare +
-            "<br>" +
-
-            "🛣️ Tol: RM" +
-            booking.toll +
-            "<br>" +
-
-            "<strong>💵 Jumlah: RM" +
-            booking.total +
-            "</strong><br><br>" +
-
-            "📌 Status: " +
-            escapeHtml(booking.status);
+            const card =
+              document.createElement(
+                "div"
+              );
 
 
-          box.appendChild(card);
+            card.className =
+              "booking-card";
 
-        });
+
+            card.innerHTML =
+
+              "<strong>🚕 " +
+              escapeHtml(
+                booking.id
+              ) +
+              "</strong><br><br>" +
+
+              "📍 " +
+              escapeHtml(
+                booking.pickup
+              ) +
+              "<br>" +
+
+              "🏁 " +
+              escapeHtml(
+                booking.dropoff
+              ) +
+              "<br>" +
+
+              "👥 " +
+              booking.pax +
+              " penumpang<br>" +
+
+              "📅 " +
+              escapeHtml(
+                booking.date
+              ) +
+              "<br>" +
+
+              "⏰ " +
+              escapeHtml(
+                booking.time
+              ) +
+              "<br>" +
+
+              "💰 Tambang: RM" +
+              booking.fare +
+              "<br>" +
+
+              "🛣️ Tol: RM" +
+              booking.toll +
+              "<br>" +
+
+              "<strong>💵 Jumlah: RM" +
+              booking.total +
+              "</strong><br><br>" +
+
+              "📌 Status: " +
+              escapeHtml(
+                booking.status
+              );
+
+
+            box.appendChild(
+              card
+            );
+
+          }
+        );
 
     }
 
 
     document
-      .getElementById("bookingsScreen")
-      .classList.remove("hidden");
+      .getElementById(
+        "bookingsScreen"
+      )
+      .classList
+      .remove("hidden");
 
   }
 
 
-  /* =========================
-     PROFIL
-  ========================= */
+  /* PROFIL */
 
   function showProfile(){
 
@@ -1395,7 +1415,9 @@
 
 
     document
-      .getElementById("profileName")
+      .getElementById(
+        "profileName"
+      )
       .textContent =
       currentUser
         ? currentUser.name
@@ -1403,15 +1425,16 @@
 
 
     document
-      .getElementById("profileScreen")
-      .classList.remove("hidden");
+      .getElementById(
+        "profileScreen"
+      )
+      .classList
+      .remove("hidden");
 
   }
 
 
-  /* =========================
-     ADMIN
-  ========================= */
+  /* ADMIN */
 
   function contactAdmin(){
 
@@ -1419,24 +1442,42 @@
 
 
     document
-      .getElementById("adminScreen")
-      .classList.remove("hidden");
+      .getElementById(
+        "adminScreen"
+      )
+      .classList
+      .remove("hidden");
 
   }
 
 
-  /* =========================
-     SECURITY
-  ========================= */
+  /* KESELAMATAN PAPARAN */
 
-  function escapeHtml(value){
+  function escapeHtml(
+    value
+  ){
 
     return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
 
   }
 
