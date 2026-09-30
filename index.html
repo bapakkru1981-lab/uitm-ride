@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>UiTM RIDE - Ujian Lokasi</title>
+  <title>UiTM RIDE - Ujian Jarak & Tambang</title>
 
   <style>
     * {
@@ -15,7 +14,7 @@
       margin: 0;
       padding: 20px;
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      background: #f4f6f8;
       color: #222;
     }
 
@@ -24,23 +23,31 @@
       margin: auto;
     }
 
-    h1 {
+    .header {
+      background: #ff7a00;
+      color: white;
+      padding: 24px;
+      border-radius: 16px;
       text-align: center;
-      margin-bottom: 5px;
+      margin-bottom: 18px;
     }
 
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 25px;
+    .header h1 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    .header p {
+      margin: 0;
+      font-size: 14px;
     }
 
     .card {
       background: white;
-      padding: 18px;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
     }
 
     label {
@@ -50,83 +57,92 @@
     }
 
     input,
+    select,
     textarea {
       width: 100%;
-      padding: 13px;
+      padding: 14px;
       border: 1px solid #ccc;
       border-radius: 10px;
       font-size: 16px;
-      margin-bottom: 10px;
+      margin-bottom: 16px;
     }
 
     textarea {
-      min-height: 100px;
+      min-height: 90px;
       resize: vertical;
     }
 
     button {
       width: 100%;
-      padding: 14px;
       border: none;
       border-radius: 10px;
-      font-size: 16px;
+      padding: 15px;
+      font-size: 17px;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 6px;
+      margin-top: 5px;
     }
 
-    .location-btn {
-      background: #222;
-      color: white;
-    }
-
-    .confirm-btn {
-      background: #178a3b;
-      color: white;
-    }
-
-    .test-btn {
+    .btn-main {
       background: #ff7a00;
       color: white;
     }
 
+    .btn-main:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
     .result {
-      background: #f1f1f1;
-      padding: 14px;
+      display: none;
+      background: #fff7ed;
+      border: 1px solid #ffd8b0;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .result-row:last-child {
+      border-bottom: none;
+    }
+
+    .total {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .status {
+      margin-top: 14px;
+      padding: 12px;
       border-radius: 10px;
-      margin-top: 12px;
-      word-break: break-word;
+      background: #f1f5f9;
+      font-size: 14px;
       line-height: 1.5;
     }
 
-    .success {
-      color: green;
-      font-weight: bold;
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
     }
 
-    .error {
-      color: #c00;
-      font-weight: bold;
+    .success {
+      background: #dcfce7;
+      color: #166534;
     }
 
     .small {
-      font-size: 13px;
-      color: #777;
-      line-height: 1.4;
-    }
-
-    .location-name {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .address {
-      color: #555;
-    }
-
-    .hidden {
-      display: none;
+      font-size: 12px;
+      color: #666;
+      margin-top: -8px;
+      margin-bottom: 15px;
     }
   </style>
 </head>
@@ -135,550 +151,470 @@
 
 <div class="container">
 
-  <h1>🚕 UiTM RIDE</h1>
-
-  <div class="subtitle">
-    Ujian Current Location & Nota
+  <div class="header">
+    <h1>🚕 UiTM RIDE</h1>
+    <p>Ujian Jarak & Tambang</p>
   </div>
-
-
-  <!-- PICKUP -->
 
   <div class="card">
 
-    <label>📍 Pickup</label>
-
+    <label for="pickup">📍 Pickup</label>
     <input
-      type="text"
       id="pickup"
-      placeholder="Contoh: UiTM Shah Alam"
-    >
-
-    <button
-      type="button"
-      class="location-btn"
-      id="currentLocationBtn"
-    >
-      📍 Guna Current Location
-    </button>
-
-    <div
-      id="locationResult"
-      class="result hidden"
-    ></div>
-
-    <button
-      type="button"
-      class="confirm-btn hidden"
-      id="confirmLocationBtn"
-    >
-      ✅ Gunakan Lokasi Ini
-    </button>
-
-  </div>
-
-
-  <!-- DROP OFF -->
-
-  <div class="card">
-
-    <label>🏁 Drop-off</label>
-
-    <input
       type="text"
-      id="dropoff"
-      placeholder="Contoh: Setia Alam"
+      placeholder="Contoh: Universiti Teknologi MARA Shah Alam"
     >
 
-  </div>
+    <label for="dropoff">🏁 Drop-off</label>
+    <input
+      id="dropoff"
+      type="text"
+      placeholder="Contoh: Setia Alam, Selangor"
+    >
 
+    <label for="pax">👥 Bilangan Penumpang</label>
+    <select id="pax">
+      <option value="1">1 penumpang</option>
+      <option value="2">2 penumpang</option>
+      <option value="3">3 penumpang</option>
+      <option value="4">4 penumpang</option>
+      <option value="5">5 penumpang</option>
+      <option value="6">6 penumpang</option>
+    </select>
 
-  <!-- NOTES -->
+    <button id="calculateBtn" class="btn-main">
+      📏 Kira Jarak & Tambang
+    </button>
 
-  <div class="card">
+    <div id="status" class="status">
+      Masukkan Pickup dan Drop-off kemudian tekan butang di atas.
+    </div>
 
-    <label>📝 Nota</label>
+    <div id="result" class="result">
 
-    <textarea
-      id="notes"
-      placeholder="Contoh: Tunggu di lobi utama / pintu pagar / saya pakai baju hitam"
-    ></textarea>
+      <div class="result-row">
+        <span>📍 Pickup</span>
+        <strong id="resultPickup">-</strong>
+      </div>
 
-    <div class="small">
-      Nota ini boleh digunakan untuk arahan tambahan kepada pemandu.
+      <div class="result-row">
+        <span>🏁 Drop-off</span>
+        <strong id="resultDropoff">-</strong>
+      </div>
+
+      <div class="result-row">
+        <span>📏 Jarak</span>
+        <strong id="resultDistance">-</strong>
+      </div>
+
+      <div class="result-row">
+        <span>💰 Tambang</span>
+        <strong id="resultFare">-</strong>
+      </div>
+
+      <div class="result-row">
+        <span>🛣️ Tol</span>
+        <strong id="resultToll">RM0.00</strong>
+      </div>
+
+      <div class="result-row">
+        <span>🚗 Jenis Kenderaan</span>
+        <strong id="resultVehicle">-</strong>
+      </div>
+
+      <div class="result-row total">
+        <span>💵 Jumlah</span>
+        <strong id="resultTotal">-</strong>
+      </div>
+
     </div>
 
   </div>
 
-
-  <!-- TEST -->
-
   <div class="card">
-
-    <button
-      type="button"
-      class="test-btn"
-      id="testBtn"
-    >
-      🧪 Uji Maklumat
-    </button>
-
-    <div
-      id="testResult"
-      class="result hidden"
-    ></div>
-
+    <strong>🧪 Nota Ujian</strong>
+    <p class="small" style="margin-top:10px;">
+      Ini masih versi ujian. Jarak dipaparkan supaya kita boleh
+      menyemak pengiraan sistem. Dalam versi penumpang sebenar,
+      jarak boleh disembunyikan.
+    </p>
   </div>
 
 </div>
 
-
 <script>
 
-const pickupInput =
-  document.getElementById("pickup");
+const pickupInput = document.getElementById("pickup");
+const dropoffInput = document.getElementById("dropoff");
+const paxInput = document.getElementById("pax");
 
-const dropoffInput =
-  document.getElementById("dropoff");
+const calculateBtn = document.getElementById("calculateBtn");
 
-const notesInput =
-  document.getElementById("notes");
+const statusBox = document.getElementById("status");
+const resultBox = document.getElementById("result");
 
-const locationButton =
-  document.getElementById("currentLocationBtn");
-
-const locationResult =
-  document.getElementById("locationResult");
-
-const confirmLocationButton =
-  document.getElementById("confirmLocationBtn");
-
-const testButton =
-  document.getElementById("testBtn");
-
-const testResult =
-  document.getElementById("testResult");
+const resultPickup = document.getElementById("resultPickup");
+const resultDropoff = document.getElementById("resultDropoff");
+const resultDistance = document.getElementById("resultDistance");
+const resultFare = document.getElementById("resultFare");
+const resultToll = document.getElementById("resultToll");
+const resultVehicle = document.getElementById("resultVehicle");
+const resultTotal = document.getElementById("resultTotal");
 
 
-let detectedLatitude = null;
-let detectedLongitude = null;
-let detectedAddress = "";
+/* ================================
+   PAPAR STATUS
+================================ */
 
+function showStatus(message, type = "") {
 
-/*
-========================================
-CURRENT LOCATION
-========================================
-*/
+  statusBox.textContent = message;
 
-locationButton.addEventListener(
-  "click",
-  function () {
+  statusBox.className = "status";
 
-    locationResult.classList.remove("hidden");
-
-    locationResult.innerHTML =
-      "⏳ Sedang mendapatkan lokasi semasa...";
-
-    confirmLocationButton.classList.add("hidden");
-
-
-    if (!navigator.geolocation) {
-
-      locationResult.innerHTML =
-        '<span class="error">' +
-        '❌ Telefon/browser tidak menyokong GPS.' +
-        '</span>';
-
-      return;
-    }
-
-
-    navigator.geolocation.getCurrentPosition(
-
-      function (position) {
-
-        detectedLatitude =
-          position.coords.latitude;
-
-        detectedLongitude =
-          position.coords.longitude;
-
-
-        locationResult.innerHTML =
-          "⏳ Lokasi GPS berjaya diperoleh.<br>" +
-          "🔎 Sedang mengenal pasti alamat...";
-
-
-        reverseGeocode(
-          detectedLatitude,
-          detectedLongitude
-        );
-
-      },
-
-
-      function (error) {
-
-        let message =
-          "❌ Tidak dapat mendapatkan lokasi.";
-
-
-        if (error.code === 1) {
-
-          message =
-            "❌ Kebenaran lokasi tidak dibenarkan. " +
-            "Sila benarkan Location untuk browser.";
-
-        }
-
-        else if (error.code === 2) {
-
-          message =
-            "❌ Lokasi tidak dapat dikenal pasti.";
-
-        }
-
-        else if (error.code === 3) {
-
-          message =
-            "❌ Masa mendapatkan lokasi tamat.";
-
-        }
-
-
-        locationResult.innerHTML =
-          '<span class="error">' +
-          message +
-          '</span>';
-
-      },
-
-
-      {
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 0
-      }
-
-    );
-
+  if (type === "error") {
+    statusBox.classList.add("error");
   }
-);
+
+  if (type === "success") {
+    statusBox.classList.add("success");
+  }
+}
 
 
-/*
-========================================
-REVERSE GEOCODING
-========================================
-*/
+/* ================================
+   CARI LOKASI
+================================ */
 
-async function reverseGeocode(
-  latitude,
-  longitude
+async function searchLocation(place) {
+
+  const url =
+    "https://nominatim.openstreetmap.org/search" +
+    "?format=jsonv2" +
+    "&limit=1" +
+    "&q=" +
+    encodeURIComponent(place);
+
+  const response = await fetch(url, {
+    headers: {
+      "Accept": "application/json"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error("Gagal mendapatkan lokasi.");
+  }
+
+  const data = await response.json();
+
+  if (!data || data.length === 0) {
+    throw new Error(
+      "Lokasi tidak dapat dikenal pasti: " + place
+    );
+  }
+
+  return {
+    latitude: parseFloat(data[0].lat),
+    longitude: parseFloat(data[0].lon),
+    name: data[0].display_name
+  };
+}
+
+
+/* ================================
+   KIRA JARAK JALAN OSRM
+================================ */
+
+async function calculateRoute(
+  pickup,
+  dropoff
 ) {
 
-  try {
+  const url =
+    "https://router.project-osrm.org/route/v1/driving/" +
+    pickup.longitude + "," +
+    pickup.latitude + ";" +
+    dropoff.longitude + "," +
+    dropoff.latitude +
+    "?overview=false";
 
-    const url =
-      "https://nominatim.openstreetmap.org/reverse" +
-      "?format=jsonv2" +
-      "&lat=" +
-      encodeURIComponent(latitude) +
-      "&lon=" +
-      encodeURIComponent(longitude) +
-      "&zoom=18" +
-      "&addressdetails=1";
+  const response = await fetch(url);
 
-
-    const response =
-      await fetch(url, {
-        headers: {
-          "Accept": "application/json"
-        }
-      });
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        "Reverse geocoding gagal"
-      );
-
-    }
-
-
-    const data =
-      await response.json();
-
-
-    if (!data || !data.display_name) {
-
-      throw new Error(
-        "Alamat tidak dijumpai"
-      );
-
-    }
-
-
-    detectedAddress =
-      data.display_name;
-
-
-    const address =
-      data.address || {};
-
-
-    /*
-     * Cuba bina nama lokasi yang lebih mudah dibaca
-     */
-
-    const placeName =
-      address.amenity ||
-      address.building ||
-      address.shop ||
-      address.tourism ||
-      address.road ||
-      address.neighbourhood ||
-      address.suburb ||
-      address.city_district ||
-      address.town ||
-      address.city ||
-      "Lokasi semasa";
-
-
-    locationResult.innerHTML =
-
-      '<div class="success">' +
-      '✅ Lokasi berjaya dikenal pasti' +
-      '</div>' +
-
-      '<br>' +
-
-      '<div class="location-name">' +
-      escapeHtml(placeName) +
-      '</div>' +
-
-      '<div class="address">' +
-      escapeHtml(detectedAddress) +
-      '</div>' +
-
-      '<br>' +
-
-      '<div class="small">' +
-      '📍 GPS: ' +
-      latitude.toFixed(6) +
-      ', ' +
-      longitude.toFixed(6) +
-      '</div>';
-
-
-    confirmLocationButton.classList.remove(
-      "hidden"
-    );
-
-
+  if (!response.ok) {
+    throw new Error("Gagal mendapatkan laluan.");
   }
 
-  catch (error) {
+  const data = await response.json();
 
-    console.error(error);
-
-
-    /*
-     * Jika alamat tidak dapat diperoleh,
-     * koordinat masih boleh digunakan.
-     */
-
-    locationResult.innerHTML =
-
-      '<span class="error">' +
-      '⚠️ Lokasi GPS berjaya diperoleh, ' +
-      'tetapi nama alamat tidak dapat dikenal pasti.' +
-      '</span>' +
-
-      '<br><br>' +
-
-      '<div class="small">' +
-      'Latitude: ' +
-      latitude.toFixed(6) +
-      '<br>' +
-      'Longitude: ' +
-      longitude.toFixed(6) +
-      '</div>';
-
-
-    confirmLocationButton.classList.remove(
-      "hidden"
-    );
-
+  if (
+    data.code !== "Ok" ||
+    !data.routes ||
+    data.routes.length === 0
+  ) {
+    throw new Error("Laluan tidak dapat dikira.");
   }
 
+  return data.routes[0].distance / 1000;
 }
 
 
-/*
-========================================
-GUNAKAN LOKASI INI
-========================================
-*/
+/* ================================
+   ROUND HALF UP
+================================ */
 
-confirmLocationButton.addEventListener(
-  "click",
-  function () {
+function roundHalfUp(value) {
 
-    if (!detectedLatitude ||
-        !detectedLongitude) {
-
-      return;
-
-    }
+  return Math.floor(value + 0.5);
+}
 
 
-    if (detectedAddress) {
+/* ================================
+   KIRA TAMBANG
+================================ */
 
-      pickupInput.value =
-        detectedAddress;
+function calculateFare(
+  distanceKm,
+  pax
+) {
 
-    }
+  let fare = 0;
 
-    else {
+  /*
+    0 - 3.0 km
+    RM5
+  */
 
-      pickupInput.value =
-        "Current Location (" +
-        detectedLatitude.toFixed(6) +
-        ", " +
-        detectedLongitude.toFixed(6) +
-        ")";
+  if (distanceKm <= 3) {
 
-    }
-
-
-    locationResult.innerHTML +=
-      '<br><br>' +
-      '<span class="success">' +
-      '✅ Lokasi telah dipilih sebagai Pickup.' +
-      '</span>';
-
-
-    confirmLocationButton.classList.add(
-      "hidden"
-    );
+    fare = 5;
 
   }
-);
+
+  /*
+    Lebih 3 km sehingga 7 km
+
+    3.0  = RM5
+    3.5  = RM5
+    3.6  = RM6
+    4.0  = RM6
+    4.5  = RM6
+    4.6  = RM7
+    ...
+    7.0  = RM9
+  */
+
+  else if (distanceKm <= 7) {
+
+    const extraDistance = distanceKm - 3;
+
+    const extraCharge =
+      Math.ceil((extraDistance - 0.5) / 1);
+
+    fare = 5 + Math.max(0, extraCharge);
+
+  }
+
+  /*
+    Lebih 7 km
+
+    7 km = RM9
+
+    Selepas 7 km:
+    RM0.80 / km
+  */
+
+  else {
+
+    fare = 9 + ((distanceKm - 7) * 0.80);
+
+  }
 
 
-/*
-========================================
-UJI MAKLUMAT
-========================================
-*/
+  /*
+    6-seater surcharge
+  */
 
-testButton.addEventListener(
+  let vehicle = "Sedan";
+
+  if (pax >= 5) {
+
+    vehicle = "6-Seater";
+
+    fare += 2;
+
+  }
+
+
+  /*
+    Pembundaran akhir
+  */
+
+  fare = roundHalfUp(fare);
+
+  return {
+    fare,
+    vehicle
+  };
+}
+
+
+/* ================================
+   BUTANG KIRA
+================================ */
+
+calculateBtn.addEventListener(
   "click",
-  function () {
+  async function() {
 
-    const pickup =
+    const pickupText =
       pickupInput.value.trim();
 
-    const dropoff =
+    const dropoffText =
       dropoffInput.value.trim();
 
-    const notes =
-      notesInput.value.trim();
+    const pax =
+      parseInt(paxInput.value);
 
 
-    if (!pickup) {
+    if (!pickupText) {
 
-      showTestError(
-        "⚠️ Sila masukkan Pickup."
+      showStatus(
+        "Sila masukkan lokasi Pickup.",
+        "error"
       );
+
+      pickupInput.focus();
 
       return;
     }
 
 
-    if (!dropoff) {
+    if (!dropoffText) {
 
-      showTestError(
-        "⚠️ Sila masukkan Drop-off."
+      showStatus(
+        "Sila masukkan lokasi Drop-off.",
+        "error"
       );
+
+      dropoffInput.focus();
 
       return;
     }
 
 
-    testResult.classList.remove(
-      "hidden"
-    );
+    calculateBtn.disabled = true;
+
+    resultBox.style.display = "none";
 
 
-    testResult.innerHTML =
+    try {
 
-      '<span class="success">' +
-      '✅ Maklumat diterima.' +
-      '</span>' +
-
-      '<br><br>' +
-
-      '📍 <b>Pickup:</b><br>' +
-      escapeHtml(pickup) +
-
-      '<br><br>' +
-
-      '🏁 <b>Drop-off:</b><br>' +
-      escapeHtml(dropoff) +
-
-      '<br><br>' +
-
-      '📝 <b>Nota:</b><br>' +
-      (
-        notes
-        ? escapeHtml(notes)
-        : "Tiada nota"
+      showStatus(
+        "🔎 Sedang mengenal pasti lokasi Pickup..."
       );
+
+
+      const pickup =
+        await searchLocation(pickupText);
+
+
+      showStatus(
+        "🔎 Sedang mengenal pasti lokasi Drop-off..."
+      );
+
+
+      const dropoff =
+        await searchLocation(dropoffText);
+
+
+      showStatus(
+        "📏 Sedang mengira jarak perjalanan..."
+      );
+
+
+      const distance =
+        await calculateRoute(
+          pickup,
+          dropoff
+        );
+
+
+      showStatus(
+        "💰 Sedang mengira tambang..."
+      );
+
+
+      const fareResult =
+        calculateFare(
+          distance,
+          pax
+        );
+
+
+      /*
+        Tol buat masa ini RM0.
+        Kita akan masukkan sistem tol
+        kemudian.
+      */
+
+      const toll = 0;
+
+      const total =
+        fareResult.fare + toll;
+
+
+      resultPickup.textContent =
+        pickupText;
+
+      resultDropoff.textContent =
+        dropoffText;
+
+      resultDistance.textContent =
+        distance.toFixed(2) + " km";
+
+      resultFare.textContent =
+        "RM" + fareResult.fare.toFixed(2);
+
+      resultToll.textContent =
+        "RM" + toll.toFixed(2);
+
+      resultVehicle.textContent =
+        fareResult.vehicle;
+
+      resultTotal.textContent =
+        "RM" + total.toFixed(2);
+
+
+      resultBox.style.display =
+        "block";
+
+
+      showStatus(
+        "✅ Jarak dan tambang berjaya dikira.",
+        "success"
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(error);
+
+      showStatus(
+        "❌ " + error.message,
+        "error"
+      );
+
+    }
+
+    finally {
+
+      calculateBtn.disabled = false;
+
+    }
 
   }
 );
-
-
-/*
-========================================
-ERROR
-========================================
-*/
-
-function showTestError(message) {
-
-  testResult.classList.remove(
-    "hidden"
-  );
-
-  testResult.innerHTML =
-    '<span class="error">' +
-    message +
-    '</span>';
-
-}
-
-
-/*
-========================================
-SECURITY
-========================================
-*/
-
-function escapeHtml(text) {
-
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
 
 </script>
 
