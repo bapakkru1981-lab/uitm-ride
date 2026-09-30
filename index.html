@@ -38,6 +38,10 @@
       margin-bottom: 6px;
     }
 
+    h2 {
+      margin-top: 10px;
+    }
+
     .subtitle {
       text-align: center;
       color: #6b7280;
@@ -98,10 +102,6 @@
       color: white;
     }
 
-    .menu-button {
-      margin-top: 12px;
-    }
-
     .hidden {
       display: none;
     }
@@ -129,6 +129,20 @@
       margin-top: 15px;
       line-height: 1.7;
     }
+
+    .loading {
+      text-align: center;
+      padding: 15px;
+      color: #4b5563;
+    }
+
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
   </style>
 </head>
 
@@ -148,6 +162,7 @@
     <h2>👤 Daftar Pengguna</h2>
 
     <label for="nameInput">Nama penuh</label>
+
     <input
       type="text"
       id="nameInput"
@@ -170,27 +185,19 @@
 
       <div id="welcomeText" class="welcome"></div>
 
-      <button
-        class="primary menu-button"
-        onclick="showBooking()">
+      <button class="primary" onclick="showBooking()">
         🚕 Tempah Perjalanan
       </button>
 
-      <button
-        class="secondary menu-button"
-        onclick="showBookings()">
+      <button class="secondary" onclick="showBookings()">
         📋 Tempahan Saya
       </button>
 
-      <button
-        class="secondary menu-button"
-        onclick="showProfile()">
+      <button class="secondary" onclick="showProfile()">
         👤 Profil Saya
       </button>
 
-      <button
-        class="secondary menu-button"
-        onclick="contactAdmin()">
+      <button class="secondary" onclick="contactAdmin()">
         📞 Hubungi Admin
       </button>
 
@@ -216,7 +223,6 @@
         placeholder="Contoh: UiTM Shah Alam"
       >
 
-
       <label for="dropoff">
         🏁 Lokasi Dropoff
       </label>
@@ -226,7 +232,6 @@
         id="dropoff"
         placeholder="Contoh: Setia City Mall"
       >
-
 
       <label for="passengers">
         👥 Bilangan Penumpang
@@ -241,7 +246,6 @@
         <option value="6">6 Penumpang</option>
       </select>
 
-
       <label for="date">
         📅 Tarikh
       </label>
@@ -250,7 +254,6 @@
         type="date"
         id="date"
       >
-
 
       <label for="time">
         ⏰ Masa
@@ -261,7 +264,6 @@
         id="time"
       >
 
-
       <label for="notes">
         📝 Nota
       </label>
@@ -271,9 +273,9 @@
         placeholder="Contoh: Tunggu di pintu utama"
       ></textarea>
 
-
       <button
         class="success"
+        id="continueButton"
         onclick="continueBooking()">
         ➡️ Teruskan
       </button>
@@ -283,6 +285,8 @@
         onclick="showMain()">
         ↩️ Kembali
       </button>
+
+      <div id="distanceMessage"></div>
 
     </div>
 
@@ -350,405 +354,4 @@
 
       <h2>👤 Profil Saya</h2>
 
-      <div class="profile-row">
-        <strong>Nama</strong><br>
-        <span id="profileName"></span>
-      </div>
-
-      <div class="profile-row">
-        <strong>Status</strong><br>
-        Pengguna Berdaftar
-      </div>
-
-      <button
-        class="secondary"
-        onclick="showMain()">
-        ↩️ Kembali
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<script>
-
-  const tg = window.Telegram.WebApp;
-
-  tg.ready();
-  tg.expand();
-
-
-  let currentBooking = null;
-
-
-  function getUser() {
-
-    return JSON.parse(
-      localStorage.getItem("uitmRideUser")
-    );
-
-  }
-
-
-  function registerUser() {
-
-    const name =
-      document.getElementById("nameInput").value.trim();
-
-    if (!name) {
-
-      alert("Sila masukkan nama penuh.");
-
-      return;
-
-    }
-
-    const user = {
-
-      name: name,
-
-      telegramId:
-        tg.initDataUnsafe?.user?.id || "prototype-user"
-
-    };
-
-    localStorage.setItem(
-      "uitmRideUser",
-      JSON.stringify(user)
-    );
-
-    showMain();
-
-  }
-
-
-  function showMain() {
-
-    hideAll();
-
-    document
-      .getElementById("mainScreen")
-      .classList.remove("hidden");
-
-    const user = getUser();
-
-    if (user) {
-
-      document
-        .getElementById("welcomeText")
-        .textContent =
-        "👋 Selamat datang, " + user.name;
-
-    }
-
-  }
-
-
-  function showBooking() {
-
-    hideAll();
-
-    document
-      .getElementById("bookingScreen")
-      .classList.remove("hidden");
-
-  }
-
-
-  function continueBooking() {
-
-    const pickup =
-      document.getElementById("pickup").value.trim();
-
-    const dropoff =
-      document.getElementById("dropoff").value.trim();
-
-    const passengers =
-      document.getElementById("passengers").value;
-
-    const date =
-      document.getElementById("date").value;
-
-    const time =
-      document.getElementById("time").value;
-
-    const notes =
-      document.getElementById("notes").value.trim();
-
-
-    if (!pickup) {
-
-      alert("Sila masukkan lokasi pickup.");
-
-      return;
-
-    }
-
-
-    if (!dropoff) {
-
-      alert("Sila masukkan lokasi dropoff.");
-
-      return;
-
-    }
-
-
-    if (!date) {
-
-      alert("Sila pilih tarikh.");
-
-      return;
-
-    }
-
-
-    if (!time) {
-
-      alert("Sila pilih masa.");
-
-      return;
-
-    }
-
-
-    currentBooking = {
-
-      pickup,
-      dropoff,
-      passengers,
-      date,
-      time,
-      notes
-
-    };
-
-
-    document.getElementById(
-      "bookingSummary"
-    ).innerHTML = `
-
-      📍 <strong>Pickup:</strong>
-      ${pickup}<br>
-
-      🏁 <strong>Dropoff:</strong>
-      ${dropoff}<br>
-
-      👥 <strong>Penumpang:</strong>
-      ${passengers}<br>
-
-      📅 <strong>Tarikh:</strong>
-      ${date}<br>
-
-      ⏰ <strong>Masa:</strong>
-      ${time}<br>
-
-      📝 <strong>Nota:</strong>
-      ${notes || "—"}
-
-      <hr>
-
-      📏 <strong>Jarak:</strong>
-      Akan dikira kemudian<br>
-
-      💰 <strong>Tambang:</strong>
-      Akan dikira kemudian<br>
-
-      🛣️ <strong>Tol:</strong>
-      Akan dikira kemudian<br>
-
-      💵 <strong>Jumlah:</strong>
-      Akan dikira kemudian
-
-    `;
-
-
-    hideAll();
-
-    document
-      .getElementById("summaryScreen")
-      .classList.remove("hidden");
-
-  }
-
-
-  function confirmBooking() {
-
-    if (!currentBooking) {
-
-      alert("Tiada tempahan untuk disimpan.");
-
-      return;
-
-    }
-
-
-    let bookings =
-      JSON.parse(
-        localStorage.getItem("uitmRideBookings")
-      ) || [];
-
-
-    currentBooking.id =
-      "UR" + Date.now();
-
-
-    bookings.push(currentBooking);
-
-
-    localStorage.setItem(
-      "uitmRideBookings",
-      JSON.stringify(bookings)
-    );
-
-
-    alert(
-      "✅ Tempahan berjaya direkodkan dalam prototype."
-    );
-
-
-    showMain();
-
-  }
-
-
-  function showBookings() {
-
-    hideAll();
-
-    const bookings =
-      JSON.parse(
-        localStorage.getItem("uitmRideBookings")
-      ) || [];
-
-
-    const container =
-      document.getElementById("myBookings");
-
-
-    if (bookings.length === 0) {
-
-      container.innerHTML =
-        "Belum ada tempahan.";
-
-    } else {
-
-      container.innerHTML =
-        bookings.map((b, index) => `
-
-          <div class="booking-summary">
-
-            <strong>🚕 Tempahan ${index + 1}</strong><br><br>
-
-            📍 ${b.pickup}<br>
-
-            🏁 ${b.dropoff}<br>
-
-            👥 ${b.passengers} penumpang<br>
-
-            📅 ${b.date}<br>
-
-            ⏰ ${b.time}<br>
-
-            📝 ${b.notes || "—"}
-
-          </div>
-
-        `).join("");
-
-    }
-
-
-    document
-      .getElementById("bookingsScreen")
-      .classList.remove("hidden");
-
-  }
-
-
-  function showProfile() {
-
-    hideAll();
-
-    const user = getUser();
-
-
-    if (user) {
-
-      document
-        .getElementById("profileName")
-        .textContent = user.name;
-
-    }
-
-
-    document
-      .getElementById("profileScreen")
-      .classList.remove("hidden");
-
-  }
-
-
-  function contactAdmin() {
-
-    alert(
-      "📞 Fungsi Hubungi Admin akan disambungkan kemudian."
-    );
-
-  }
-
-
-  function hideAll() {
-
-    document
-      .getElementById("registerScreen")
-      .classList.add("hidden");
-
-    document
-      .getElementById("mainScreen")
-      .classList.add("hidden");
-
-    document
-      .getElementById("bookingScreen")
-      .classList.add("hidden");
-
-    document
-      .getElementById("summaryScreen")
-      .classList.add("hidden");
-
-    document
-      .getElementById("bookingsScreen")
-      .classList.add("hidden");
-
-    document
-      .getElementById("profileScreen")
-      .classList.add("hidden");
-
-  }
-
-
-  window.onload = function() {
-
-    const user = getUser();
-
-    if (user) {
-
-      showMain();
-
-    } else {
-
-      document
-        .getElementById("registerScreen")
-        .classList.remove("hidden");
-
-    }
-
-  };
-
-</script>
-
-</body>
-</html>
+      <div class="profile
