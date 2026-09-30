@@ -577,4 +577,178 @@
 
   function confirmBooking() {
 
-    if (!
+    if (!currentBooking) {
+
+      alert("Tiada tempahan untuk disimpan.");
+
+      return;
+
+    }
+
+
+    let bookings =
+      JSON.parse(
+        localStorage.getItem("uitmRideBookings")
+      ) || [];
+
+
+    currentBooking.id =
+      "UR" + Date.now();
+
+
+    bookings.push(currentBooking);
+
+
+    localStorage.setItem(
+      "uitmRideBookings",
+      JSON.stringify(bookings)
+    );
+
+
+    alert(
+      "✅ Tempahan berjaya direkodkan dalam prototype."
+    );
+
+
+    showMain();
+
+  }
+
+
+  function showBookings() {
+
+    hideAll();
+
+    const bookings =
+      JSON.parse(
+        localStorage.getItem("uitmRideBookings")
+      ) || [];
+
+
+    const container =
+      document.getElementById("myBookings");
+
+
+    if (bookings.length === 0) {
+
+      container.innerHTML =
+        "Belum ada tempahan.";
+
+    } else {
+
+      container.innerHTML =
+        bookings.map((b, index) => `
+
+          <div class="booking-summary">
+
+            <strong>🚕 Tempahan ${index + 1}</strong><br><br>
+
+            📍 ${b.pickup}<br>
+
+            🏁 ${b.dropoff}<br>
+
+            👥 ${b.passengers} penumpang<br>
+
+            📅 ${b.date}<br>
+
+            ⏰ ${b.time}<br>
+
+            📝 ${b.notes || "—"}
+
+          </div>
+
+        `).join("");
+
+    }
+
+
+    document
+      .getElementById("bookingsScreen")
+      .classList.remove("hidden");
+
+  }
+
+
+  function showProfile() {
+
+    hideAll();
+
+    const user = getUser();
+
+
+    if (user) {
+
+      document
+        .getElementById("profileName")
+        .textContent = user.name;
+
+    }
+
+
+    document
+      .getElementById("profileScreen")
+      .classList.remove("hidden");
+
+  }
+
+
+  function contactAdmin() {
+
+    alert(
+      "📞 Fungsi Hubungi Admin akan disambungkan kemudian."
+    );
+
+  }
+
+
+  function hideAll() {
+
+    document
+      .getElementById("registerScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("mainScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("bookingScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("summaryScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("bookingsScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("profileScreen")
+      .classList.add("hidden");
+
+  }
+
+
+  window.onload = function() {
+
+    const user = getUser();
+
+    if (user) {
+
+      showMain();
+
+    } else {
+
+      document
+        .getElementById("registerScreen")
+        .classList.remove("hidden");
+
+    }
+
+  };
+
+</script>
+
+</body>
+</html>
