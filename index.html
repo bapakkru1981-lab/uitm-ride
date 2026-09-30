@@ -1006,24 +1006,83 @@
      TELEGRAM
      ===================================================== */
 
-  let telegramUser = null;
+  const BACKEND_URL = "https://domestic-condo-its-groups.trycloudflare.com";
 
-  try {
-    if (
-      window.Telegram &&
-      Telegram.WebApp &&
-      Telegram.WebApp.initDataUnsafe &&
-      Telegram.WebApp.initDataUnsafe.user
-    ) {
-      telegramUser = Telegram.WebApp.initDataUnsafe.user;
-      Telegram.WebApp.ready();
-    }
-  } catch (e) {
-    telegramUser = null;
+let telegramUser = null;
+let telegramInitData = "";
+
+try {
+  if (window.Telegram && Telegram.WebApp) {
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand();
+
+    telegramInitData = Telegram.WebApp.initData || "";
+    telegramUser = Telegram.WebApp.initDataUnsafe?.user || null;
+  }
+} catch (e) {
+  console.error("Telegram WebApp error:", e);
+}
+
+async function authenticateTelegram(name) {
+  if (!telegramInitData) {
+    throw new Error(
+      language === "ms"
+        ? "Sila buka UiTM RIDE melalui Telegram."
+        : "Please open UiTM RIDE through Telegram."
+    );
   }
 
+  const response = await fetch(
+    `${BACKEND_URL}/api/auth/telegram`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        initData: telegramInitData,
+        name: name
+      })
+    }
+  );
 
-  function getTelegramId() {
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data.error ||
+      (language === "ms"
+        ? "Pengesahan Telegram gagal."
+        : "Telegram authentication failed.")
+    );
+  }
+
+  const user = data.user || data;
+
+  currentUser = {
+    id: String(
+      user.id ||
+      user.user_id ||
+      user.telegram_id ||
+      telegramUser?.id ||
+      ""
+    ),
+    name: user.name || user.full_name || name,
+    roles: user.roles || data.roles || ["passenger"],
+    driverApproved: Boolean(
+      user.driverApproved ??
+      user.driver_approved ??
+      false
+    )
+  };
+
+  localStorage.setItem(
+    "uitmRideUser",
+    JSON.stringify(currentUser)
+  );
+
+  return currentUser;
+}
 
     if (telegramUser && telegramUser.id) {
       return String(telegramUser.id);
@@ -1192,42 +1251,49 @@
   );
 
 
-  function registerUser() {
+  async function registerUser() {
+  const name = $("nameInput").value.trim();
 
-    const name =
-      $("nameInput").value.trim();
-
-    if (!name) {
-
-      alert(
-        language === "ms"
-          ? "Sila masukkan nama."
-          : "Please enter your name."
-      );
-
-      return;
-    }
-
-    currentUser = {
-
-      id: getTelegramId(),
-
-      name: name,
-
-      roles: ["passenger"],
-
-      driverApproved: false
-
-    };
-
-    localStorage.setItem(
-      "uitmRideUser",
-      JSON.stringify(currentUser)
+  if (!name) {
+    alert(
+      language === "ms"
+        ? "Sila masukkan nama."
+        : "Please enter your name."
     );
+    return;
+  }
+
+  const btn = $("registerBtn");
+  const oldText = btn.textContent;
+
+  btn.disabled = true;
+  btn.textContent =
+    language === "ms"
+      ? "⏳ Mengesahkan..."
+      : "⏳ Verifying...";
+
+  try {
+    await authenticateTelegram(name);
 
     showMain();
 
+  } catch (error) {
+    console.error("Registration error:", error);
+
+    alert(
+      error.message ||
+      (
+        language === "ms"
+          ? "Tidak dapat mengesahkan Telegram."
+          : "Unable to verify Telegram."
+      )
+    );
+
+  } finally {
+    btn.disabled = false;
+    btn.textContent = oldText;
   }
+}
 
 
   function showMain() {
