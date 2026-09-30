@@ -5,623 +5,951 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UiTM RIDE</title>
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
   <style>
     * {
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
     }
 
     body {
       margin: 0;
-      background: #f4f4f4;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
       color: #222;
     }
 
-    .container {
+    .app {
       max-width: 520px;
       margin: auto;
-      padding: 20px;
+      min-height: 100vh;
+      background: white;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #f97316, #111827);
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
     }
 
     .logo {
-      text-align: center;
-      font-size: 32px;
+      font-size: 30px;
       font-weight: bold;
-      margin-top: 10px;
     }
 
     .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 25px;
+      margin-top: 5px;
+      font-size: 14px;
+      opacity: .9;
+    }
+
+    .content {
+      padding: 18px;
     }
 
     .card {
       background: white;
-      padding: 20px;
-      border-radius: 16px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid #e5e7eb;
+      border-radius: 15px;
+      padding: 16px;
+      margin-bottom: 14px;
     }
 
-    h2 {
-      margin-top: 0;
+    .language-box {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .lang-btn {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .lang-btn.active {
+      background: #f97316;
+      color: white;
+      border-color: #f97316;
     }
 
     label {
       display: block;
       font-weight: bold;
-      margin-top: 15px;
-      margin-bottom: 6px;
+      margin: 12px 0 6px;
+      font-size: 14px;
     }
 
-    input,
-    textarea,
-    select {
+    input, select, textarea {
       width: 100%;
-      padding: 13px;
-      border: 1px solid #ccc;
+      padding: 12px;
+      border: 1px solid #d1d5db;
       border-radius: 10px;
       font-size: 16px;
       background: white;
     }
 
     textarea {
-      min-height: 80px;
+      min-height: 70px;
       resize: vertical;
     }
 
     button {
-      width: 100%;
       border: none;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      margin-top: 15px;
+      border-radius: 10px;
+      padding: 13px 15px;
+      font-size: 15px;
       cursor: pointer;
+      font-weight: bold;
     }
 
     .primary {
-      background: #ff7a00;
+      background: #f97316;
       color: white;
+      width: 100%;
+      margin-top: 14px;
     }
 
-    .secondary {
-      background: #eeeeee;
-      color: #222;
+    .dark {
+      background: #111827;
+      color: white;
+      width: 100%;
+      margin-top: 10px;
     }
 
     .danger {
-      background: #d93025;
+      background: #dc2626;
       color: white;
-    }
-
-    .menu-button {
-      background: #ff7a00;
-      color: white;
+      width: 100%;
       margin-top: 10px;
     }
 
-    .hidden {
-      display: none;
-    }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 8px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    .summary-row:last-child {
-      border-bottom: none;
-    }
-
-    .summary-row span {
-      text-align: right;
-      word-break: break-word;
-    }
-
-    .total {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    .notice {
-      background: #fff3cd;
-      border: 1px solid #ffe69c;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 12px;
-      font-size: 14px;
+    .secondary {
+      background: #e5e7eb;
+      color: #111827;
     }
 
     .success {
-      background: #d1e7dd;
-      border: 1px solid #a3cfbb;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 12px;
+      background: #16a34a;
+      color: white;
     }
 
-    .booking-item {
-      border: 1px solid #ddd;
-      padding: 14px;
-      border-radius: 12px;
+    .warning {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .menu-btn {
+      width: 100%;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      text-align: left;
       margin-bottom: 10px;
-      background: #fafafa;
+      padding: 16px;
+    }
+
+    .menu-btn:hover {
+      background: #f9fafb;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .welcome {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .status {
+      padding: 8px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .status.available {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status.trip {
+      background: #ffedd5;
+      color: #9a3412;
+    }
+
+    .status.offline {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .booking {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .booking-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 5px 0;
+    }
+
+    .row span:first-child {
+      color: #6b7280;
+    }
+
+    .price {
+      font-size: 21px;
+      font-weight: bold;
     }
 
     .small {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .role {
+      display: inline-block;
+      background: #fff7ed;
+      color: #c2410c;
+      padding: 7px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin: 3px;
+    }
+
+    .admin-card {
+      border-left: 4px solid #111827;
+    }
+
+    .driver-card {
+      border-left: 4px solid #f97316;
+    }
+
+    .passenger-card {
+      border-left: 4px solid #2563eb;
+    }
+
+    .divider {
+      border: 0;
+      border-top: 1px solid #e5e7eb;
+      margin: 18px 0;
+    }
+
+    .notice {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      border-radius: 10px;
+      padding: 12px;
       font-size: 13px;
-      color: #666;
+      margin-bottom: 12px;
     }
 
-    .price-box {
-      background: #f7f7f7;
-      border-radius: 12px;
-      padding: 15px;
-      margin-top: 15px;
-    }
-
-    .language-box {
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 1px solid #eee;
+    .bottom {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      padding-bottom: 20px;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-  <!-- REGISTRATION -->
-  <div id="registrationScreen">
-
+  <div class="header">
     <div class="logo">🚕 UiTM RIDE</div>
-
-    <div class="subtitle" data-i18n="registrationSubtitle">
+    <div class="subtitle" id="headerSubtitle">
       Prototype Sistem Perjalanan UiTM
     </div>
-
-    <div class="card">
-
-      <h2 data-i18n="registerTitle">👤 Daftar Pengguna</h2>
-
-      <p data-i18n="registerDescription">
-        Sila daftarkan nama anda sebelum membuat tempahan.
-      </p>
-
-      <label data-i18n="nameLabel">Nama</label>
-
-      <input
-        type="text"
-        id="registerName"
-        data-placeholder="namePlaceholder"
-        placeholder="Masukkan nama anda"
-      >
-
-      <div class="notice" data-i18n="telegramNotice">
-        🔐 Akaun Telegram anda akan dikenal pasti secara automatik.
-        Telegram User ID tidak dipaparkan kepada pengguna lain.
-      </div>
-
-      <button
-        class="primary"
-        id="registerButton"
-        type="button"
-        data-i18n="registerButton">
-        📝 Daftar
-      </button>
-
-    </div>
   </div>
 
+  <div class="content">
 
-  <!-- MAIN MENU -->
-  <div id="mainScreen" class="hidden">
+    <!-- =========================
+         REGISTRATION
+    ========================== -->
 
-    <div class="logo">🚕 UiTM RIDE</div>
+    <section id="registerPage">
 
-    <div class="subtitle" data-i18n="mainSubtitle">
-      Sistem Tempahan Perjalanan UiTM
-    </div>
+      <div class="card">
 
-    <div class="card">
+        <h2 id="registerTitle">👤 Daftar Pengguna</h2>
 
-      <h2 id="welcomeText">
-        👋 Selamat datang
-      </h2>
+        <div class="language-box">
+          <button class="lang-btn" id="registerBm">🇲🇾 Bahasa Melayu</button>
+          <button class="lang-btn" id="registerEn">🇬🇧 English</button>
+        </div>
 
-      <button
-        class="menu-button"
-        id="newBookingButton"
-        type="button"
-        data-i18n="newBookingButton">
-        🚕 Tempah Perjalanan
-      </button>
+        <label id="nameLabel">Nama</label>
+        <input
+          id="nameInput"
+          type="text"
+          placeholder="Masukkan nama anda"
+        >
 
-      <button
-        class="secondary"
-        id="myBookingsButton"
-        type="button"
-        data-i18n="myBookingsButton">
-        📋 Tempahan Saya
-      </button>
-
-      <button
-        class="secondary"
-        id="profileButton"
-        type="button"
-        data-i18n="profileButton">
-        👤 Profil Saya
-      </button>
-
-      <button
-        class="secondary"
-        id="adminButton"
-        type="button"
-        data-i18n="adminButton">
-        📞 Hubungi Admin
-      </button>
-
-    </div>
-  </div>
-
-
-  <!-- BOOKING FORM -->
-  <div id="bookingScreen" class="hidden">
-
-    <div class="card">
-
-      <h2 data-i18n="bookingTitle">
-        🚕 Tempah Perjalanan
-      </h2>
-
-      <label data-i18n="pickupLabel">📍 Pickup</label>
-
-      <input
-        type="text"
-        id="pickup"
-        data-placeholder="pickupPlaceholder"
-        placeholder="Contoh: UiTM Shah Alam"
-      >
-
-      <label data-i18n="pickupNoteLabel">
-        📝 Nota Pickup
-      </label>
-
-      <textarea
-        id="pickupNote"
-        data-placeholder="pickupNotePlaceholder"
-        placeholder="Contoh: Kolej Mawar, pintu belakang"
-      ></textarea>
-
-      <label data-i18n="dropoffLabel">🏁 Drop-off</label>
-
-      <input
-        type="text"
-        id="dropoff"
-        data-placeholder="dropoffPlaceholder"
-        placeholder="Contoh: Setia Alam"
-      >
-
-      <label data-i18n="dropoffNoteLabel">
-        📝 Nota Drop-off
-      </label>
-
-      <textarea
-        id="dropoffNote"
-        data-placeholder="dropoffNotePlaceholder"
-        placeholder="Contoh: Depan masjid / blok / kedai"
-      ></textarea>
-
-      <label data-i18n="paxLabel">
-        👥 Bilangan Penumpang
-      </label>
-
-      <select id="pax">
-        <option value="1" data-i18n="pax1">1 penumpang</option>
-        <option value="2" data-i18n="pax2">2 penumpang</option>
-        <option value="3" data-i18n="pax3">3 penumpang</option>
-        <option value="4" data-i18n="pax4">4 penumpang</option>
-        <option value="5" data-i18n="pax5">5 penumpang</option>
-        <option value="6" data-i18n="pax6">6 penumpang</option>
-      </select>
-
-      <label data-i18n="dateLabel">📅 Tarikh</label>
-
-      <input
-        type="date"
-        id="bookingDate"
-      >
-
-      <label data-i18n="timeLabel">⏰ Masa</label>
-
-      <input
-        type="time"
-        id="bookingTime"
-      >
-
-      <label data-i18n="vehicleLabel">
-        🚗 Jenis Kenderaan
-      </label>
-
-      <select id="vehicle">
-        <option value="sedan" data-i18n="sedan">
-          Sedan
-        </option>
-
-        <option value="6seater" data-i18n="sixSeater">
-          6-Seater
-        </option>
-      </select>
-
-      <div class="notice" data-i18n="distanceNotice">
-        💡 Jarak perjalanan tidak dipaparkan kepada penumpang.
-      </div>
-
-      <button
-        class="primary"
-        id="continueBookingButton"
-        type="button"
-        data-i18n="continueButton">
-        ➡️ Teruskan
-      </button>
-
-      <button
-        class="secondary"
-        id="backToMainButton"
-        type="button"
-        data-i18n="backButton">
-        ↩️ Kembali
-      </button>
-
-    </div>
-  </div>
-
-
-  <!-- BOOKING SUMMARY -->
-  <div id="summaryScreen" class="hidden">
-
-    <div class="card">
-
-      <h2 data-i18n="bookingSummaryTitle">
-        🚕 TEMPAHAN PERJALANAN
-      </h2>
-
-      <div class="summary-row">
-        <strong data-i18n="pickupText">📍 Pickup</strong>
-        <span id="summaryPickup"></span>
-      </div>
-
-      <div class="summary-row">
-        <strong data-i18n="pickupNoteText">📝 Nota Pickup</strong>
-        <span id="summaryPickupNote"></span>
-      </div>
-
-      <div class="summary-row">
-        <strong data-i18n="dropoffText">🏁 Drop-off</strong>
-        <span id="summaryDropoff"></span>
-      </div>
-
-      <div class="summary-row">
-        <strong data-i18n="dropoffNoteText">📝 Nota Drop-off</strong>
-        <span id="summaryDropoffNote"></span>
-      </div>
-
-      <div class="summary-row">
-        <strong data-i18n="paxText">👥 Pax</strong>
-        <span id="summaryPax"></span>
-      </div>
-
-      <div class="summary-row">
-        <strong data-i18n="dateText">📅 Tarikh</strong>
-        <span id="summaryDate"></span>
-      </div>
-
-      <div class="summary-row">
-        <strong data-i18n="timeText">⏰ Masa</strong>
-        <span id="summaryTime"></span>
-      </div>
-
-      <div class="summary-row">
-        <strong data-i18n="vehicleText">🚗 Kenderaan</strong>
-        <span id="summaryVehicle"></span>
-      </div>
-
-
-      <div class="price-box">
-
-        <div class="summary-row">
-          <strong data-i18n="fareText">
-            💰 Tambang
-          </strong>
-
-          <span id="summaryFare">
-            RM0
+        <div class="notice" style="margin-top:15px;">
+          <span id="telegramInfo">
+            Telegram Account akan dikenal pasti secara automatik.
           </span>
         </div>
 
-        <div class="summary-row">
-          <strong data-i18n="tollText">
-            🛣️ Tol
-          </strong>
-
-          <span id="summaryToll">
-            RM0
-          </span>
-        </div>
-
-        <div class="summary-row total">
-          <strong data-i18n="totalText">
-            💵 Jumlah
-          </strong>
-
-          <span id="summaryTotal">
-            RM0
-          </span>
-        </div>
+        <button class="primary" id="registerBtn">
+          📝 Daftar
+        </button>
 
       </div>
 
+    </section>
 
-      <div class="notice" data-i18n="internalNotice">
-        🔐 Caj tambahan dikira secara dalaman oleh sistem.
+
+    <!-- =========================
+         MAIN MENU
+    ========================== -->
+
+    <section id="mainPage" class="hidden">
+
+      <div class="welcome" id="welcomeText"></div>
+
+      <div class="card">
+        <div id="roleTitle">Peranan Anda</div>
+        <div id="roleList"></div>
       </div>
 
-
-      <button
-        class="primary"
-        id="confirmBookingButton"
-        type="button"
-        data-i18n="confirmButton">
-        🚕 Tempah Sekarang
+      <button class="menu-btn" id="passengerMenu">
+        👤 <span data-ms="Penumpang" data-en="Passenger">Penumpang</span>
       </button>
 
-      <button
-        class="secondary"
-        id="editBookingButton"
-        type="button"
-        data-i18n="editButton">
-        ✏️ Edit
+      <button class="menu-btn" id="driverMenu">
+        🚗 <span data-ms="Pemandu" data-en="Driver">Pemandu</span>
       </button>
 
-      <button
-        class="danger"
-        id="cancelSummaryButton"
-        type="button"
-        data-i18n="cancelButton">
-        ❌ Batal
+      <button class="menu-btn" id="adminMenu">
+        🛡️ <span data-ms="Admin" data-en="Admin">Admin</span>
       </button>
 
-    </div>
-  </div>
-
-
-  <!-- MY BOOKINGS -->
-  <div id="bookingsScreen" class="hidden">
-
-    <div class="card">
-
-      <h2 data-i18n="myBookingsTitle">
-        📋 Tempahan Saya
-      </h2>
-
-      <div id="bookingsList"></div>
-
-      <button
-        class="secondary"
-        id="backFromBookingsButton"
-        type="button"
-        data-i18n="backButton">
-        ↩️ Kembali
+      <button class="menu-btn" id="profileMenu">
+        👤 <span data-ms="Profil Saya" data-en="My Profile">Profil Saya</span>
       </button>
 
-    </div>
-  </div>
+      <button class="menu-btn" id="applyDriverMenu">
+        ➕ <span
+          data-ms="Daftar Sebagai Pemandu"
+          data-en="Register as Driver"
+        >Daftar Sebagai Pemandu</span>
+      </button>
+
+    </section>
 
 
-  <!-- PROFILE -->
-  <div id="profileScreen" class="hidden">
+    <!-- =========================
+         PASSENGER HOME
+    ========================== -->
 
-    <div class="card">
+    <section id="passengerPage" class="hidden">
 
-      <h2 data-i18n="profileTitle">
-        👤 Profil Saya
-      </h2>
+      <div class="card passenger-card">
+        <h2>👤 <span data-ms="Penumpang" data-en="Passenger">Penumpang</span></h2>
 
-      <div class="summary-row">
-        <strong data-i18n="nameText">Nama</strong>
-        <span id="profileName"></span>
+        <button class="primary" id="bookTripBtn">
+          🚕 <span
+            data-ms="Tempah Perjalanan"
+            data-en="Book a Ride"
+          >Tempah Perjalanan</span>
+        </button>
+
+        <button class="dark" id="myBookingsBtn">
+          📋 <span
+            data-ms="Tempahan Saya"
+            data-en="My Bookings"
+          >Tempahan Saya</span>
+        </button>
+
+        <button class="secondary" style="width:100%;margin-top:10px;" id="passengerBack">
+          ← <span data-ms="Kembali" data-en="Back">Kembali</span>
+        </button>
       </div>
 
-      <div class="summary-row">
-        <strong data-i18n="statusText">Status</strong>
-        <span data-i18n="activeText">Aktif</span>
-      </div>
-
-      <div class="summary-row">
-        <strong>Telegram</strong>
-        <span data-i18n="verifiedText">
-          ✅ Disahkan
-        </span>
-      </div>
-
-      <div class="notice" data-i18n="userIdNotice">
-        🔐 Telegram User ID digunakan secara dalaman
-        untuk mengenal pasti akaun anda.
-      </div>
+    </section>
 
 
-      <!-- LANGUAGE -->
-      <div class="language-box">
+    <!-- =========================
+         BOOKING FORM
+    ========================== -->
 
-        <label data-i18n="languageLabel">
-          🌐 Bahasa / Language
+    <section id="bookingPage" class="hidden">
+
+      <div class="card">
+
+        <h2>🚕 <span data-ms="Tempah Perjalanan" data-en="Book a Ride">
+          Tempah Perjalanan
+        </span></h2>
+
+        <label data-ms="Pickup" data-en="Pickup">Pickup</label>
+        <input id="pickup" placeholder="Contoh: UiTM Shah Alam">
+
+        <label data-ms="Nota Pickup" data-en="Pickup Note">
+          Nota Pickup
+        </label>
+        <textarea
+          id="pickupNote"
+          placeholder="Contoh: Hadapan kolej..."
+        ></textarea>
+
+        <label data-ms="Drop-off" data-en="Drop-off">
+          Drop-off
+        </label>
+        <input id="dropoff" placeholder="Contoh: Setia Alam">
+
+        <label data-ms="Nota Drop-off" data-en="Drop-off Note">
+          Nota Drop-off
+        </label>
+        <textarea
+          id="dropoffNote"
+          placeholder="Nota tambahan..."
+        ></textarea>
+
+        <label data-ms="Bilangan Penumpang" data-en="Passengers">
+          Bilangan Penumpang
         </label>
 
-        <select id="languageSelect">
-
-          <option value="ms">
-            🇲🇾 Bahasa Melayu
-          </option>
-
-          <option value="en">
-            🇬🇧 English
-          </option>
-
+        <select id="pax">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
         </select>
 
+        <label data-ms="Tarikh" data-en="Date">Tarikh</label>
+        <input id="date" type="date">
+
+        <label data-ms="Masa" data-en="Time">Masa</label>
+        <input id="time" type="time">
+
+        <label data-ms="Kenderaan" data-en="Vehicle">
+          Kenderaan
+        </label>
+
+        <select id="vehicle">
+          <option value="sedan">🚗 Sedan</option>
+          <option value="6seater">🚐 6-Seater</option>
+        </select>
+
+        <button class="primary" id="calculateBtn">
+          ➡️ <span
+            data-ms="Teruskan"
+            data-en="Continue"
+          >Teruskan</span>
+        </button>
+
+        <button class="secondary" style="width:100%;margin-top:10px;" id="bookingBack">
+          ← <span data-ms="Kembali" data-en="Back">Kembali</span>
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         BOOKING SUMMARY
+    ========================== -->
+
+    <section id="summaryPage" class="hidden">
+
+      <div class="card">
+
+        <h2>🚕 <span
+          data-ms="Tempahan Perjalanan"
+          data-en="Ride Booking"
+        >Tempahan Perjalanan</span></h2>
+
+        <div class="row">
+          <span>📍 Pickup</span>
+          <strong id="summaryPickup"></strong>
+        </div>
+
+        <div class="row">
+          <span>📝 Nota Pickup</span>
+          <strong id="summaryPickupNote"></strong>
+        </div>
+
+        <div class="row">
+          <span>🏁 Drop-off</span>
+          <strong id="summaryDropoff"></strong>
+        </div>
+
+        <div class="row">
+          <span>📝 Nota Drop-off</span>
+          <strong id="summaryDropoffNote"></strong>
+        </div>
+
+        <div class="row">
+          <span>👥 Pax</span>
+          <strong id="summaryPax"></strong>
+        </div>
+
+        <div class="row">
+          <span>📅 Tarikh</span>
+          <strong id="summaryDate"></strong>
+        </div>
+
+        <div class="row">
+          <span>⏰ Masa</span>
+          <strong id="summaryTime"></strong>
+        </div>
+
+        <div class="row">
+          <span>🚗 Kenderaan</span>
+          <strong id="summaryVehicle"></strong>
+        </div>
+
+        <hr class="divider">
+
+        <div class="row">
+          <span>💰 Tambang</span>
+          <strong class="price" id="summaryFare"></strong>
+        </div>
+
+        <div class="row">
+          <span>🛣️ Tol</span>
+          <strong id="summaryToll">RM0.00</strong>
+        </div>
+
+        <div class="row">
+          <span>💵 Jumlah</span>
+          <strong class="price" id="summaryTotal">RM0.00</strong>
+        </div>
+
+        <div class="notice" style="margin-top:15px;">
+          💡 <span
+            data-ms="Caj kawasan, peak hour, 6-seater dan malam telah dimasukkan dalam Tambang."
+            data-en="Area, peak hour, 6-seater and night charges are already included in the Fare."
+          >
+            Caj kawasan, peak hour, 6-seater dan malam telah dimasukkan dalam Tambang.
+          </span>
+        </div>
+
+        <button class="primary" id="confirmBookingBtn">
+          🚕 <span
+            data-ms="Tempah Sekarang"
+            data-en="Book Now"
+          >Tempah Sekarang</span>
+        </button>
+
+        <button class="secondary" style="width:100%;margin-top:10px;" id="editBookingBtn">
+          ✏️ <span data-ms="Edit" data-en="Edit">Edit</span>
+        </button>
+
+        <button class="danger" id="cancelSummaryBtn">
+          ❌ <span data-ms="Batal" data-en="Cancel">Batal</span>
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         MY BOOKINGS
+    ========================== -->
+
+    <section id="bookingsPage" class="hidden">
+
+      <div class="card">
+        <h2>📋 <span
+          data-ms="Tempahan Saya"
+          data-en="My Bookings"
+        >Tempahan Saya</span></h2>
+
+        <div id="bookingList"></div>
+
+        <button class="secondary" style="width:100%;" id="bookingsBack">
+          ← <span data-ms="Kembali" data-en="Back">Kembali</span>
+        </button>
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         DRIVER HOME
+    ========================== -->
+
+    <section id="driverPage" class="hidden">
+
+      <div class="card driver-card">
+
+        <h2>🚗 <span data-ms="Pemandu" data-en="Driver">Pemandu</span></h2>
+
+        <div id="driverStatus" class="status available">
+          🟢 Available
+        </div>
+
+        <button class="primary" id="toggleDriverStatus">
+          🔄 Tukar Status
+        </button>
+
       </div>
 
 
-      <button
-        class="secondary"
-        id="backFromProfileButton"
-        type="button"
-        data-i18n="backButton">
-        ↩️ Kembali
-      </button>
+      <div class="card">
 
-    </div>
-  </div>
+        <h3>📋 Tempahan Menunggu</h3>
 
+        <div id="driverBookings"></div>
 
-  <!-- ADMIN CONTACT -->
-  <div id="adminScreen" class="hidden">
-
-    <div class="card">
-
-      <h2 data-i18n="adminTitle">
-        📞 Hubungi Admin
-      </h2>
-
-      <p data-i18n="adminDescription">
-        Jika anda mempunyai masalah berkaitan tempahan,
-        sila hubungi admin UiTM RIDE melalui Telegram.
-      </p>
-
-      <div class="notice" data-i18n="adminNotice">
-        ℹ️ Fungsi penghantaran mesej kepada admin akan
-        disambungkan kemudian.
       </div>
 
-      <button
-        class="secondary"
-        id="backFromAdminButton"
-        type="button"
-        data-i18n="backButton">
-        ↩️ Kembali
+
+      <div class="card">
+
+        <h3>🚘 Perjalanan Semasa</h3>
+
+        <div id="activeTrip"></div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>💰 Pendapatan Saya</h3>
+
+        <div class="row">
+          <span>Trip selesai</span>
+          <strong id="completedTrips">0</strong>
+        </div>
+
+        <div class="row">
+          <span>Pendapatan tambang</span>
+          <strong id="driverIncome">RM0.00</strong>
+        </div>
+
+        <div class="row">
+          <span>Pampasan</span>
+          <strong id="driverCompensation">RM0.00</strong>
+        </div>
+
+        <div class="row">
+          <span>Jumlah</span>
+          <strong class="price" id="driverTotalIncome">RM0.00</strong>
+        </div>
+
+      </div>
+
+      <button class="secondary" style="width:100%;" id="driverBack">
+        ← Kembali
       </button>
 
+    </section>
+
+
+    <!-- =========================
+         ARRIVED / TOLL
+    ========================== -->
+
+    <section id="arrivedPage" class="hidden">
+
+      <div class="card driver-card">
+
+        <h2>🏁 ARRIVED</h2>
+
+        <p>Anda telah sampai ke lokasi drop-off.</p>
+
+        <div class="row">
+          <span>📍 Drop-off</span>
+          <strong id="arrivedDropoff"></strong>
+        </div>
+
+        <hr class="divider">
+
+        <div class="row">
+          <span>💰 Tambang</span>
+          <strong class="price" id="arrivedFare"></strong>
+        </div>
+
+        <div class="notice">
+          🔒 Tambang asal tidak boleh diubah oleh pemandu.
+          <br><br>
+          Pemandu hanya boleh memasukkan jumlah tol.
+        </div>
+
+        <button class="success" style="width:100%;" id="noTollBtn">
+          ❌ Tiada Tol — RM0
+        </button>
+
+        <label>🛣️ Caj Tol</label>
+        <input
+          id="tollInput"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Contoh: 3.00"
+        >
+
+        <button class="primary" id="confirmTollBtn">
+          💵 Sahkan Jumlah Akhir
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         FINAL TRIP
+    ========================== -->
+
+    <section id="finalTripPage" class="hidden">
+
+      <div class="card">
+
+        <h2>✅ Perjalanan Selesai</h2>
+
+        <div class="row">
+          <span>💰 Tambang</span>
+          <strong id="finalFare"></strong>
+        </div>
+
+        <div class="row">
+          <span>🛣️ Tol</span>
+          <strong id="finalToll"></strong>
+        </div>
+
+        <hr class="divider">
+
+        <div class="row">
+          <span>💵 Jumlah Akhir</span>
+          <strong class="price" id="finalTotal"></strong>
+        </div>
+
+        <div class="notice">
+          Penumpang kini boleh melihat jumlah akhir termasuk tol.
+        </div>
+
+        <button class="primary" id="finishTripBtn">
+          🏁 Selesai Perjalanan
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         DRIVER REGISTRATION
+    ========================== -->
+
+    <section id="driverRegisterPage" class="hidden">
+
+      <div class="card">
+
+        <h2>🚗 Daftar Sebagai Pemandu</h2>
+
+        <div class="notice">
+          Status awal: Menunggu Pengesahan Admin.
+        </div>
+
+        <label>Nama seperti IC</label>
+        <input id="driverName">
+
+        <label>No. IC</label>
+        <input id="driverIc" placeholder="Prototaip sahaja">
+
+        <label>No. Telefon</label>
+        <input id="driverPhone">
+
+        <label>Jenis Kenderaan</label>
+        <select id="driverVehicleType">
+          <option value="sedan">🚗 Sedan</option>
+          <option value="6seater">🚐 6-Seater</option>
+        </select>
+
+        <label>Model Kenderaan</label>
+        <input id="driverVehicleModel">
+
+        <label>No. Pendaftaran</label>
+        <input id="driverPlate">
+
+        <button class="primary" id="submitDriverBtn">
+          📝 Hantar Permohonan
+        </button>
+
+        <button class="secondary" style="width:100%;margin-top:10px;" id="driverRegisterBack">
+          ← Kembali
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         PROFILE
+    ========================== -->
+
+    <section id="profilePage" class="hidden">
+
+      <div class="card">
+
+        <h2>👤 <span
+          data-ms="Profil Saya"
+          data-en="My Profile"
+        >Profil Saya</span></h2>
+
+        <div class="row">
+          <span>Nama</span>
+          <strong id="profileName"></strong>
+        </div>
+
+        <div class="row">
+          <span>Telegram</span>
+          <strong>✓ Verified</strong>
+        </div>
+
+        <hr class="divider">
+
+        <h3>🌐 Bahasa / Language</h3>
+
+        <div class="language-box">
+          <button class="lang-btn" id="profileBm">
+            🇲🇾 Bahasa Melayu
+          </button>
+
+          <button class="lang-btn" id="profileEn">
+            🇬🇧 English
+          </button>
+        </div>
+
+        <hr class="divider">
+
+        <h3>👥 Peranan</h3>
+        <div id="profileRoles"></div>
+
+        <button class="secondary" style="width:100%;margin-top:15px;" id="profileBack">
+          ← Kembali
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         ADMIN
+    ========================== -->
+
+    <section id="adminPage" class="hidden">
+
+      <div class="card admin-card">
+
+        <h2>🛡️ Admin Panel</h2>
+
+        <div class="notice">
+          ⚠️ Prototaip Admin. Dalam sistem sebenar, akses Admin akan
+          dilindungi oleh backend dan role-based authorization.
+        </div>
+
+        <h3>👥 Statistik</h3>
+
+        <div class="row">
+          <span>Pengguna</span>
+          <strong id="adminUsers">0</strong>
+        </div>
+
+        <div class="row">
+          <span>Pemandu</span>
+          <strong id="adminDrivers">0</strong>
+        </div>
+
+        <div class="row">
+          <span>Tempahan</span>
+          <strong id="adminBookings">0</strong>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>🚗 Permohonan Pemandu</h3>
+
+        <div id="adminDriverApplications"></div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>📋 Semua Tempahan</h3>
+
+        <div id="adminBookingList"></div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>⚙️ Tetapan Tambang</h3>
+
+        <label>Tambang asas 3 km</label>
+        <input id="adminBaseFare" type="number" step="0.01">
+
+        <label>Kadar tambahan ≤ 7 km</label>
+        <input id="adminRate1" type="number" step="0.01">
+
+        <label>Kadar tambahan > 7 km / km</label>
+        <input id="adminRate2" type="number" step="0.01">
+
+        <label>Caj 6-Seater</label>
+        <input id="admin6seater" type="number" step="0.01">
+
+        <label>Caj Peak Hour</label>
+        <input id="adminPeak" type="number" step="0.01">
+
+        <label>Caj Malam</label>
+        <input id="adminNight" type="number" step="0.01">
+
+        <label>Caj Kawasan</label>
+        <input id="adminArea" type="number" step="0.01">
+
+        <button class="primary" id="saveFareSettings">
+          💾 Simpan Tetapan
+        </button>
+
+      </div>
+
+
+      <button class="secondary" style="width:100%;" id="adminBack">
+        ← Kembali
+      </button>
+
+    </section>
+
+
+    <div class="bottom">
+      UiTM RIDE Prototype
     </div>
+
   </div>
 
 </div>
@@ -629,996 +957,768 @@
 
 <script>
 
-  /*
-   * ==========================================
-   * TELEGRAM
-   * ==========================================
-   */
+  /* =====================================================
+     UI TM RIDE PROTOTYPE
+     ===================================================== */
 
-  const tg =
-    window.Telegram &&
-    window.Telegram.WebApp
-      ? window.Telegram.WebApp
-      : null;
+  const $ = id => document.getElementById(id);
 
-  if (tg) {
-    tg.ready();
-    tg.expand();
-  }
+  let language = localStorage.getItem("uitmRideLanguage") || "ms";
 
+  let currentUser = JSON.parse(
+    localStorage.getItem("uitmRideUser") || "null"
+  );
 
-  /*
-   * ==========================================
-   * TELEGRAM USER ID
-   * ==========================================
-   */
+  let bookings = JSON.parse(
+    localStorage.getItem("uitmRideBookings") || "[]"
+  );
 
-  let telegramUserId = "prototype-user";
+  let driverApplications = JSON.parse(
+    localStorage.getItem("uitmRideDriverApplications") || "[]"
+  );
 
-  if (
-    tg &&
-    tg.initDataUnsafe &&
-    tg.initDataUnsafe.user &&
-    tg.initDataUnsafe.user.id
-  ) {
+  let driverStatus =
+    localStorage.getItem("uitmRideDriverStatus") || "available";
 
-    telegramUserId =
-      String(tg.initDataUnsafe.user.id);
+  let activeTrip =
+    JSON.parse(localStorage.getItem("uitmRideActiveTrip") || "null");
 
-  }
+  let income =
+    JSON.parse(localStorage.getItem("uitmRideIncome") || '{"trips":0,"fare":0,"compensation":0}');
 
 
-  /*
-   * ==========================================
-   * LANGUAGE
-   * ==========================================
-   */
+  let fareSettings =
+    JSON.parse(
+      localStorage.getItem("uitmRideFareSettings") ||
+      JSON.stringify({
+        baseFare: 5,
+        rate1: 1,
+        rate2: 0.80,
+        sixSeater: 2,
+        peak: 2,
+        night: 2,
+        area: 1
+      })
+    );
 
-  let currentLanguage =
-    localStorage.getItem("uitmRideLanguage") || "ms";
 
+  /* =====================================================
+     TELEGRAM
+     ===================================================== */
 
-  const translations = {
+  let telegramUser = null;
 
-    ms: {
-
-      registrationSubtitle:
-        "Prototype Sistem Perjalanan UiTM",
-
-      registerTitle:
-        "👤 Daftar Pengguna",
-
-      registerDescription:
-        "Sila daftarkan nama anda sebelum membuat tempahan.",
-
-      nameLabel:
-        "Nama",
-
-      namePlaceholder:
-        "Masukkan nama anda",
-
-      telegramNotice:
-        "🔐 Akaun Telegram anda akan dikenal pasti secara automatik. Telegram User ID tidak dipaparkan kepada pengguna lain.",
-
-      registerButton:
-        "📝 Daftar",
-
-      mainSubtitle:
-        "Sistem Tempahan Perjalanan UiTM",
-
-      newBookingButton:
-        "🚕 Tempah Perjalanan",
-
-      myBookingsButton:
-        "📋 Tempahan Saya",
-
-      profileButton:
-        "👤 Profil Saya",
-
-      adminButton:
-        "📞 Hubungi Admin",
-
-      bookingTitle:
-        "🚕 Tempah Perjalanan",
-
-      pickupLabel:
-        "📍 Pickup",
-
-      pickupPlaceholder:
-        "Contoh: UiTM Shah Alam",
-
-      pickupNoteLabel:
-        "📝 Nota Pickup",
-
-      pickupNotePlaceholder:
-        "Contoh: Kolej Mawar, pintu belakang",
-
-      dropoffLabel:
-        "🏁 Drop-off",
-
-      dropoffPlaceholder:
-        "Contoh: Setia Alam",
-
-      dropoffNoteLabel:
-        "📝 Nota Drop-off",
-
-      dropoffNotePlaceholder:
-        "Contoh: Depan masjid / blok / kedai",
-
-      paxLabel:
-        "👥 Bilangan Penumpang",
-
-      pax1:
-        "1 penumpang",
-
-      pax2:
-        "2 penumpang",
-
-      pax3:
-        "3 penumpang",
-
-      pax4:
-        "4 penumpang",
-
-      pax5:
-        "5 penumpang",
-
-      pax6:
-        "6 penumpang",
-
-      dateLabel:
-        "📅 Tarikh",
-
-      timeLabel:
-        "⏰ Masa",
-
-      vehicleLabel:
-        "🚗 Jenis Kenderaan",
-
-      sedan:
-        "Sedan",
-
-      sixSeater:
-        "6-Seater",
-
-      distanceNotice:
-        "💡 Jarak perjalanan tidak dipaparkan kepada penumpang.",
-
-      continueButton:
-        "➡️ Teruskan",
-
-      backButton:
-        "↩️ Kembali",
-
-      bookingSummaryTitle:
-        "🚕 TEMPAHAN PERJALANAN",
-
-      pickupText:
-        "📍 Pickup",
-
-      pickupNoteText:
-        "📝 Nota Pickup",
-
-      dropoffText:
-        "🏁 Drop-off",
-
-      dropoffNoteText:
-        "📝 Nota Drop-off",
-
-      paxText:
-        "👥 Pax",
-
-      dateText:
-        "📅 Tarikh",
-
-      timeText:
-        "⏰ Masa",
-
-      vehicleText:
-        "🚗 Kenderaan",
-
-      fareText:
-        "💰 Tambang",
-
-      tollText:
-        "🛣️ Tol",
-
-      totalText:
-        "💵 Jumlah",
-
-      internalNotice:
-        "🔐 Caj tambahan dikira secara dalaman oleh sistem.",
-
-      confirmButton:
-        "🚕 Tempah Sekarang",
-
-      editButton:
-        "✏️ Edit",
-
-      cancelButton:
-        "❌ Batal",
-
-      myBookingsTitle:
-        "📋 Tempahan Saya",
-
-      profileTitle:
-        "👤 Profil Saya",
-
-      nameText:
-        "Nama",
-
-      statusText:
-        "Status",
-
-      activeText:
-        "Aktif",
-
-      verifiedText:
-        "✅ Disahkan",
-
-      userIdNotice:
-        "🔐 Telegram User ID digunakan secara dalaman untuk mengenal pasti akaun anda.",
-
-      languageLabel:
-        "🌐 Bahasa / Language",
-
-      adminTitle:
-        "📞 Hubungi Admin",
-
-      adminDescription:
-        "Jika anda mempunyai masalah berkaitan tempahan, sila hubungi admin UiTM RIDE melalui Telegram.",
-
-      adminNotice:
-        "ℹ️ Fungsi penghantaran mesej kepada admin akan disambungkan kemudian."
-
-    },
-
-
-    en: {
-
-      registrationSubtitle:
-        "UiTM Journey System Prototype",
-
-      registerTitle:
-        "👤 User Registration",
-
-      registerDescription:
-        "Please register your name before making a booking.",
-
-      nameLabel:
-        "Name",
-
-      namePlaceholder:
-        "Enter your name",
-
-      telegramNotice:
-        "🔐 Your Telegram account will be identified automatically. Telegram User ID is not shown to other users.",
-
-      registerButton:
-        "📝 Register",
-
-      mainSubtitle:
-        "UiTM Ride Booking System",
-
-      newBookingButton:
-        "🚕 Book a Ride",
-
-      myBookingsButton:
-        "📋 My Bookings",
-
-      profileButton:
-        "👤 My Profile",
-
-      adminButton:
-        "📞 Contact Admin",
-
-      bookingTitle:
-        "🚕 Book a Ride",
-
-      pickupLabel:
-        "📍 Pickup",
-
-      pickupPlaceholder:
-        "Example: UiTM Shah Alam",
-
-      pickupNoteLabel:
-        "📝 Pickup Note",
-
-      pickupNotePlaceholder:
-        "Example: Mawar College, back entrance",
-
-      dropoffLabel:
-        "🏁 Drop-off",
-
-      dropoffPlaceholder:
-        "Example: Setia Alam",
-
-      dropoffNoteLabel:
-        "📝 Drop-off Note",
-
-      dropoffNotePlaceholder:
-        "Example: In front of mosque / block / shop",
-
-      paxLabel:
-        "👥 Number of Passengers",
-
-      pax1:
-        "1 passenger",
-
-      pax2:
-        "2 passengers",
-
-      pax3:
-        "3 passengers",
-
-      pax4:
-        "4 passengers",
-
-      pax5:
-        "5 passengers",
-
-      pax6:
-        "6 passengers",
-
-      dateLabel:
-        "📅 Date",
-
-      timeLabel:
-        "⏰ Time",
-
-      vehicleLabel:
-        "🚗 Vehicle Type",
-
-      sedan:
-        "Sedan",
-
-      sixSeater:
-        "6-Seater",
-
-      distanceNotice:
-        "💡 Trip distance is not shown to passengers.",
-
-      continueButton:
-        "➡️ Continue",
-
-      backButton:
-        "↩️ Back",
-
-      bookingSummaryTitle:
-        "🚕 RIDE BOOKING",
-
-      pickupText:
-        "📍 Pickup",
-
-      pickupNoteText:
-        "📝 Pickup Note",
-
-      dropoffText:
-        "🏁 Drop-off",
-
-      dropoffNoteText:
-        "📝 Drop-off Note",
-
-      paxText:
-        "👥 Passengers",
-
-      dateText:
-        "📅 Date",
-
-      timeText:
-        "⏰ Time",
-
-      vehicleText:
-        "🚗 Vehicle",
-
-      fareText:
-        "💰 Fare",
-
-      tollText:
-        "🛣️ Toll",
-
-      totalText:
-        "💵 Total",
-
-      internalNotice:
-        "🔐 Additional charges are calculated internally by the system.",
-
-      confirmButton:
-        "🚕 Confirm Booking",
-
-      editButton:
-        "✏️ Edit",
-
-      cancelButton:
-        "❌ Cancel",
-
-      myBookingsTitle:
-        "📋 My Bookings",
-
-      profileTitle:
-        "👤 My Profile",
-
-      nameText:
-        "Name",
-
-      statusText:
-        "Status",
-
-      activeText:
-        "Active",
-
-      verifiedText:
-        "✅ Verified",
-
-      userIdNotice:
-        "🔐 Telegram User ID is used internally to identify your account.",
-
-      languageLabel:
-        "🌐 Language / Bahasa",
-
-      adminTitle:
-        "📞 Contact Admin",
-
-      adminDescription:
-        "If you have any issues with your booking, please contact the UiTM RIDE admin through Telegram.",
-
-      adminNotice:
-        "ℹ️ The admin messaging function will be connected later."
-
-    }
-
-  };
-
-
-  function t(key) {
-
-    return (
-      translations[currentLanguage] &&
-      translations[currentLanguage][key]
-    ) || key;
-
-  }
-
-
-  function applyLanguage() {
-
-    document
-      .querySelectorAll("[data-i18n]")
-      .forEach(function(element) {
-
-        const key =
-          element.getAttribute("data-i18n");
-
-        element.textContent =
-          t(key);
-
-      });
-
-
-    document
-      .querySelectorAll("[data-placeholder]")
-      .forEach(function(element) {
-
-        const key =
-          element.getAttribute("data-placeholder");
-
-        element.placeholder =
-          t(key);
-
-      });
-
-
-    document.documentElement.lang =
-      currentLanguage === "ms"
-        ? "ms"
-        : "en";
-
-
-    document.getElementById(
-      "languageSelect"
-    ).value =
-      currentLanguage;
-
-
-    updateWelcomeText();
-
-    displayBookings();
-
-  }
-
-
-  function setLanguage(language) {
-
+  try {
     if (
-      language !== "ms" &&
-      language !== "en"
+      window.Telegram &&
+      Telegram.WebApp &&
+      Telegram.WebApp.initDataUnsafe &&
+      Telegram.WebApp.initDataUnsafe.user
     ) {
+      telegramUser = Telegram.WebApp.initDataUnsafe.user;
+      Telegram.WebApp.ready();
+    }
+  } catch (e) {
+    telegramUser = null;
+  }
 
-      language = "ms";
 
+  function getTelegramId() {
+
+    if (telegramUser && telegramUser.id) {
+      return String(telegramUser.id);
     }
 
-    currentLanguage =
-      language;
+    return "prototype-" + Date.now();
+  }
+
+
+  /* =====================================================
+     LANGUAGE
+     ===================================================== */
+
+  function setLanguage(lang) {
+
+    language = lang;
 
     localStorage.setItem(
       "uitmRideLanguage",
-      currentLanguage
+      language
     );
 
-    applyLanguage();
+    document.querySelectorAll("[data-ms]").forEach(el => {
 
-  }
-
-
-  /*
-   * ==========================================
-   * STORAGE
-   * ==========================================
-   */
-
-  function getUsers() {
-
-    try {
-
-      return JSON.parse(
-        localStorage.getItem(
-          "uitmRideUsers"
-        ) || "{}"
-      );
-
-    } catch (error) {
-
-      return {};
-
-    }
-
-  }
-
-
-  function saveUsers(users) {
-
-    localStorage.setItem(
-      "uitmRideUsers",
-      JSON.stringify(users)
-    );
-
-  }
-
-
-  function getBookings() {
-
-    try {
-
-      return JSON.parse(
-        localStorage.getItem(
-          "uitmRideBookings"
-        ) || "[]"
-      );
-
-    } catch (error) {
-
-      return [];
-
-    }
-
-  }
-
-
-  function saveBookings(bookings) {
-
-    localStorage.setItem(
-      "uitmRideBookings",
-      JSON.stringify(bookings)
-    );
-
-  }
-
-
-  /*
-   * ==========================================
-   * SCREEN CONTROL
-   * ==========================================
-   */
-
-  const screens = [
-    "registrationScreen",
-    "mainScreen",
-    "bookingScreen",
-    "summaryScreen",
-    "bookingsScreen",
-    "profileScreen",
-    "adminScreen"
-  ];
-
-
-  function showScreen(screenId) {
-
-    screens.forEach(function(id) {
-
-      document
-        .getElementById(id)
-        .classList.add("hidden");
+      el.textContent =
+        language === "ms"
+          ? el.dataset.ms
+          : el.dataset.en;
 
     });
 
+    if (language === "ms") {
 
-    document
-      .getElementById(screenId)
-      .classList.remove("hidden");
+      $("headerSubtitle").textContent =
+        "Prototype Sistem Perjalanan UiTM";
+
+      $("registerTitle").textContent =
+        "👤 Daftar Pengguna";
+
+      $("nameLabel").textContent =
+        "Nama";
+
+      $("nameInput").placeholder =
+        "Masukkan nama anda";
+
+      $("telegramInfo").textContent =
+        "Telegram Account akan dikenal pasti secara automatik.";
+
+      $("registerBtn").textContent =
+        "📝 Daftar";
+
+    } else {
+
+      $("headerSubtitle").textContent =
+        "UiTM Travel System Prototype";
+
+      $("registerTitle").textContent =
+        "👤 User Registration";
+
+      $("nameLabel").textContent =
+        "Name";
+
+      $("nameInput").placeholder =
+        "Enter your name";
+
+      $("telegramInfo").textContent =
+        "Telegram Account will be identified automatically.";
+
+      $("registerBtn").textContent =
+        "📝 Register";
+
+    }
+
+    updateLanguageButtons();
+  }
+
+
+  function updateLanguageButtons() {
+
+    document.querySelectorAll(".lang-btn")
+      .forEach(btn => btn.classList.remove("active"));
+
+    if (language === "ms") {
+
+      $("registerBm").classList.add("active");
+
+      if ($("profileBm"))
+        $("profileBm").classList.add("active");
+
+    } else {
+
+      $("registerEn").classList.add("active");
+
+      if ($("profileEn"))
+        $("profileEn").classList.add("active");
+
+    }
+  }
+
+
+  $("registerBm").addEventListener(
+    "click",
+    () => setLanguage("ms")
+  );
+
+  $("registerEn").addEventListener(
+    "click",
+    () => setLanguage("en")
+  );
+
+  $("profileBm").addEventListener(
+    "click",
+    () => setLanguage("ms")
+  );
+
+  $("profileEn").addEventListener(
+    "click",
+    () => setLanguage("en")
+  );
+
+
+  /* =====================================================
+     PAGE CONTROL
+     ===================================================== */
+
+  const pages = [
+
+    "registerPage",
+    "mainPage",
+    "passengerPage",
+    "bookingPage",
+    "summaryPage",
+    "bookingsPage",
+    "driverPage",
+    "arrivedPage",
+    "finalTripPage",
+    "driverRegisterPage",
+    "profilePage",
+    "adminPage"
+
+  ];
+
+
+  function showPage(page) {
+
+    pages.forEach(id => {
+
+      $(id).classList.add("hidden");
+
+    });
+
+    $(page).classList.remove("hidden");
+
+    window.scrollTo(0, 0);
 
   }
 
 
-  /*
-   * ==========================================
-   * USER
-   * ==========================================
-   */
+  /* =====================================================
+     REGISTRATION
+     ===================================================== */
 
-  let currentUser = null;
+  $("registerBtn").addEventListener(
+    "click",
+    registerUser
+  );
 
 
-  function updateWelcomeText() {
+  function registerUser() {
 
-    const welcome =
-      document.getElementById(
-        "welcomeText"
+    const name =
+      $("nameInput").value.trim();
+
+    if (!name) {
+
+      alert(
+        language === "ms"
+          ? "Sila masukkan nama."
+          : "Please enter your name."
       );
 
-    if (!welcome) return;
+      return;
+    }
+
+    currentUser = {
+
+      id: getTelegramId(),
+
+      name: name,
+
+      roles: ["passenger"],
+
+      driverApproved: false
+
+    };
+
+    localStorage.setItem(
+      "uitmRideUser",
+      JSON.stringify(currentUser)
+    );
+
+    showMain();
+
+  }
+
+
+  function showMain() {
 
     if (!currentUser) {
 
-      welcome.textContent =
-        currentLanguage === "ms"
-          ? "👋 Selamat datang"
-          : "👋 Welcome";
+      showPage("registerPage");
+
+      return;
+
+    }
+
+    $("welcomeText").textContent =
+      language === "ms"
+        ? `👋 Selamat datang, ${currentUser.name}`
+        : `👋 Welcome, ${currentUser.name}`;
+
+    renderRoles();
+
+    showPage("mainPage");
+
+  }
+
+
+  /* =====================================================
+     ROLES
+     ===================================================== */
+
+  function renderRoles() {
+
+    const roles =
+      currentUser.roles || ["passenger"];
+
+    $("roleList").innerHTML = "";
+
+    roles.forEach(role => {
+
+      const span =
+        document.createElement("span");
+
+      span.className = "role";
+
+      if (role === "passenger")
+        span.textContent =
+          language === "ms"
+            ? "👤 Penumpang"
+            : "👤 Passenger";
+
+      if (role === "driver")
+        span.textContent =
+          language === "ms"
+            ? "🚗 Pemandu"
+            : "🚗 Driver";
+
+      if (role === "admin")
+        span.textContent =
+          "🛡️ Admin";
+
+      $("roleList").appendChild(span);
+
+    });
+
+    $("adminMenu").classList.toggle(
+      "hidden",
+      !roles.includes("admin")
+    );
+
+    $("driverMenu").classList.toggle(
+      "hidden",
+      !roles.includes("driver")
+    );
+
+    $("applyDriverMenu").classList.toggle(
+      "hidden",
+      roles.includes("driver")
+    );
+
+  }
+
+
+  /* =====================================================
+     PASSENGER
+     ===================================================== */
+
+  $("passengerMenu").addEventListener(
+    "click",
+    () => showPage("passengerPage")
+  );
+
+  $("passengerBack").addEventListener(
+    "click",
+    showMain
+  );
+
+  $("bookTripBtn").addEventListener(
+    "click",
+    () => {
+
+      clearBookingForm();
+
+      showPage("bookingPage");
+
+    }
+  );
+
+  $("myBookingsBtn").addEventListener(
+    "click",
+    () => {
+
+      renderBookings();
+
+      showPage("bookingsPage");
+
+    }
+  );
+
+  $("bookingsBack").addEventListener(
+    "click",
+    () => showPage("passengerPage")
+  );
+
+
+  /* =====================================================
+     BOOKING FORM
+     ===================================================== */
+
+  $("bookingBack").addEventListener(
+    "click",
+    () => showPage("passengerPage")
+  );
+
+
+  function clearBookingForm() {
+
+    $("pickup").value = "";
+    $("pickupNote").value = "";
+    $("dropoff").value = "";
+    $("dropoffNote").value = "";
+    $("pax").value = "1";
+    $("date").value = "";
+    $("time").value = "";
+    $("vehicle").value = "sedan";
+
+  }
+
+
+  $("calculateBtn").addEventListener(
+    "click",
+    calculateBooking
+  );
+
+
+  function calculateBooking() {
+
+    const pickup =
+      $("pickup").value.trim();
+
+    const dropoff =
+      $("dropoff").value.trim();
+
+    const pax =
+      Number($("pax").value);
+
+    const date =
+      $("date").value;
+
+    const time =
+      $("time").value;
+
+    const vehicle =
+      $("vehicle").value;
+
+
+    if (!pickup || !dropoff) {
+
+      alert(
+        language === "ms"
+          ? "Sila masukkan pickup dan drop-off."
+          : "Please enter pickup and drop-off."
+      );
 
       return;
 
     }
 
 
-    welcome.textContent =
-      currentLanguage === "ms"
-        ? "👋 Selamat datang, " +
-          currentUser.name
-        : "👋 Welcome, " +
-          currentUser.name;
+    if (!date || !time) {
 
-  }
-
-
-  function loadUser() {
-
-    const users =
-      getUsers();
-
-
-    if (users[telegramUserId]) {
-
-      currentUser =
-        users[telegramUserId];
-
-
-      document.getElementById(
-        "profileName"
-      ).textContent =
-        currentUser.name;
-
-
-      updateWelcomeText();
-
-      showScreen(
-        "mainScreen"
+      alert(
+        language === "ms"
+          ? "Sila pilih tarikh dan masa."
+          : "Please select date and time."
       );
 
-    } else {
-
-      showScreen(
-        "registrationScreen"
-      );
+      return;
 
     }
 
+
+    if (pax >= 5 && vehicle !== "6seater") {
+
+      alert(
+        language === "ms"
+          ? "5–6 penumpang memerlukan kenderaan 6-Seater."
+          : "5–6 passengers require a 6-Seater vehicle."
+      );
+
+      return;
+
+    }
+
+
+    /*
+      PROTOTYPE:
+      Jarak belum menggunakan routing API.
+      Kita gunakan 5.6 km sebagai contoh
+      supaya aliran tambang boleh diuji.
+
+      Nanti backend akan masukkan jarak sebenar.
+    */
+
+    const distanceKm = 5.6;
+
+
+    const fareData =
+      calculateFare(
+        distanceKm,
+        vehicle,
+        time,
+        pickup,
+        dropoff
+      );
+
+
+    $("summaryPickup").textContent =
+      pickup;
+
+    $("summaryPickupNote").textContent =
+      $("pickupNote").value.trim() || "-";
+
+    $("summaryDropoff").textContent =
+      dropoff;
+
+    $("summaryDropoffNote").textContent =
+      $("dropoffNote").value.trim() || "-";
+
+    $("summaryPax").textContent =
+      pax;
+
+    $("summaryDate").textContent =
+      date;
+
+    $("summaryTime").textContent =
+      time;
+
+    $("summaryVehicle").textContent =
+      vehicle === "6seater"
+        ? "🚐 6-Seater"
+        : "🚗 Sedan";
+
+
+    $("summaryFare").textContent =
+      money(fareData.fare);
+
+    $("summaryToll").textContent =
+      "RM0.00";
+
+    $("summaryTotal").textContent =
+      money(fareData.fare);
+
+
+    window.pendingBooking = {
+
+      pickup,
+      pickupNote: $("pickupNote").value.trim(),
+
+      dropoff,
+      dropoffNote: $("dropoffNote").value.trim(),
+
+      pax,
+      date,
+      time,
+      vehicle,
+
+      distanceKm,
+
+      baseFare: fareData.baseFare,
+
+      areaCharge: fareData.areaCharge,
+
+      peakCharge: fareData.peakCharge,
+
+      vehicleCharge: fareData.vehicleCharge,
+
+      nightCharge: fareData.nightCharge,
+
+      fare: fareData.fare,
+
+      toll: 0,
+
+      total: fareData.fare,
+
+      status: "pending"
+
+    };
+
+
+    showPage("summaryPage");
+
   }
 
 
-  /*
-   * ==========================================
-   * REGISTER
-   * ==========================================
-   */
-
-  document
-    .getElementById("registerButton")
-    .addEventListener(
-      "click",
-      function() {
-
-        const name =
-          document
-            .getElementById(
-              "registerName"
-            )
-            .value
-            .trim();
-
-
-        if (!name) {
-
-          alert(
-            currentLanguage === "ms"
-              ? "Sila masukkan nama anda."
-              : "Please enter your name."
-          );
-
-          return;
-
-        }
-
-
-        const users =
-          getUsers();
-
-
-        currentUser = {
-
-          name:
-            name,
-
-          telegramUserId:
-            telegramUserId,
-
-          registeredAt:
-            new Date().toISOString()
-
-        };
-
-
-        users[telegramUserId] =
-          currentUser;
-
-
-        saveUsers(users);
-
-
-        document.getElementById(
-          "profileName"
-        ).textContent =
-          name;
-
-
-        updateWelcomeText();
-
-
-        showScreen(
-          "mainScreen"
-        );
-
-      }
-    );
-
-
-  /*
-   * ==========================================
-   * FARE CALCULATION
-   * ==========================================
-   *
-   * Formula semasa:
-   *
-   * 0 - 3 km = RM5
-   *
-   * >3 km hingga 7 km:
-   * RM1 tambahan selepas 500m pertama
-   *
-   * >7 km:
-   * RM0.80/km
-   *
-   * 6-Seater = +RM2
-   *
-   * Peak:
-   * 07:00-09:00 = +RM2
-   * 17:00-19:00 = +RM2
-   *
-   * Night:
-   * 00:00-05:59 = +RM2
-   *
-   * Nota:
-   * Semua caj tambahan ini TIDAK dipaparkan
-   * sebagai pecahan kepada passenger.
-   */
-
+  /* =====================================================
+     FARE CALCULATION
+     ===================================================== */
 
   function calculateFare(
     distanceKm,
     vehicle,
-    time
+    time,
+    pickup,
+    dropoff
   ) {
 
-    let baseFare = 5;
+    let baseFare = 0;
+
+
+    /*
+      3 km pertama = RM5
+      3.0–3.5 = RM5
+      3.6–4.5 = RM6
+      4.6–5.5 = RM7
+      5.6–6.5 = RM8
+      6.6–7.0 = RM9
+
+      Selepas 7 km:
+      RM0.80/km
+
+      Prototaip menggunakan logik
+      yang telah dipersetujui.
+    */
+
+
+    if (distanceKm <= 3) {
+
+      baseFare =
+        fareSettings.baseFare;
+
+    } else if (distanceKm <= 7) {
+
+      const extra =
+        Math.floor(
+          (distanceKm - 3) * 2
+        ) / 2;
+
+      let increments =
+        Math.ceil(
+          Math.max(0, extra - 0.5)
+        );
+
+      baseFare =
+        fareSettings.baseFare +
+        increments * fareSettings.rate1;
+
+    } else {
+
+      baseFare =
+        fareSettings.baseFare +
+        4 * fareSettings.rate1;
+
+      const extraDistance =
+        distanceKm - 7;
+
+      baseFare +=
+        extraDistance *
+        fareSettings.rate2;
+
+    }
+
+
+    let areaCharge =
+      calculateAreaCharge(
+        pickup,
+        dropoff,
+        distanceKm
+      );
+
 
     let peakCharge = 0;
 
+    const hour =
+      Number(time.split(":")[0]);
+
+
+    if (
+      (hour >= 7 && hour < 9) ||
+      (hour >= 17 && hour < 19)
+    ) {
+
+      peakCharge =
+        fareSettings.peak;
+
+    }
+
+
     let nightCharge = 0;
+
+
+    if (hour >= 0 && hour < 6) {
+
+      nightCharge =
+        fareSettings.night;
+
+    }
+
 
     let vehicleCharge = 0;
 
 
-    /*
-     * DISTANCE
-     */
-
-    if (distanceKm > 3) {
-
-      const extra =
-        distanceKm - 3;
-
-
-      if (distanceKm <= 7) {
-
-        baseFare =
-          5 +
-          Math.ceil(
-            Math.max(
-              0,
-              extra - 0.5
-            ) / 1
-          );
-
-      } else {
-
-        baseFare =
-          9 +
-          (
-            (distanceKm - 7) *
-            0.8
-          );
-
-      }
-
-    }
-
-
-    /*
-     * VEHICLE
-     */
-
-    if (
-      vehicle === "6seater"
-    ) {
+    if (vehicle === "6seater") {
 
       vehicleCharge =
-        2;
+        fareSettings.sixSeater;
 
     }
 
 
     /*
-     * TIME
-     */
+      KLIA fixed fare
+    */
 
-    if (time) {
-
-      const hour =
-        parseInt(
-          time.split(":")[0],
-          10
-        );
-
-
-      if (
-        (hour >= 7 && hour < 9) ||
-        (hour >= 17 && hour < 19)
-      ) {
-
-        peakCharge =
-          2;
-
-      }
+    const allText =
+      (
+        pickup +
+        " " +
+        dropoff
+      ).toLowerCase();
 
 
-      if (
-        hour >= 0 &&
-        hour < 6
-      ) {
+    let fare;
 
-        nightCharge =
-          2;
 
-      }
+    if (
+      allText.includes("klia") ||
+      allText.includes("kuala lumpur international airport")
+    ) {
+
+      fare = 65;
+
+      peakCharge = 0;
+      nightCharge = 0;
+      vehicleCharge = 0;
+
+    } else {
+
+      fare =
+        baseFare +
+        areaCharge +
+        peakCharge +
+        vehicleCharge +
+        nightCharge;
+
+      fare =
+        roundHalfUp(fare);
 
     }
-
-
-    const rawFare =
-      baseFare +
-      vehicleCharge +
-      peakCharge +
-      nightCharge;
-
-
-    const roundedFare =
-      Math.floor(
-        rawFare + 0.5
-      );
 
 
     return {
 
-      baseFare:
-        baseFare,
+      baseFare,
 
-      vehicleCharge:
-        vehicleCharge,
+      areaCharge,
 
-      peakCharge:
-        peakCharge,
+      peakCharge,
 
-      nightCharge:
-        nightCharge,
+      vehicleCharge,
 
-      fare:
-        roundedFare
+      nightCharge,
+
+      fare
 
     };
 
   }
 
 
-  /*
-   * ==========================================
-   * AREA CHARGE
-   * ==========================================
-   *
-   * UiTM -> UiTM = RM0
-   *
-   * UiTM -> Outside = RM1
-   *
-   * Outside -> UiTM = RM1
-   *
-   * Outside -> Outside:
-   * <= 2.0km = RM0
-   * >= 2.1km = RM1
-   *
-   * Buat masa ini route engine belum disambungkan.
-   * Oleh itu outside -> outside belum boleh
-   * menggunakan syarat 2.1km secara sebenar.
-   */
+  function roundHalfUp(value) {
 
-
-  function isInsideUiTM(location) {
-
-    const text =
-      String(location || "")
-        .toLowerCase()
-        .trim();
-
-
-    const keywords = [
-
-      "uitm shah alam",
-
-      "universiti teknologi mara shah alam",
-
-      "universiti teknologi mara",
-
-      "kampus shah alam",
-
-      "uitm"
-
-    ];
-
-
-    return keywords.some(
-      function(keyword) {
-
-        return text.includes(
-          keyword
-        );
-
-      }
+    return Math.floor(
+      value + 0.5
     );
 
   }
@@ -1630,25 +1730,16 @@
     distanceKm
   ) {
 
-    const pickupInside =
-      isInsideUiTM(
-        pickup
-      );
+    const insidePickup =
+      isInsideUiTM(pickup);
 
+    const insideDropoff =
+      isInsideUiTM(dropoff);
 
-    const dropoffInside =
-      isInsideUiTM(
-        dropoff
-      );
-
-
-    /*
-     * BOTH INSIDE
-     */
 
     if (
-      pickupInside &&
-      dropoffInside
+      insidePickup &&
+      insideDropoff
     ) {
 
       return 0;
@@ -1656,31 +1747,33 @@
     }
 
 
-    /*
-     * ENTER OR LEAVE UiTM
-     */
-
     if (
-      pickupInside ||
-      dropoffInside
+      insidePickup &&
+      !insideDropoff
     ) {
 
-      return 1;
+      return fareSettings.area;
 
     }
 
 
-    /*
-     * BOTH OUTSIDE
-     *
-     * Route engine belum tersedia.
-     */
+    if (
+      !insidePickup &&
+      insideDropoff
+    ) {
+
+      return fareSettings.area;
+
+    }
+
 
     if (
+      !insidePickup &&
+      !insideDropoff &&
       distanceKm >= 2.1
     ) {
 
-      return 1;
+      return fareSettings.area;
 
     }
 
@@ -1690,904 +1783,1490 @@
   }
 
 
-  /*
-   * ==========================================
-   * BOOKING
-   * ==========================================
-   */
+  function isInsideUiTM(place) {
 
-  let currentBooking =
-    null;
+    const text =
+      place.toLowerCase();
 
+    return (
 
-  /*
-   * ==========================================
-   * CONTINUE BOOKING
-   * ==========================================
-   */
+      text.includes("uitm shah alam") ||
 
-  document
-    .getElementById(
-      "continueBookingButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
+      text.includes(
+        "universiti teknologi mara shah alam"
+      ) ||
 
-        const pickup =
-          document
-            .getElementById(
-              "pickup"
-            )
-            .value
-            .trim();
+      text.includes(
+        "universiti teknologi mara"
+      ) ||
 
+      text.includes(
+        "kampus shah alam"
+      )
 
-        const pickupNote =
-          document
-            .getElementById(
-              "pickupNote"
-            )
-            .value
-            .trim();
-
-
-        const dropoff =
-          document
-            .getElementById(
-              "dropoff"
-            )
-            .value
-            .trim();
-
-
-        const dropoffNote =
-          document
-            .getElementById(
-              "dropoffNote"
-            )
-            .value
-            .trim();
-
-
-        const pax =
-          parseInt(
-            document
-              .getElementById(
-                "pax"
-              )
-              .value,
-            10
-          );
-
-
-        const date =
-          document
-            .getElementById(
-              "bookingDate"
-            )
-            .value;
-
-
-        const time =
-          document
-            .getElementById(
-              "bookingTime"
-            )
-            .value;
-
-
-        const vehicle =
-          document
-            .getElementById(
-              "vehicle"
-            )
-            .value;
-
-
-        /*
-         * VALIDATION
-         */
-
-        if (!pickup) {
-
-          alert(
-            currentLanguage === "ms"
-              ? "Sila masukkan lokasi Pickup."
-              : "Please enter the pickup location."
-          );
-
-          return;
-
-        }
-
-
-        if (!dropoff) {
-
-          alert(
-            currentLanguage === "ms"
-              ? "Sila masukkan lokasi Drop-off."
-              : "Please enter the drop-off location."
-          );
-
-          return;
-
-        }
-
-
-        if (!date) {
-
-          alert(
-            currentLanguage === "ms"
-              ? "Sila pilih tarikh perjalanan."
-              : "Please select the trip date."
-          );
-
-          return;
-
-        }
-
-
-        if (!time) {
-
-          alert(
-            currentLanguage === "ms"
-              ? "Sila pilih masa perjalanan."
-              : "Please select the trip time."
-          );
-
-          return;
-
-        }
-
-
-        /*
-         * CAPACITY
-         */
-
-        if (
-          pax > 4 &&
-          vehicle !== "6seater"
-        ) {
-
-          alert(
-            currentLanguage === "ms"
-              ? "5–6 penumpang memerlukan kenderaan 6-Seater."
-              : "5–6 passengers require a 6-Seater vehicle."
-          );
-
-          return;
-
-        }
-
-
-        /*
-         * DISTANCE
-         *
-         * Buat sementara 0 km.
-         */
-
-        const distanceKm =
-          0;
-
-
-        /*
-         * TOLL
-         *
-         * Akan dimasukkan kemudian
-         * oleh Pemandu selepas ARRIVED.
-         */
-
-        const toll =
-          0;
-
-
-        /*
-         * FARE
-         */
-
-        const fareData =
-          calculateFare(
-            distanceKm,
-            vehicle,
-            time
-          );
-
-
-        /*
-         * AREA CHARGE
-         */
-
-        const areaCharge =
-          calculateAreaCharge(
-            pickup,
-            dropoff,
-            distanceKm
-          );
-
-
-        /*
-         * TAMBANG DIPAPARKAN
-         *
-         * Fare + Area Charge
-         *
-         * Caj kawasan tidak dipaparkan
-         * sebagai pecahan.
-         */
-
-        const displayedFare =
-          fareData.fare +
-          areaCharge;
-
-
-        /*
-         * TOTAL
-         */
-
-        const total =
-          displayedFare +
-          toll;
-
-
-        /*
-         * BOOKING OBJECT
-         */
-
-        currentBooking = {
-
-          id:
-            "UR" +
-            Date.now(),
-
-          userId:
-            telegramUserId,
-
-          name:
-            currentUser.name,
-
-          pickup:
-            pickup,
-
-          pickupNote:
-            pickupNote,
-
-          dropoff:
-            dropoff,
-
-          dropoffNote:
-            dropoffNote,
-
-          pax:
-            pax,
-
-          date:
-            date,
-
-          time:
-            time,
-
-          vehicle:
-            vehicle,
-
-          distanceKm:
-            distanceKm,
-
-          baseFare:
-            fareData.baseFare,
-
-          vehicleCharge:
-            fareData.vehicleCharge,
-
-          peakCharge:
-            fareData.peakCharge,
-
-          nightCharge:
-            fareData.nightCharge,
-
-          areaCharge:
-            areaCharge,
-
-          fare:
-            displayedFare,
-
-          toll:
-            toll,
-
-          total:
-            total,
-
-          status:
-            "Menunggu Pemandu",
-
-          createdAt:
-            new Date().toISOString()
-
-        };
-
-
-        /*
-         * SUMMARY
-         */
-
-        document.getElementById(
-          "summaryPickup"
-        ).textContent =
-          pickup;
-
-
-        document.getElementById(
-          "summaryPickupNote"
-        ).textContent =
-          pickupNote || "—";
-
-
-        document.getElementById(
-          "summaryDropoff"
-        ).textContent =
-          dropoff;
-
-
-        document.getElementById(
-          "summaryDropoffNote"
-        ).textContent =
-          dropoffNote || "—";
-
-
-        document.getElementById(
-          "summaryPax"
-        ).textContent =
-          pax;
-
-
-        document.getElementById(
-          "summaryDate"
-        ).textContent =
-          date;
-
-
-        document.getElementById(
-          "summaryTime"
-        ).textContent =
-          time;
-
-
-        document.getElementById(
-          "summaryVehicle"
-        ).textContent =
-          vehicle === "6seater"
-            ? "6-Seater"
-            : "Sedan";
-
-
-        /*
-         * IMPORTANT:
-         *
-         * Hanya displayedFare dipaparkan.
-         * Area charge, peak, night dan vehicle
-         * charge tidak dipaparkan.
-         */
-
-        document.getElementById(
-          "summaryFare"
-        ).textContent =
-          "RM" +
-          displayedFare.toFixed(0);
-
-
-        document.getElementById(
-          "summaryToll"
-        ).textContent =
-          "RM" +
-          toll.toFixed(2);
-
-
-        document.getElementById(
-          "summaryTotal"
-        ).textContent =
-          "RM" +
-          total.toFixed(2);
-
-
-        showScreen(
-          "summaryScreen"
-        );
-
-      }
     );
 
-
-  /*
-   * ==========================================
-   * CONFIRM BOOKING
-   * ==========================================
-   */
-
-  document
-    .getElementById(
-      "confirmBookingButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        if (!currentBooking) {
-
-          alert(
-            currentLanguage === "ms"
-              ? "Tiada tempahan untuk disimpan."
-              : "There is no booking to save."
-          );
-
-          return;
-
-        }
+  }
 
 
-        const bookings =
-          getBookings();
+  function money(value) {
 
-
-        bookings.push(
-          currentBooking
-        );
-
-
-        saveBookings(
-          bookings
-        );
-
-
-        alert(
-          currentLanguage === "ms"
-            ? "✅ Tempahan berjaya direkodkan dalam sistem ujian."
-            : "✅ Booking successfully recorded in the test system."
-        );
-
-
-        currentBooking =
-          null;
-
-
-        showScreen(
-          "mainScreen"
-        );
-
-      }
+    return (
+      "RM" +
+      Number(value || 0)
+        .toFixed(2)
     );
 
-
-  /*
-   * ==========================================
-   * EDIT
-   * ==========================================
-   */
-
-  document
-    .getElementById(
-      "editBookingButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        showScreen(
-          "bookingScreen"
-        );
-
-      }
-    );
+  }
 
 
-  /*
-   * ==========================================
-   * CANCEL SUMMARY
-   * ==========================================
-   */
+  /* =====================================================
+     EDIT / CONFIRM BOOKING
+     ===================================================== */
 
-  document
-    .getElementById(
-      "cancelSummaryButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        currentBooking =
-          null;
-
-        showScreen(
-          "mainScreen"
-        );
-
-      }
-    );
+  $("editBookingBtn").addEventListener(
+    "click",
+    () => showPage("bookingPage")
+  );
 
 
-  /*
-   * ==========================================
-   * NEW BOOKING
-   * ==========================================
-   */
-
-  document
-    .getElementById(
-      "newBookingButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        document.getElementById(
-          "pickup"
-        ).value = "";
+  $("cancelSummaryBtn").addEventListener(
+    "click",
+    () => showPage("passengerPage")
+  );
 
 
-        document.getElementById(
-          "pickupNote"
-        ).value = "";
+  $("confirmBookingBtn").addEventListener(
+    "click",
+    confirmBooking
+  );
 
 
-        document.getElementById(
-          "dropoff"
-        ).value = "";
+  function confirmBooking() {
 
+    if (!window.pendingBooking) {
 
-        document.getElementById(
-          "dropoffNote"
-        ).value = "";
-
-
-        document.getElementById(
-          "pax"
-        ).value = "1";
-
-
-        document.getElementById(
-          "bookingDate"
-        ).value = "";
-
-
-        document.getElementById(
-          "bookingTime"
-        ).value = "";
-
-
-        document.getElementById(
-          "vehicle"
-        ).value = "sedan";
-
-
-        showScreen(
-          "bookingScreen"
-        );
-
-      }
-    );
-
-
-  /*
-   * ==========================================
-   * MY BOOKINGS
-   * ==========================================
-   */
-
-  document
-    .getElementById(
-      "myBookingsButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        displayBookings();
-
-        showScreen(
-          "bookingsScreen"
-        );
-
-      }
-    );
-
-
-  function displayBookings() {
-
-    const list =
-      document.getElementById(
-        "bookingsList"
-      );
-
-
-    const bookings =
-      getBookings()
-        .filter(
-          function(booking) {
-
-            return (
-              booking.userId ===
-              telegramUserId
-            );
-
-          }
-        );
-
-
-    if (
-      bookings.length === 0
-    ) {
-
-      list.innerHTML =
-        "<p>" +
-        (
-          currentLanguage === "ms"
-            ? "Tiada tempahan lagi."
-            : "No bookings yet."
-        ) +
-        "</p>";
+      alert("Tiada tempahan.");
 
       return;
 
     }
 
 
-    list.innerHTML =
-      "";
+    const booking = {
+
+      id:
+        "UR" +
+        Date.now(),
+
+      userId:
+        currentUser.id,
+
+      passengerName:
+        currentUser.name,
+
+      ...window.pendingBooking,
+
+      createdAt:
+        new Date().toISOString()
+
+    };
 
 
-    bookings
+    bookings.push(booking);
+
+
+    saveBookings();
+
+
+    window.pendingBooking = null;
+
+
+    alert(
+      language === "ms"
+        ? "Tempahan berjaya dihantar."
+        : "Booking submitted successfully."
+    );
+
+
+    renderBookings();
+
+    showPage("bookingsPage");
+
+  }
+
+
+  function saveBookings() {
+
+    localStorage.setItem(
+      "uitmRideBookings",
+      JSON.stringify(bookings)
+    );
+
+  }
+
+
+  /* =====================================================
+     PASSENGER BOOKINGS
+     ===================================================== */
+
+  function renderBookings() {
+
+    $("bookingList").innerHTML = "";
+
+
+    const mine =
+      bookings.filter(
+        b =>
+          b.userId === currentUser.id
+      );
+
+
+    if (!mine.length) {
+
+      $("bookingList").innerHTML =
+        "<p class='small'>Tiada tempahan.</p>";
+
+      return;
+
+    }
+
+
+    mine
       .slice()
       .reverse()
-      .forEach(
-        function(booking) {
+      .forEach(booking => {
 
-          const item =
-            document.createElement(
-              "div"
-            );
+        const div =
+          document.createElement("div");
 
-
-          item.className =
-            "booking-item";
+        div.className =
+          "booking";
 
 
-          const statusText =
-            currentLanguage === "ms"
-              ? "Status"
-              : "Status";
+        div.innerHTML = `
 
+          <div class="booking-title">
+            🚕 ${booking.id}
+          </div>
 
-          const passengerText =
-            currentLanguage === "ms"
-              ? "Pax"
-              : "Passengers";
+          <div class="row">
+            <span>📍 Pickup</span>
+            <strong>${escapeHtml(booking.pickup)}</strong>
+          </div>
 
+          <div class="row">
+            <span>🏁 Drop-off</span>
+            <strong>${escapeHtml(booking.dropoff)}</strong>
+          </div>
 
-          item.innerHTML = `
+          <div class="row">
+            <span>📅 Tarikh</span>
+            <strong>${booking.date}</strong>
+          </div>
 
-            <strong>
-              🚕 ${escapeHtml(booking.id)}
+          <div class="row">
+            <span>⏰ Masa</span>
+            <strong>${booking.time}</strong>
+          </div>
+
+          <div class="row">
+            <span>📌 Status</span>
+            <strong>${booking.status}</strong>
+          </div>
+
+          <hr class="divider">
+
+          <div class="row">
+            <span>💰 Tambang</span>
+            <strong>${money(booking.fare)}</strong>
+          </div>
+
+          <div class="row">
+            <span>🛣️ Tol</span>
+            <strong>${money(booking.toll)}</strong>
+          </div>
+
+          <div class="row">
+            <span>💵 Jumlah</span>
+            <strong class="price">
+              ${money(booking.total)}
             </strong>
+          </div>
 
-            <br><br>
-
-            📍 ${escapeHtml(booking.pickup)}
-
-            <br>
-
-            🏁 ${escapeHtml(booking.dropoff)}
-
-            <br><br>
-
-            📅 ${escapeHtml(booking.date)}
-
-            <br>
-
-            ⏰ ${escapeHtml(booking.time)}
-
-            <br>
-
-            👥 ${passengerText}: ${booking.pax}
-
-            <br>
-
-            💵 RM${Number(booking.total).toFixed(2)}
-
-            <br><br>
-
-            <span class="small">
-              ${statusText}:
-              ${escapeHtml(booking.status)}
-            </span>
-
-          `;
+        `;
 
 
-          list.appendChild(
-            item
-          );
+        $("bookingList")
+          .appendChild(div);
+
+      });
+
+  }
+
+
+  /* =====================================================
+     DRIVER
+     ===================================================== */
+
+  $("driverMenu").addEventListener(
+    "click",
+    () => {
+
+      renderDriver();
+
+      showPage("driverPage");
+
+    }
+  );
+
+
+  $("driverBack").addEventListener(
+    "click",
+    showMain
+  );
+
+
+  function renderDriver() {
+
+    updateDriverStatus();
+
+    renderDriverBookings();
+
+    renderActiveTrip();
+
+    renderIncome();
+
+  }
+
+
+  function updateDriverStatus() {
+
+    const el =
+      $("driverStatus");
+
+
+    if (driverStatus === "available") {
+
+      el.className =
+        "status available";
+
+      el.textContent =
+        "🟢 Available";
+
+      $("toggleDriverStatus").textContent =
+        "⚪ Set Offline";
+
+    } else if (
+      driverStatus === "offline"
+    ) {
+
+      el.className =
+        "status offline";
+
+      el.textContent =
+        "⚪ Offline";
+
+      $("toggleDriverStatus").textContent =
+        "🟢 Set Available";
+
+    } else {
+
+      el.className =
+        "status trip";
+
+      el.textContent =
+        "🟠 On Trip";
+
+      $("toggleDriverStatus").textContent =
+        "🔒 Sedang Dalam Perjalanan";
+
+    }
+
+  }
+
+
+  $("toggleDriverStatus")
+    .addEventListener(
+      "click",
+      () => {
+
+        if (
+          driverStatus === "available"
+        ) {
+
+          driverStatus =
+            "offline";
+
+        } else if (
+          driverStatus === "offline"
+        ) {
+
+          driverStatus =
+            "available";
 
         }
+
+
+        localStorage.setItem(
+          "uitmRideDriverStatus",
+          driverStatus
+        );
+
+
+        renderDriver();
+
+      }
+    );
+
+
+  function renderDriverBookings() {
+
+    $("driverBookings").innerHTML = "";
+
+
+    if (
+      driverStatus !== "available"
+    ) {
+
+      $("driverBookings").innerHTML =
+        "<p class='small'>Pemandu perlu Available untuk menerima tempahan.</p>";
+
+      return;
+
+    }
+
+
+    const pending =
+      bookings.filter(
+        b =>
+          b.status === "pending"
+      );
+
+
+    if (!pending.length) {
+
+      $("driverBookings").innerHTML =
+        "<p class='small'>Tiada tempahan menunggu.</p>";
+
+      return;
+
+    }
+
+
+    pending.forEach(booking => {
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "booking";
+
+
+      div.innerHTML = `
+
+        <div class="booking-title">
+          🚕 ${booking.id}
+        </div>
+
+        <div class="row">
+          <span>👤 Penumpang</span>
+          <strong>${escapeHtml(booking.passengerName)}</strong>
+        </div>
+
+        <div class="row">
+          <span>📍 Pickup</span>
+          <strong>${escapeHtml(booking.pickup)}</strong>
+        </div>
+
+        <div class="row">
+          <span>🏁 Drop-off</span>
+          <strong>${escapeHtml(booking.dropoff)}</strong>
+        </div>
+
+        <div class="row">
+          <span>👥 Pax</span>
+          <strong>${booking.pax}</strong>
+        </div>
+
+        <div class="row">
+          <span>💰 Tambang</span>
+          <strong>${money(booking.fare)}</strong>
+        </div>
+
+        <button
+          class="success"
+          style="width:100%;margin-top:10px;"
+          onclick="acceptBooking('${booking.id}')"
+        >
+          ✅ Terima Tempahan
+        </button>
+
+        <button
+          class="danger"
+          onclick="rejectBooking('${booking.id}')"
+        >
+          ❌ Tolak
+        </button>
+
+      `;
+
+
+      $("driverBookings")
+        .appendChild(div);
+
+    });
+
+  }
+
+
+  window.acceptBooking =
+    function(id) {
+
+      if (activeTrip) {
+
+        alert(
+          "Anda masih mempunyai perjalanan aktif."
+        );
+
+        return;
+
+      }
+
+
+      const booking =
+        bookings.find(
+          b => b.id === id
+        );
+
+
+      if (!booking)
+        return;
+
+
+      booking.status =
+        "accepted";
+
+      booking.driverId =
+        currentUser.id;
+
+      booking.driverName =
+        currentUser.name;
+
+
+      activeTrip =
+        booking;
+
+
+      driverStatus =
+        "trip";
+
+
+      localStorage.setItem(
+        "uitmRideDriverStatus",
+        driverStatus
+      );
+
+      localStorage.setItem(
+        "uitmRideActiveTrip",
+        JSON.stringify(activeTrip)
+      );
+
+
+      saveBookings();
+
+      renderDriver();
+
+    };
+
+
+  window.rejectBooking =
+    function(id) {
+
+      const booking =
+        bookings.find(
+          b => b.id === id
+        );
+
+
+      if (!booking)
+        return;
+
+
+      booking.status =
+        "rejected";
+
+
+      saveBookings();
+
+      renderDriver();
+
+    };
+
+
+  function renderActiveTrip() {
+
+    $("activeTrip").innerHTML = "";
+
+
+    if (!activeTrip) {
+
+      $("activeTrip").innerHTML =
+        "<p class='small'>Tiada perjalanan aktif.</p>";
+
+      return;
+
+    }
+
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "booking";
+
+
+    div.innerHTML = `
+
+      <div class="booking-title">
+        🚕 ${activeTrip.id}
+      </div>
+
+      <div class="row">
+        <span>👤 Penumpang</span>
+        <strong>${escapeHtml(activeTrip.passengerName)}</strong>
+      </div>
+
+      <div class="row">
+        <span>📍 Pickup</span>
+        <strong>${escapeHtml(activeTrip.pickup)}</strong>
+      </div>
+
+      <div class="row">
+        <span>🏁 Drop-off</span>
+        <strong>${escapeHtml(activeTrip.dropoff)}</strong>
+      </div>
+
+      <div class="row">
+        <span>💰 Tambang</span>
+        <strong>${money(activeTrip.fare)}</strong>
+      </div>
+
+      <div class="notice">
+        Pemandu tidak boleh mengubah tambang.
+        Hanya tol boleh dimasukkan.
+      </div>
+
+      <button
+        class="warning"
+        style="width:100%;"
+        onclick="arrivedTrip()"
+      >
+        🏁 ARRIVED
+      </button>
+
+    `;
+
+
+    $("activeTrip")
+      .appendChild(div);
+
+  }
+
+
+  window.arrivedTrip =
+    function() {
+
+      if (!activeTrip)
+        return;
+
+
+      $("arrivedDropoff").textContent =
+        activeTrip.dropoff;
+
+      $("arrivedFare").textContent =
+        money(activeTrip.fare);
+
+      $("tollInput").value =
+        "";
+
+      showPage("arrivedPage");
+
+    };
+
+
+  /* =====================================================
+     TOLL
+     ===================================================== */
+
+  $("noTollBtn").addEventListener(
+    "click",
+    () => {
+
+      $("tollInput").value =
+        "0";
+
+    }
+  );
+
+
+  $("confirmTollBtn").addEventListener(
+    "click",
+    confirmToll
+  );
+
+
+  function confirmToll() {
+
+    if (!activeTrip)
+      return;
+
+
+    let toll =
+      Number(
+        $("tollInput").value
+      );
+
+
+    if (
+      !Number.isFinite(toll) ||
+      toll < 0
+    ) {
+
+      alert(
+        "Jumlah tol tidak sah."
+      );
+
+      return;
+
+    }
+
+
+    toll =
+      Math.round(
+        toll * 100
+      ) / 100;
+
+
+    activeTrip.toll =
+      toll;
+
+    activeTrip.total =
+      Number(
+        (
+          activeTrip.fare +
+          toll
+        ).toFixed(2)
+      );
+
+
+    activeTrip.status =
+      "completed";
+
+
+    const booking =
+      bookings.find(
+        b =>
+          b.id === activeTrip.id
+      );
+
+
+    if (booking) {
+
+      booking.toll =
+        toll;
+
+      booking.total =
+        activeTrip.total;
+
+      booking.status =
+        "completed";
+
+      booking.completedAt =
+        new Date().toISOString();
+
+    }
+
+
+    $("finalFare").textContent =
+      money(activeTrip.fare);
+
+    $("finalToll").textContent =
+      money(activeTrip.toll);
+
+    $("finalTotal").textContent =
+      money(activeTrip.total);
+
+
+    saveBookings();
+
+
+    localStorage.setItem(
+      "uitmRideActiveTrip",
+      JSON.stringify(activeTrip)
+    );
+
+
+    showPage("finalTripPage");
+
+  }
+
+
+  $("finishTripBtn")
+    .addEventListener(
+      "click",
+      finishTrip
+    );
+
+
+  function finishTrip() {
+
+    income.trips++;
+
+    income.fare +=
+      Number(activeTrip.fare || 0);
+
+
+    localStorage.setItem(
+      "uitmRideIncome",
+      JSON.stringify(income)
+    );
+
+
+    activeTrip = null;
+
+
+    localStorage.removeItem(
+      "uitmRideActiveTrip"
+    );
+
+
+    driverStatus =
+      "available";
+
+
+    localStorage.setItem(
+      "uitmRideDriverStatus",
+      driverStatus
+    );
+
+
+    alert(
+      language === "ms"
+        ? "Perjalanan selesai."
+        : "Trip completed."
+    );
+
+
+    renderDriver();
+
+    showPage("driverPage");
+
+  }
+
+
+  /* =====================================================
+     DRIVER INCOME
+     ===================================================== */
+
+  function renderIncome() {
+
+    $("completedTrips").textContent =
+      income.trips;
+
+    $("driverIncome").textContent =
+      money(income.fare);
+
+    $("driverCompensation").textContent =
+      money(income.compensation);
+
+    $("driverTotalIncome").textContent =
+      money(
+        income.fare +
+        income.compensation
       );
 
   }
 
 
-  /*
-   * ==========================================
-   * ESCAPE HTML
-   * ==========================================
-   */
+  /* =====================================================
+     DRIVER REGISTRATION
+     ===================================================== */
+
+  $("applyDriverMenu")
+    .addEventListener(
+      "click",
+      () => {
+
+        $("driverName").value =
+          currentUser.name;
+
+        showPage(
+          "driverRegisterPage"
+        );
+
+      }
+    );
+
+
+  $("driverRegisterBack")
+    .addEventListener(
+      "click",
+      showMain
+    );
+
+
+  $("submitDriverBtn")
+    .addEventListener(
+      "click",
+      submitDriverApplication
+    );
+
+
+  function submitDriverApplication() {
+
+    const name =
+      $("driverName").value.trim();
+
+    const ic =
+      $("driverIc").value.trim();
+
+    const phone =
+      $("driverPhone").value.trim();
+
+    const vehicleType =
+      $("driverVehicleType").value;
+
+    const vehicleModel =
+      $("driverVehicleModel").value.trim();
+
+    const plate =
+      $("driverPlate").value.trim();
+
+
+    if (
+      !name ||
+      !ic ||
+      !phone ||
+      !vehicleModel ||
+      !plate
+    ) {
+
+      alert(
+        "Sila lengkapkan semua maklumat."
+      );
+
+      return;
+
+    }
+
+
+    const application = {
+
+      id:
+        "DRV" + Date.now(),
+
+      userId:
+        currentUser.id,
+
+      name,
+      ic,
+      phone,
+
+      vehicleType,
+      vehicleModel,
+      plate,
+
+      status:
+        "Menunggu Pengesahan Admin",
+
+      createdAt:
+        new Date().toISOString()
+
+    };
+
+
+    driverApplications.push(
+      application
+    );
+
+
+    localStorage.setItem(
+      "uitmRideDriverApplications",
+      JSON.stringify(
+        driverApplications
+      )
+    );
+
+
+    alert(
+      "Permohonan pemandu telah dihantar kepada Admin."
+    );
+
+
+    showMain();
+
+  }
+
+
+  /* =====================================================
+     PROFILE
+     ===================================================== */
+
+  $("profileMenu").addEventListener(
+    "click",
+    () => {
+
+      $("profileName").textContent =
+        currentUser.name;
+
+      $("profileRoles").innerHTML = "";
+
+      (currentUser.roles || [])
+        .forEach(role => {
+
+          const span =
+            document.createElement("span");
+
+          span.className =
+            "role";
+
+          span.textContent =
+            role === "passenger"
+              ? "👤 Penumpang"
+              : role === "driver"
+                ? "🚗 Pemandu"
+                : "🛡️ Admin";
+
+          $("profileRoles")
+            .appendChild(span);
+
+        });
+
+
+      updateLanguageButtons();
+
+      showPage("profilePage");
+
+    }
+  );
+
+
+  $("profileBack")
+    .addEventListener(
+      "click",
+      showMain
+    );
+
+
+  /* =====================================================
+     ADMIN
+     ===================================================== */
+
+  $("adminMenu").addEventListener(
+    "click",
+    () => {
+
+      renderAdmin();
+
+      showPage("adminPage");
+
+    }
+  );
+
+
+  $("adminBack")
+    .addEventListener(
+      "click",
+      showMain
+    );
+
+
+  function renderAdmin() {
+
+    $("adminUsers").textContent =
+      currentUser ? 1 : 0;
+
+    $("adminDrivers").textContent =
+      driverApplications.length;
+
+    $("adminBookings").textContent =
+      bookings.length;
+
+
+    renderDriverApplications();
+
+    renderAdminBookings();
+
+    loadFareSettings();
+
+  }
+
+
+  function renderDriverApplications() {
+
+    $("adminDriverApplications")
+      .innerHTML = "";
+
+
+    if (!driverApplications.length) {
+
+      $("adminDriverApplications")
+        .innerHTML =
+        "<p class='small'>Tiada permohonan.</p>";
+
+      return;
+
+    }
+
+
+    driverApplications
+      .slice()
+      .reverse()
+      .forEach(application => {
+
+        const div =
+          document.createElement("div");
+
+        div.className =
+          "booking";
+
+
+        div.innerHTML = `
+
+          <div class="booking-title">
+            🚗 ${escapeHtml(application.name)}
+          </div>
+
+          <div class="row">
+            <span>IC</span>
+            <strong>${escapeHtml(application.ic)}</strong>
+          </div>
+
+          <div class="row">
+            <span>Telefon</span>
+            <strong>${escapeHtml(application.phone)}</strong>
+          </div>
+
+          <div class="row">
+            <span>Kenderaan</span>
+            <strong>
+              ${escapeHtml(application.vehicleModel)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>No. Pendaftaran</span>
+            <strong>
+              ${escapeHtml(application.plate)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>Status</span>
+            <strong>
+              ${escapeHtml(application.status)}
+            </strong>
+          </div>
+
+          ${
+            application.status ===
+            "Menunggu Pengesahan Admin"
+
+            ? `
+
+              <button
+                class="success"
+                style="width:100%;margin-top:10px;"
+                onclick="approveDriver('${application.id}')"
+              >
+                ✅ Luluskan
+              </button>
+
+              <button
+                class="danger"
+                onclick="rejectDriver('${application.id}')"
+              >
+                ❌ Tolak
+              </button>
+
+            `
+
+            : ""
+
+          }
+
+        `;
+
+
+        $("adminDriverApplications")
+          .appendChild(div);
+
+      });
+
+  }
+
+
+  window.approveDriver =
+    function(id) {
+
+      const application =
+        driverApplications.find(
+          a => a.id === id
+        );
+
+
+      if (!application)
+        return;
+
+
+      application.status =
+        "Diluluskan";
+
+
+      /*
+        Dalam prototaip:
+        jika permohonan adalah pengguna semasa,
+        role driver akan ditambah.
+
+        Dalam sistem sebenar:
+        backend akan kemas kini role.
+      */
+
+      if (
+        application.userId ===
+        currentUser.id
+      ) {
+
+        if (
+          !currentUser.roles.includes(
+            "driver"
+          )
+        ) {
+
+          currentUser.roles.push(
+            "driver"
+          );
+
+        }
+
+        currentUser.driverApproved =
+          true;
+
+
+        localStorage.setItem(
+          "uitmRideUser",
+          JSON.stringify(
+            currentUser
+          )
+        );
+
+      }
+
+
+      localStorage.setItem(
+        "uitmRideDriverApplications",
+        JSON.stringify(
+          driverApplications
+        )
+      );
+
+
+      renderAdmin();
+
+    };
+
+
+  window.rejectDriver =
+    function(id) {
+
+      const application =
+        driverApplications.find(
+          a => a.id === id
+        );
+
+
+      if (!application)
+        return;
+
+
+      application.status =
+        "Ditolak";
+
+
+      localStorage.setItem(
+        "uitmRideDriverApplications",
+        JSON.stringify(
+          driverApplications
+        )
+      );
+
+
+      renderAdmin();
+
+    };
+
+
+  /* =====================================================
+     ADMIN BOOKINGS
+     ===================================================== */
+
+  function renderAdminBookings() {
+
+    $("adminBookingList")
+      .innerHTML = "";
+
+
+    if (!bookings.length) {
+
+      $("adminBookingList")
+        .innerHTML =
+        "<p class='small'>Tiada tempahan.</p>";
+
+      return;
+
+    }
+
+
+    bookings
+      .slice()
+      .reverse()
+      .forEach(booking => {
+
+        const div =
+          document.createElement("div");
+
+        div.className =
+          "booking";
+
+
+        div.innerHTML = `
+
+          <div class="booking-title">
+            🚕 ${booking.id}
+          </div>
+
+          <div class="row">
+            <span>👤 Penumpang</span>
+            <strong>
+              ${escapeHtml(booking.passengerName)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>📍 Pickup</span>
+            <strong>
+              ${escapeHtml(booking.pickup)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>🏁 Drop-off</span>
+            <strong>
+              ${escapeHtml(booking.dropoff)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>📏 Jarak</span>
+            <strong>
+              ${booking.distanceKm} km
+            </strong>
+          </div>
+
+          <hr class="divider">
+
+          <div class="row">
+            <span>Tambang Asas</span>
+            <strong>
+              ${money(booking.baseFare)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>Caj Kawasan</span>
+            <strong>
+              ${money(booking.areaCharge)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>Caj Peak Hours</span>
+            <strong>
+              ${money(booking.peakCharge)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>Caj 6-Seater</span>
+            <strong>
+              ${money(booking.vehicleCharge)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>Caj Malam</span>
+            <strong>
+              ${money(booking.nightCharge)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>🛣️ Tol</span>
+            <strong>
+              ${money(booking.toll)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>💵 Jumlah Keseluruhan</span>
+            <strong class="price">
+              ${money(booking.total)}
+            </strong>
+          </div>
+
+          <div class="row">
+            <span>Status</span>
+            <strong>
+              ${escapeHtml(booking.status)}
+            </strong>
+          </div>
+
+        `;
+
+
+        $("adminBookingList")
+          .appendChild(div);
+
+      });
+
+  }
+
+
+  /* =====================================================
+     ADMIN FARE SETTINGS
+     ===================================================== */
+
+  function loadFareSettings() {
+
+    $("adminBaseFare").value =
+      fareSettings.baseFare;
+
+    $("adminRate1").value =
+      fareSettings.rate1;
+
+    $("adminRate2").value =
+      fareSettings.rate2;
+
+    $("admin6seater").value =
+      fareSettings.sixSeater;
+
+    $("adminPeak").value =
+      fareSettings.peak;
+
+    $("adminNight").value =
+      fareSettings.night;
+
+    $("adminArea").value =
+      fareSettings.area;
+
+  }
+
+
+  $("saveFareSettings")
+    .addEventListener(
+      "click",
+      () => {
+
+        fareSettings = {
+
+          baseFare:
+            Number($("adminBaseFare").value),
+
+          rate1:
+            Number($("adminRate1").value),
+
+          rate2:
+            Number($("adminRate2").value),
+
+          sixSeater:
+            Number($("admin6seater").value),
+
+          peak:
+            Number($("adminPeak").value),
+
+          night:
+            Number($("adminNight").value),
+
+          area:
+            Number($("adminArea").value)
+
+        };
+
+
+        localStorage.setItem(
+          "uitmRideFareSettings",
+          JSON.stringify(
+            fareSettings
+          )
+        );
+
+
+        alert(
+          "Tetapan tambang disimpan."
+        );
+
+      }
+    );
+
+
+  /* =====================================================
+     ESCAPE HTML
+     ===================================================== */
 
   function escapeHtml(value) {
 
-    return String(value)
-      .replaceAll(
-        "&",
+    return String(value || "")
+      .replace(
+        /&/g,
         "&amp;"
       )
-      .replaceAll(
-        "<",
+      .replace(
+        /</g,
         "&lt;"
       )
-      .replaceAll(
-        ">",
+      .replace(
+        />/g,
         "&gt;"
       )
-      .replaceAll(
-        '"',
+      .replace(
+        /"/g,
         "&quot;"
       )
-      .replaceAll(
-        "'",
+      .replace(
+        /'/g,
         "&#039;"
       );
 
   }
 
 
-  /*
-   * ==========================================
-   * PROFILE
-   * ==========================================
-   */
+  /* =====================================================
+     INITIALIZE
+     ===================================================== */
 
-  document
-    .getElementById(
-      "profileButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        showScreen(
-          "profileScreen"
-        );
-
-      }
-    );
+  setLanguage(language);
 
 
-  /*
-   * LANGUAGE SELECT
-   * ==========================================
-   */
+  if (currentUser) {
 
-  document
-    .getElementById(
-      "languageSelect"
-    )
-    .addEventListener(
-      "change",
-      function() {
+    showMain();
 
-        setLanguage(
-          this.value
-        );
+  } else {
 
-      }
-    );
+    showPage("registerPage");
 
-
-  /*
-   * ==========================================
-   * ADMIN
-   * ==========================================
-   */
-
-  document
-    .getElementById(
-      "adminButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        showScreen(
-          "adminScreen"
-        );
-
-      }
-    );
-
-
-  /*
-   * ==========================================
-   * BACK BUTTONS
-   * ==========================================
-   */
-
-  document
-    .getElementById(
-      "backToMainButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        showScreen(
-          "mainScreen"
-        );
-
-      }
-    );
-
-
-  document
-    .getElementById(
-      "backFromBookingsButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        showScreen(
-          "mainScreen"
-        );
-
-      }
-    );
-
-
-  document
-    .getElementById(
-      "backFromProfileButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        showScreen(
-          "mainScreen"
-        );
-
-      }
-    );
-
-
-  document
-    .getElementById(
-      "backFromAdminButton"
-    )
-    .addEventListener(
-      "click",
-      function() {
-
-        showScreen(
-          "mainScreen"
-        );
-
-      }
-    );
-
-
-  /*
-   * ==========================================
-   * START
-   * ==========================================
-   */
-
-  applyLanguage();
-
-  loadUser();
+  }
 
 </script>
 
