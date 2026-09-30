@@ -1,186 +1,436 @@
 <!DOCTYPE html>
-<html>
+<html lang="ms">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UiTM RIDE</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UiTM RIDE</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-        }
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-        .container {
-            max-width: 500px;
-            margin: auto;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-        h1 {
-            text-align: center;
-            font-size: 24px;
-        }
+    body {
+      margin: 0;
+      background: #f3f4f6;
+      color: #111827;
+    }
 
-        .box {
-            background: white;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 12px;
-        }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+    }
 
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
+    .header {
+      text-align: center;
+      padding: 20px 10px;
+    }
 
-        input,
-        textarea,
-        select {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-        }
+    .logo {
+      font-size: 48px;
+    }
 
-        textarea {
-            height: 80px;
-            resize: vertical;
-        }
+    h1 {
+      margin: 8px 0;
+      font-size: 26px;
+    }
 
-        button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 8px;
-        }
+    .subtitle {
+      color: #6b7280;
+      font-size: 14px;
+    }
 
-        .fare {
-            background: #eeeeee;
-        }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
 
-        .book {
-            background: #ff7a00;
-            color: white;
-        }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
 
-        .cancel {
-            background: #dddddd;
-        }
-    </style>
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #111827;
+      color: white;
+    }
+
+    .secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .success {
+      background: #16a34a;
+      color: white;
+    }
+
+    .danger {
+      background: #dc2626;
+      color: white;
+    }
+
+    .menu-button {
+      text-align: left;
+      background: white;
+      color: #111827;
+      border: 1px solid #e5e7eb;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .info {
+      background: #f9fafb;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .welcome {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #6b7280;
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>🚕 UiTM RIDE</h1>
+  <div class="header">
+    <div class="logo">🚕</div>
+    <h1>UiTM RIDE</h1>
+    <div class="subtitle">Prototype Sistem Perjalanan UiTM</div>
+  </div>
 
-    <div class="box">
-        <label>📍 Pickup</label>
-        <input type="text" id="pickup" placeholder="Masukkan lokasi pickup">
+  <!-- PENDAFTARAN -->
+  <div id="registrationScreen" class="card">
+
+    <h2>👤 Daftar Pengguna</h2>
+
+    <p>
+      Sila daftar terlebih dahulu sebelum menggunakan UiTM RIDE.
+    </p>
+
+    <label for="name">Nama penuh</label>
+
+    <input
+      type="text"
+      id="name"
+      placeholder="Masukkan nama anda"
+      maxlength="100"
+    >
+
+    <div class="info">
+      🔵 Akaun Telegram<br>
+      <span class="small">
+        Akaun Telegram akan dikenal pasti secara automatik.
+      </span>
     </div>
 
-    <div class="box">
-        <label>🏁 Dropoff</label>
-        <input type="text" id="dropoff" placeholder="Masukkan lokasi dropoff">
-    </div>
-
-    <div class="box">
-        <label>👥 Penumpang</label>
-        <select id="pax">
-            <option value="">Pilih jumlah penumpang</option>
-            <option value="1">1 orang</option>
-            <option value="2">2 orang</option>
-            <option value="3">3 orang</option>
-            <option value="4">4 orang</option>
-            <option value="5">5 orang</option>
-            <option value="6">6 orang</option>
-        </select>
-    </div>
-
-    <div class="box">
-        <label>⏰ Masa</label>
-        <input type="time" id="time">
-    </div>
-
-    <div class="box">
-        <label>📅 Tarikh</label>
-        <input type="date" id="date">
-    </div>
-
-    <div class="box">
-        <label>📝 Nota</label>
-        <textarea id="notes" placeholder="Nota tambahan (pilihan)"></textarea>
-    </div>
-
-    <button class="fare" onclick="calculateFare()">
-        💰 Kira Tambang
+    <button class="primary" onclick="registerUser()">
+      📝 Daftar
     </button>
 
-    <button class="book" onclick="bookRide()">
-        🚕 Tempah Sekarang
+    <p id="registrationMessage" class="small"></p>
+
+  </div>
+
+
+  <!-- MENU PENUMPANG -->
+  <div id="passengerMenu" class="card hidden">
+
+    <div class="welcome">
+      👋 Selamat datang, <span id="displayName"></span>
+    </div>
+
+    <p class="small">
+      Anda telah berjaya mendaftar sebagai pengguna UiTM RIDE.
+    </p>
+
+    <button class="menu-button" onclick="booking()">
+      🚕 Tempah Perjalanan
     </button>
 
-    <button class="cancel" onclick="cancelBooking()">
-        ❌ Batal
+    <button class="menu-button" onclick="myBookings()">
+      📋 Tempahan Saya
     </button>
 
-    <div id="result"></div>
+    <button class="menu-button" onclick="profile()">
+      👤 Profil Saya
+    </button>
+
+    <button class="menu-button" onclick="contactAdmin()">
+      📞 Hubungi Admin
+    </button>
+
+  </div>
+
+
+  <!-- PROFIL -->
+  <div id="profileScreen" class="card hidden">
+
+    <h2>👤 Profil Saya</h2>
+
+    <div class="info">
+      <strong>Nama</strong><br>
+      <span id="profileName"></span>
+    </div>
+
+    <div class="info">
+      <strong>Status</strong><br>
+      ✅ Pengguna Berdaftar
+    </div>
+
+    <button class="secondary" onclick="backToMenu()">
+      🔙 Kembali
+    </button>
+
+  </div>
+
+
+  <!-- TEMPAHAN -->
+  <div id="bookingScreen" class="card hidden">
+
+    <h2>🚕 Tempah Perjalanan</h2>
+
+    <p>
+      Bahagian tempahan akan kita bina dalam langkah seterusnya.
+    </p>
+
+    <button class="primary" onclick="alert('Fungsi tempahan akan dibina selepas sistem pendaftaran siap.')">
+      🚕 Tempahan Perjalanan
+    </button>
+
+    <button class="secondary" onclick="backToMenu()">
+      🔙 Kembali
+    </button>
+
+  </div>
+
+
+  <!-- TEMPAHAN SAYA -->
+  <div id="myBookingsScreen" class="card hidden">
+
+    <h2>📋 Tempahan Saya</h2>
+
+    <p>
+      Belum ada rekod tempahan.
+    </p>
+
+    <button class="secondary" onclick="backToMenu()">
+      🔙 Kembali
+    </button>
+
+  </div>
 
 </div>
 
+
 <script>
 
-function calculateFare() {
+  const tg = window.Telegram && window.Telegram.WebApp
+    ? window.Telegram.WebApp
+    : null;
 
-    const pickup = document.getElementById("pickup").value;
-    const dropoff = document.getElementById("dropoff").value;
-    const pax = document.getElementById("pax").value;
-    const time = document.getElementById("time").value;
+  if (tg) {
+    tg.ready();
+    tg.expand();
+  }
 
-    if (!pickup || !dropoff || !pax || !time) {
-        document.getElementById("result").innerHTML =
-            "<p>⚠️ Sila lengkapkan maklumat tempahan.</p>";
-        return;
+
+  // Dapatkan Telegram User ID
+  function getTelegramUserId() {
+
+    if (
+      tg &&
+      tg.initDataUnsafe &&
+      tg.initDataUnsafe.user &&
+      tg.initDataUnsafe.user.id
+    ) {
+      return String(tg.initDataUnsafe.user.id);
     }
 
-    document.getElementById("result").innerHTML =
-        "<p>🔍 Maklumat lengkap. Kiraan tambang akan disambungkan kepada sistem kemudian.</p>";
-}
+    return "prototype-user";
+  }
 
-function bookRide() {
 
-    const pickup = document.getElementById("pickup").value;
-    const dropoff = document.getElementById("dropoff").value;
+  // Semak pengguna yang telah berdaftar
+  function checkRegistration() {
 
-    if (!pickup || !dropoff) {
-        alert("⚠️ Sila lengkapkan Pickup dan Dropoff.");
-        return;
+    const savedUser = localStorage.getItem("uitmRideUser");
+
+    if (savedUser) {
+
+      try {
+
+        const user = JSON.parse(savedUser);
+
+        document.getElementById("displayName").textContent = user.name;
+
+        document.getElementById("registrationScreen")
+          .classList.add("hidden");
+
+        document.getElementById("passengerMenu")
+          .classList.remove("hidden");
+
+      } catch (error) {
+
+        localStorage.removeItem("uitmRideUser");
+
+      }
+    }
+  }
+
+
+  // Daftar pengguna
+  function registerUser() {
+
+    const nameInput = document.getElementById("name");
+    const message = document.getElementById("registrationMessage");
+
+    const name = nameInput.value.trim();
+
+    if (name.length < 2) {
+
+      message.textContent = "⚠️ Sila masukkan nama penuh anda.";
+      message.style.color = "#dc2626";
+
+      return;
     }
 
-    alert("🚕 Tempahan akan dihantar kepada sistem UiTM RIDE.");
-}
+    const telegramUserId = getTelegramUserId();
 
-function cancelBooking() {
+    const user = {
+      name: name,
+      telegramUserId: telegramUserId,
+      registeredAt: new Date().toISOString()
+    };
 
-    document.getElementById("pickup").value = "";
-    document.getElementById("dropoff").value = "";
-    document.getElementById("pax").value = "";
-    document.getElementById("time").value = "";
-    document.getElementById("date").value = "";
-    document.getElementById("notes").value = "";
+    localStorage.setItem(
+      "uitmRideUser",
+      JSON.stringify(user)
+    );
 
-    document.getElementById("result").innerHTML = "";
-}
+    document.getElementById("displayName").textContent = name;
+
+    document.getElementById("registrationScreen")
+      .classList.add("hidden");
+
+    document.getElementById("passengerMenu")
+      .classList.remove("hidden");
+  }
+
+
+  function hideAllScreens() {
+
+    document.getElementById("passengerMenu")
+      .classList.add("hidden");
+
+    document.getElementById("profileScreen")
+      .classList.add("hidden");
+
+    document.getElementById("bookingScreen")
+      .classList.add("hidden");
+
+    document.getElementById("myBookingsScreen")
+      .classList.add("hidden");
+  }
+
+
+  function profile() {
+
+    hideAllScreens();
+
+    const savedUser = localStorage.getItem("uitmRideUser");
+
+    if (savedUser) {
+
+      const user = JSON.parse(savedUser);
+
+      document.getElementById("profileName").textContent =
+        user.name;
+    }
+
+    document.getElementById("profileScreen")
+      .classList.remove("hidden");
+  }
+
+
+  function booking() {
+
+    hideAllScreens();
+
+    document.getElementById("bookingScreen")
+      .classList.remove("hidden");
+  }
+
+
+  function myBookings() {
+
+    hideAllScreens();
+
+    document.getElementById("myBookingsScreen")
+      .classList.remove("hidden");
+  }
+
+
+  function backToMenu() {
+
+    hideAllScreens();
+
+    document.getElementById("passengerMenu")
+      .classList.remove("hidden");
+  }
+
+
+  function contactAdmin() {
+
+    alert(
+      "📞 Fungsi Hubungi Admin akan kita sambungkan kepada akaun Telegram Admin UiTM RIDE."
+    );
+
+  }
+
+
+  checkRegistration();
 
 </script>
 
