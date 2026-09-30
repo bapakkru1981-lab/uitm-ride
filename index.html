@@ -10,61 +10,61 @@
   <style>
     * {
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
     }
 
     body {
       margin: 0;
+      font-family: Arial, sans-serif;
       background: #f3f4f6;
       color: #111827;
     }
 
     .container {
-      max-width: 500px;
+      max-width: 520px;
       margin: auto;
       padding: 20px;
     }
 
-    .header {
-      text-align: center;
-      padding: 20px 10px;
-    }
-
-    .logo {
-      font-size: 48px;
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
     h1 {
-      margin: 8px 0;
-      font-size: 26px;
+      text-align: center;
+      margin-bottom: 6px;
     }
 
     .subtitle {
+      text-align: center;
       color: #6b7280;
-      font-size: 14px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      margin-top: 15px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      margin-bottom: 22px;
     }
 
     label {
       display: block;
       font-weight: bold;
-      margin-bottom: 8px;
+      margin-top: 14px;
+      margin-bottom: 7px;
     }
 
-    input {
+    input,
+    select,
+    textarea {
       width: 100%;
-      padding: 14px;
+      padding: 13px;
       border: 1px solid #d1d5db;
       border-radius: 10px;
       font-size: 16px;
-      margin-bottom: 15px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
     }
 
     button {
@@ -74,7 +74,7 @@
       border-radius: 10px;
       font-size: 16px;
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 14px;
       cursor: pointer;
     }
 
@@ -99,33 +99,35 @@
     }
 
     .menu-button {
-      text-align: left;
-      background: white;
-      color: #111827;
-      border: 1px solid #e5e7eb;
+      margin-top: 12px;
     }
 
     .hidden {
       display: none;
     }
 
-    .info {
-      background: #f9fafb;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
     .welcome {
+      text-align: center;
       font-size: 18px;
       font-weight: bold;
-      margin-bottom: 5px;
+      margin-bottom: 18px;
     }
 
-    .small {
-      font-size: 13px;
-      color: #6b7280;
+    .profile-row {
+      padding: 10px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .profile-row:last-child {
+      border-bottom: none;
+    }
+
+    .booking-summary {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 15px;
+      line-height: 1.7;
     }
   </style>
 </head>
@@ -134,130 +136,237 @@
 
 <div class="container">
 
-  <div class="header">
-    <div class="logo">🚕</div>
-    <h1>UiTM RIDE</h1>
-    <div class="subtitle">Prototype Sistem Perjalanan UiTM</div>
-  </div>
-
   <!-- PENDAFTARAN -->
-  <div id="registrationScreen" class="card">
+  <div id="registerScreen" class="card">
+
+    <h1>🚕 UiTM RIDE</h1>
+
+    <div class="subtitle">
+      Prototype Sistem Perjalanan UiTM
+    </div>
 
     <h2>👤 Daftar Pengguna</h2>
 
-    <p>
-      Sila daftar terlebih dahulu sebelum menggunakan UiTM RIDE.
-    </p>
-
-    <label for="name">Nama penuh</label>
-
+    <label for="nameInput">Nama penuh</label>
     <input
       type="text"
-      id="name"
-      placeholder="Masukkan nama anda"
-      maxlength="100"
+      id="nameInput"
+      placeholder="Masukkan nama penuh"
     >
-
-    <div class="info">
-      🔵 Akaun Telegram<br>
-      <span class="small">
-        Akaun Telegram akan dikenal pasti secara automatik.
-      </span>
-    </div>
 
     <button class="primary" onclick="registerUser()">
       📝 Daftar
     </button>
 
-    <p id="registrationMessage" class="small"></p>
-
   </div>
 
 
-  <!-- MENU PENUMPANG -->
-  <div id="passengerMenu" class="card hidden">
+  <!-- MENU UTAMA -->
+  <div id="mainScreen" class="hidden">
 
-    <div class="welcome">
-      👋 Selamat datang, <span id="displayName"></span>
+    <div class="card">
+
+      <h1>🚕 UiTM RIDE</h1>
+
+      <div id="welcomeText" class="welcome"></div>
+
+      <button
+        class="primary menu-button"
+        onclick="showBooking()">
+        🚕 Tempah Perjalanan
+      </button>
+
+      <button
+        class="secondary menu-button"
+        onclick="showBookings()">
+        📋 Tempahan Saya
+      </button>
+
+      <button
+        class="secondary menu-button"
+        onclick="showProfile()">
+        👤 Profil Saya
+      </button>
+
+      <button
+        class="secondary menu-button"
+        onclick="contactAdmin()">
+        📞 Hubungi Admin
+      </button>
+
     </div>
-
-    <p class="small">
-      Anda telah berjaya mendaftar sebagai pengguna UiTM RIDE.
-    </p>
-
-    <button class="menu-button" onclick="booking()">
-      🚕 Tempah Perjalanan
-    </button>
-
-    <button class="menu-button" onclick="myBookings()">
-      📋 Tempahan Saya
-    </button>
-
-    <button class="menu-button" onclick="profile()">
-      👤 Profil Saya
-    </button>
-
-    <button class="menu-button" onclick="contactAdmin()">
-      📞 Hubungi Admin
-    </button>
-
-  </div>
-
-
-  <!-- PROFIL -->
-  <div id="profileScreen" class="card hidden">
-
-    <h2>👤 Profil Saya</h2>
-
-    <div class="info">
-      <strong>Nama</strong><br>
-      <span id="profileName"></span>
-    </div>
-
-    <div class="info">
-      <strong>Status</strong><br>
-      ✅ Pengguna Berdaftar
-    </div>
-
-    <button class="secondary" onclick="backToMenu()">
-      🔙 Kembali
-    </button>
 
   </div>
 
 
   <!-- TEMPAHAN -->
-  <div id="bookingScreen" class="card hidden">
+  <div id="bookingScreen" class="hidden">
 
-    <h2>🚕 Tempah Perjalanan</h2>
+    <div class="card">
 
-    <p>
-      Bahagian tempahan akan kita bina dalam langkah seterusnya.
-    </p>
+      <h2>🚕 Tempah Perjalanan</h2>
 
-    <button class="primary" onclick="alert('Fungsi tempahan akan dibina selepas sistem pendaftaran siap.')">
-      🚕 Tempahan Perjalanan
-    </button>
+      <label for="pickup">
+        📍 Lokasi Pickup
+      </label>
 
-    <button class="secondary" onclick="backToMenu()">
-      🔙 Kembali
-    </button>
+      <input
+        type="text"
+        id="pickup"
+        placeholder="Contoh: UiTM Shah Alam"
+      >
+
+
+      <label for="dropoff">
+        🏁 Lokasi Dropoff
+      </label>
+
+      <input
+        type="text"
+        id="dropoff"
+        placeholder="Contoh: Setia City Mall"
+      >
+
+
+      <label for="passengers">
+        👥 Bilangan Penumpang
+      </label>
+
+      <select id="passengers">
+        <option value="1">1 Penumpang</option>
+        <option value="2">2 Penumpang</option>
+        <option value="3">3 Penumpang</option>
+        <option value="4">4 Penumpang</option>
+        <option value="5">5 Penumpang</option>
+        <option value="6">6 Penumpang</option>
+      </select>
+
+
+      <label for="date">
+        📅 Tarikh
+      </label>
+
+      <input
+        type="date"
+        id="date"
+      >
+
+
+      <label for="time">
+        ⏰ Masa
+      </label>
+
+      <input
+        type="time"
+        id="time"
+      >
+
+
+      <label for="notes">
+        📝 Nota
+      </label>
+
+      <textarea
+        id="notes"
+        placeholder="Contoh: Tunggu di pintu utama"
+      ></textarea>
+
+
+      <button
+        class="success"
+        onclick="continueBooking()">
+        ➡️ Teruskan
+      </button>
+
+      <button
+        class="secondary"
+        onclick="showMain()">
+        ↩️ Kembali
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- RINGKASAN TEMPAHAN -->
+  <div id="summaryScreen" class="hidden">
+
+    <div class="card">
+
+      <h2>📋 Semak Tempahan</h2>
+
+      <div id="bookingSummary" class="booking-summary"></div>
+
+      <button
+        class="success"
+        onclick="confirmBooking()">
+        🚕 Tempah Sekarang
+      </button>
+
+      <button
+        class="secondary"
+        onclick="showBooking()">
+        ✏️ Edit
+      </button>
+
+      <button
+        class="danger"
+        onclick="showMain()">
+        ❌ Batal
+      </button>
+
+    </div>
 
   </div>
 
 
   <!-- TEMPAHAN SAYA -->
-  <div id="myBookingsScreen" class="card hidden">
+  <div id="bookingsScreen" class="hidden">
 
-    <h2>📋 Tempahan Saya</h2>
+    <div class="card">
 
-    <p>
-      Belum ada rekod tempahan.
-    </p>
+      <h2>📋 Tempahan Saya</h2>
 
-    <button class="secondary" onclick="backToMenu()">
-      🔙 Kembali
-    </button>
+      <div id="myBookings">
+        Belum ada tempahan.
+      </div>
+
+      <button
+        class="secondary"
+        onclick="showMain()">
+        ↩️ Kembali
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- PROFIL -->
+  <div id="profileScreen" class="hidden">
+
+    <div class="card">
+
+      <h2>👤 Profil Saya</h2>
+
+      <div class="profile-row">
+        <strong>Nama</strong><br>
+        <span id="profileName"></span>
+      </div>
+
+      <div class="profile-row">
+        <strong>Status</strong><br>
+        Pengguna Berdaftar
+      </div>
+
+      <button
+        class="secondary"
+        onclick="showMain()">
+        ↩️ Kembali
+      </button>
+
+    </div>
 
   </div>
 
@@ -266,82 +375,44 @@
 
 <script>
 
-  const tg = window.Telegram && window.Telegram.WebApp
-    ? window.Telegram.WebApp
-    : null;
+  const tg = window.Telegram.WebApp;
 
-  if (tg) {
-    tg.ready();
-    tg.expand();
+  tg.ready();
+  tg.expand();
+
+
+  let currentBooking = null;
+
+
+  function getUser() {
+
+    return JSON.parse(
+      localStorage.getItem("uitmRideUser")
+    );
+
   }
 
 
-  // Dapatkan Telegram User ID
-  function getTelegramUserId() {
-
-    if (
-      tg &&
-      tg.initDataUnsafe &&
-      tg.initDataUnsafe.user &&
-      tg.initDataUnsafe.user.id
-    ) {
-      return String(tg.initDataUnsafe.user.id);
-    }
-
-    return "prototype-user";
-  }
-
-
-  // Semak pengguna yang telah berdaftar
-  function checkRegistration() {
-
-    const savedUser = localStorage.getItem("uitmRideUser");
-
-    if (savedUser) {
-
-      try {
-
-        const user = JSON.parse(savedUser);
-
-        document.getElementById("displayName").textContent = user.name;
-
-        document.getElementById("registrationScreen")
-          .classList.add("hidden");
-
-        document.getElementById("passengerMenu")
-          .classList.remove("hidden");
-
-      } catch (error) {
-
-        localStorage.removeItem("uitmRideUser");
-
-      }
-    }
-  }
-
-
-  // Daftar pengguna
   function registerUser() {
 
-    const nameInput = document.getElementById("name");
-    const message = document.getElementById("registrationMessage");
+    const name =
+      document.getElementById("nameInput").value.trim();
 
-    const name = nameInput.value.trim();
+    if (!name) {
 
-    if (name.length < 2) {
-
-      message.textContent = "⚠️ Sila masukkan nama penuh anda.";
-      message.style.color = "#dc2626";
+      alert("Sila masukkan nama penuh.");
 
       return;
+
     }
 
-    const telegramUserId = getTelegramUserId();
-
     const user = {
+
       name: name,
-      telegramUserId: telegramUserId,
-      registeredAt: new Date().toISOString()
+
+      telegramId:
+        tg.initDataUnsafe?.user?.id || "prototype-user"
+
     };
 
     localStorage.setItem(
@@ -349,90 +420,161 @@
       JSON.stringify(user)
     );
 
-    document.getElementById("displayName").textContent = name;
+    showMain();
 
-    document.getElementById("registrationScreen")
-      .classList.add("hidden");
+  }
 
-    document.getElementById("passengerMenu")
+
+  function showMain() {
+
+    hideAll();
+
+    document
+      .getElementById("mainScreen")
       .classList.remove("hidden");
-  }
 
+    const user = getUser();
 
-  function hideAllScreens() {
+    if (user) {
 
-    document.getElementById("passengerMenu")
-      .classList.add("hidden");
+      document
+        .getElementById("welcomeText")
+        .textContent =
+        "👋 Selamat datang, " + user.name;
 
-    document.getElementById("profileScreen")
-      .classList.add("hidden");
-
-    document.getElementById("bookingScreen")
-      .classList.add("hidden");
-
-    document.getElementById("myBookingsScreen")
-      .classList.add("hidden");
-  }
-
-
-  function profile() {
-
-    hideAllScreens();
-
-    const savedUser = localStorage.getItem("uitmRideUser");
-
-    if (savedUser) {
-
-      const user = JSON.parse(savedUser);
-
-      document.getElementById("profileName").textContent =
-        user.name;
     }
 
-    document.getElementById("profileScreen")
+  }
+
+
+  function showBooking() {
+
+    hideAll();
+
+    document
+      .getElementById("bookingScreen")
       .classList.remove("hidden");
+
   }
 
 
-  function booking() {
+  function continueBooking() {
 
-    hideAllScreens();
+    const pickup =
+      document.getElementById("pickup").value.trim();
 
-    document.getElementById("bookingScreen")
+    const dropoff =
+      document.getElementById("dropoff").value.trim();
+
+    const passengers =
+      document.getElementById("passengers").value;
+
+    const date =
+      document.getElementById("date").value;
+
+    const time =
+      document.getElementById("time").value;
+
+    const notes =
+      document.getElementById("notes").value.trim();
+
+
+    if (!pickup) {
+
+      alert("Sila masukkan lokasi pickup.");
+
+      return;
+
+    }
+
+
+    if (!dropoff) {
+
+      alert("Sila masukkan lokasi dropoff.");
+
+      return;
+
+    }
+
+
+    if (!date) {
+
+      alert("Sila pilih tarikh.");
+
+      return;
+
+    }
+
+
+    if (!time) {
+
+      alert("Sila pilih masa.");
+
+      return;
+
+    }
+
+
+    currentBooking = {
+
+      pickup,
+      dropoff,
+      passengers,
+      date,
+      time,
+      notes
+
+    };
+
+
+    document.getElementById(
+      "bookingSummary"
+    ).innerHTML = `
+
+      📍 <strong>Pickup:</strong>
+      ${pickup}<br>
+
+      🏁 <strong>Dropoff:</strong>
+      ${dropoff}<br>
+
+      👥 <strong>Penumpang:</strong>
+      ${passengers}<br>
+
+      📅 <strong>Tarikh:</strong>
+      ${date}<br>
+
+      ⏰ <strong>Masa:</strong>
+      ${time}<br>
+
+      📝 <strong>Nota:</strong>
+      ${notes || "—"}
+
+      <hr>
+
+      📏 <strong>Jarak:</strong>
+      Akan dikira kemudian<br>
+
+      💰 <strong>Tambang:</strong>
+      Akan dikira kemudian<br>
+
+      🛣️ <strong>Tol:</strong>
+      Akan dikira kemudian<br>
+
+      💵 <strong>Jumlah:</strong>
+      Akan dikira kemudian
+
+    `;
+
+
+    hideAll();
+
+    document
+      .getElementById("summaryScreen")
       .classList.remove("hidden");
-  }
-
-
-  function myBookings() {
-
-    hideAllScreens();
-
-    document.getElementById("myBookingsScreen")
-      .classList.remove("hidden");
-  }
-
-
-  function backToMenu() {
-
-    hideAllScreens();
-
-    document.getElementById("passengerMenu")
-      .classList.remove("hidden");
-  }
-
-
-  function contactAdmin() {
-
-    alert(
-      "📞 Fungsi Hubungi Admin akan kita sambungkan kepada akaun Telegram Admin UiTM RIDE."
-    );
 
   }
 
 
-  checkRegistration();
+  function confirmBooking() {
 
-</script>
-
-</body>
-</html>
+    if (!
