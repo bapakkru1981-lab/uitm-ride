@@ -1762,6 +1762,11 @@ async function authenticateTelegram(
 
 async function autoLoginTelegram() {
 
+console.log(
+    "TELEGRAM INIT DATA:",
+    telegramInitData
+  );
+  
   if (!telegramInitData) {
     return false;
   }
