@@ -1804,6 +1804,11 @@ console.log(
       !data.success ||
       !data.user
     ) {
+
+      alert(
+    "Auto-login gagal: " +
+    JSON.stringify(data)
+      
       return false;
     }
 
