@@ -5537,7 +5537,47 @@ $("logoutBtn")
     }
   );
 
+   $("clearCacheBtn")
+  .addEventListener(
+    "click",
+    function() {
 
+      const confirmReset =
+        confirm(
+          "Reset UiTM RIDE dan padam data login pada peranti ini?"
+        );
+
+      if (!confirmReset) {
+        return;
+      }
+
+      localStorage.removeItem(
+        "uitmRideUser"
+      );
+
+      localStorage.removeItem(
+        "uitmRideBookings"
+      );
+
+      localStorage.removeItem(
+        "uitmRideDriverApplications"
+      );
+
+      localStorage.removeItem(
+        "uitmRideDriverStatus"
+      );
+
+      localStorage.removeItem(
+        "uitmRideActiveTrip"
+      );
+
+      currentUser = null;
+
+      location.reload();
+
+    }
+  );
+  
 /* =========================================================
    ADMIN / MANAGEMENT
 ========================================================= */
