@@ -58,6 +58,7 @@
       justify-content: center;
       font-weight: bold;
       font-size: 22px;
+      text-align: center;
     }
 
     h1,
@@ -84,6 +85,12 @@
       margin-top: 7px;
       margin-bottom: 14px;
       background: #fff;
+    }
+
+    .input:focus,
+    select:focus {
+      outline: 2px solid #ff6a00;
+      border-color: #ff6a00;
     }
 
     .btn {
@@ -189,6 +196,16 @@
       color: #b42318;
     }
 
+    .status-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-expired {
+      background: #fde8e8;
+      color: #991b1b;
+    }
+
     .fare-box {
       background: #fff4eb;
       border-radius: 13px;
@@ -234,6 +251,66 @@
       color: #991b1b;
     }
 
+    .info {
+      background: #e8f1ff;
+      color: #164a8a;
+    }
+
+    .optional-charge {
+      background: #fff0e5;
+      border: 1px solid #ffb27a;
+      border-radius: 12px;
+      padding: 13px;
+      margin-top: 12px;
+      color: #7a3500;
+    }
+
+    .optional-charge strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+
+    .checkbox-row input {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .package-card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+
+    .package-price {
+      color: #ff6a00;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .telegram-card {
+      background: #eef7ff;
+      border: 1px solid #b9dfff;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
     @media (max-width: 380px) {
       .page {
         padding: 12px;
@@ -253,13 +330,18 @@
 <body>
 
 <div class="page">
-
   <div class="container">
 
-    <!-- REGISTER -->
+    <!-- =====================================================
+         REGISTER
+    ====================================================== -->
     <section id="registerPage">
+
       <div class="card center">
-        <div class="logo">UiTM<br>RIDE</div>
+
+        <div class="logo">
+          UiTM<br>RIDE
+        </div>
 
         <h1>UiTM RIDE</h1>
 
@@ -268,17 +350,60 @@
         </p>
 
         <div class="notice">
-          Sila buka aplikasi ini melalui Telegram untuk pengesahan akaun.
+          Sila buka aplikasi ini melalui Telegram untuk
+          pengesahan akaun.
         </div>
 
-        <label for="nameInput">Nama</label>
+        <label for="nameInput">
+          Nama penuh
+        </label>
+
         <input
           id="nameInput"
           class="input"
           type="text"
-          placeholder="Masukkan nama anda"
+          placeholder="Masukkan nama penuh anda"
           autocomplete="name"
         >
+
+        <label for="phoneInput">
+          No. telefon
+        </label>
+
+        <input
+          id="phoneInput"
+          class="input"
+          type="tel"
+          placeholder="Contoh: 0123456789"
+          autocomplete="tel"
+        >
+
+        <label for="userStatusInput">
+          Status pengguna
+        </label>
+
+        <input
+          id="userStatusInput"
+          class="input"
+          type="text"
+          placeholder="Contoh: Pelajar / Staf UiTM"
+        >
+
+        <label for="campusInput">
+          Kampus
+        </label>
+
+        <input
+          id="campusInput"
+          class="input"
+          type="text"
+          placeholder="Contoh: UiTM Shah Alam"
+        >
+
+        <div class="notice info">
+          Telegram ID akan dikesan secara automatik
+          melalui Telegram.
+        </div>
 
         <button
           id="registerBtn"
@@ -295,16 +420,27 @@
         >
           Bahasa: Melayu
         </button>
+
       </div>
     </section>
 
-    <!-- MAIN -->
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
     <section id="mainPage" class="hidden">
 
       <div class="topbar">
+
         <div>
-          <strong id="welcomeName">UiTM RIDE</strong>
-          <div class="muted" id="roleText"></div>
+          <strong id="welcomeName">
+            UiTM RIDE
+          </strong>
+
+          <div
+            class="muted"
+            id="roleText"
+          ></div>
         </div>
 
         <button
@@ -314,6 +450,7 @@
         >
           BM
         </button>
+
       </div>
 
       <div class="menu-grid">
@@ -355,6 +492,15 @@
         </button>
 
         <button
+          id="driverCommunityBtn"
+          class="menu-btn"
+          type="button"
+        >
+          <span>👥</span>
+          Driver Community
+        </button>
+
+        <button
           id="profileBtn"
           class="menu-btn"
           type="button"
@@ -369,17 +515,25 @@
           type="button"
         >
           <span>⚙️</span>
-          Admin
+          Pengurusan
         </button>
 
       </div>
+
     </section>
 
-    <!-- PASSENGER HOME -->
+
+    <!-- =====================================================
+         PASSENGER
+    ====================================================== -->
     <section id="passengerPage" class="hidden">
 
       <div class="topbar">
-        <h2>Tempah Ride</h2>
+
+        <h2>
+          Tempah Ride
+        </h2>
+
         <button
           class="small-btn"
           type="button"
@@ -387,11 +541,15 @@
         >
           Kembali
         </button>
+
       </div>
 
       <div class="card">
 
-        <label for="pickupInput">Lokasi Pickup</label>
+        <label for="pickupInput">
+          Lokasi Pickup
+        </label>
+
         <input
           id="pickupInput"
           class="input"
@@ -399,7 +557,10 @@
           placeholder="Contoh: UiTM Shah Alam"
         >
 
-        <label for="destinationInput">Destinasi</label>
+        <label for="destinationInput">
+          Destinasi
+        </label>
+
         <input
           id="destinationInput"
           class="input"
@@ -407,16 +568,32 @@
           placeholder="Contoh: Setia Alam"
         >
 
-        <label for="pickupType">Jenis perjalanan</label>
+        <label for="pickupType">
+          Jenis perjalanan
+        </label>
+
         <select id="pickupType">
-          <option value="uitm">UiTM</option>
-          <option value="outside">Luar UiTM</option>
+          <option value="uitm">
+            UiTM
+          </option>
+
+          <option value="outside">
+            Luar UiTM
+          </option>
         </select>
 
-        <label for="destinationType">Jenis destinasi</label>
+        <label for="destinationType">
+          Jenis destinasi
+        </label>
+
         <select id="destinationType">
-          <option value="uitm">UiTM</option>
-          <option value="outside">Luar UiTM</option>
+          <option value="uitm">
+            UiTM
+          </option>
+
+          <option value="outside">
+            Luar UiTM
+          </option>
         </select>
 
         <label for="distanceInput">
@@ -432,20 +609,34 @@
           value="5.6"
         >
 
-        <label for="seatType">Jenis kenderaan</label>
+        <label for="seatType">
+          Jenis kenderaan
+        </label>
+
         <select id="seatType">
-          <option value="standard">4-seater</option>
-          <option value="six">6-seater</option>
+          <option value="standard">
+            4-seater
+          </option>
+
+          <option value="six">
+            6-seater
+          </option>
         </select>
 
-        <label for="rideDate">Tarikh</label>
+        <label for="rideDate">
+          Tarikh
+        </label>
+
         <input
           id="rideDate"
           class="input"
           type="date"
         >
 
-        <label for="rideTime">Masa</label>
+        <label for="rideTime">
+          Masa
+        </label>
+
         <input
           id="rideTime"
           class="input"
@@ -460,7 +651,10 @@
           Kira Tambang
         </button>
 
-        <div id="fareResult" class="fare-box hidden"></div>
+        <div
+          id="fareResult"
+          class="fare-box hidden"
+        ></div>
 
         <button
           id="confirmBookingBtn"
@@ -473,14 +667,20 @@
       </div>
     </section>
 
-    <!-- BOOKING SUMMARY -->
+
+    <!-- =====================================================
+         BOOKING SUMMARY
+    ====================================================== -->
     <section id="bookingSummaryPage" class="hidden">
 
       <div class="topbar">
-        <h2>Ringkasan Tempahan</h2>
+        <h2>
+          Ringkasan Tempahan
+        </h2>
       </div>
 
       <div class="card">
+
         <div id="bookingSummary"></div>
 
         <button
@@ -498,15 +698,22 @@
         >
           Kembali
         </button>
+
       </div>
 
     </section>
 
-    <!-- MY BOOKINGS -->
+
+    <!-- =====================================================
+         MY BOOKINGS
+    ====================================================== -->
     <section id="myBookingsPage" class="hidden">
 
       <div class="topbar">
-        <h2>Tempahan Saya</h2>
+
+        <h2>
+          Tempahan Saya
+        </h2>
 
         <button
           class="small-btn"
@@ -515,17 +722,24 @@
         >
           Kembali
         </button>
+
       </div>
 
       <div id="bookingsList"></div>
 
     </section>
 
-    <!-- DRIVER -->
+
+    <!-- =====================================================
+         DRIVER
+    ====================================================== -->
     <section id="driverPage" class="hidden">
 
       <div class="topbar">
-        <h2>Driver</h2>
+
+        <h2>
+          Driver
+        </h2>
 
         <button
           class="small-btn"
@@ -534,30 +748,24 @@
         >
           Kembali
         </button>
-      </div>
-
-      <div class="card">
-
-        <div class="row">
-          <strong>Status</strong>
-          <strong id="driverStatusText">
-            Tersedia
-          </strong>
-        </div>
-
-        <button
-          id="toggleDriverStatusBtn"
-          class="btn btn-secondary"
-          type="button"
-        >
-          Tukar Status
-        </button>
 
       </div>
 
+      <div
+        id="driverStatusCard"
+        class="card"
+      ></div>
+
+      <div
+        id="driverPackageCard"
+        class="card"
+      ></div>
+
       <div class="card">
 
-        <h3>Tempahan Aktif</h3>
+        <h3>
+          Tempahan Aktif
+        </h3>
 
         <div id="driverBookingsList"></div>
 
@@ -565,11 +773,18 @@
 
     </section>
 
-    <!-- ARRIVED -->
+
+    <!-- =====================================================
+         ACTIVE TRIP
+    ====================================================== -->
     <section id="arrivedPage" class="hidden">
 
       <div class="topbar">
-        <h2>Perjalanan</h2>
+
+        <h2>
+          Perjalanan
+        </h2>
+
       </div>
 
       <div class="card">
@@ -604,11 +819,17 @@
 
     </section>
 
-    <!-- DRIVER REGISTRATION -->
+
+    <!-- =====================================================
+         DRIVER REGISTRATION
+    ====================================================== -->
     <section id="driverRegisterPage" class="hidden">
 
       <div class="topbar">
-        <h2>Daftar Driver</h2>
+
+        <h2>
+          Daftar Driver
+        </h2>
 
         <button
           class="small-btn"
@@ -617,23 +838,52 @@
         >
           Kembali
         </button>
+
       </div>
 
       <div class="card">
 
+        <div class="notice info">
+          Selepas permohonan dihantar, status anda akan
+          menjadi <strong>🟡 Menunggu kelulusan</strong>.
+          Pakej hanya dipilih selepas permohonan diluluskan.
+        </div>
+
+        <label>
+          Nama penuh
+        </label>
+
+        <input
+          id="driverFullName"
+          class="input"
+          type="text"
+          readonly
+        >
+
+        <label>
+          Telegram ID
+        </label>
+
+        <input
+          id="driverTelegramId"
+          class="input"
+          type="text"
+          readonly
+        >
+
         <label for="driverPhone">
-          Nombor Telefon
+          No. telefon
         </label>
 
         <input
           id="driverPhone"
           class="input"
           type="tel"
-          placeholder="01XXXXXXXX"
+          placeholder="Contoh: 0123456789"
         >
 
         <label for="vehicleModel">
-          Model Kenderaan
+          Jenama & model kenderaan
         </label>
 
         <input
@@ -643,8 +893,75 @@
           placeholder="Contoh: Perodua Bezza"
         >
 
+        <label for="vehicleColor">
+          Warna kenderaan
+        </label>
+
+        <input
+          id="vehicleColor"
+          class="input"
+          type="text"
+          placeholder="Contoh: Hitam"
+        >
+
+        <label for="vehicleCategory">
+          Kategori kenderaan
+        </label>
+
+        <select id="vehicleCategory">
+
+          <option value="Sedan">
+            Sedan
+          </option>
+
+          <option value="Hatchback">
+            Hatchback
+          </option>
+
+          <option value="SUV">
+            SUV
+          </option>
+
+          <option value="MPV 6-Seater">
+            MPV 6-Seater
+          </option>
+
+          <option value="Lain-lain">
+            Lain-lain
+          </option>
+
+        </select>
+
+        <label for="passengerCapacity">
+          Kapasiti penumpang
+        </label>
+
+        <select id="passengerCapacity">
+
+          <option value="1">
+            1 penumpang
+          </option>
+
+          <option value="2">
+            2 penumpang
+          </option>
+
+          <option value="3">
+            3 penumpang
+          </option>
+
+          <option value="4">
+            4 penumpang
+          </option>
+
+          <option value="6">
+            6 penumpang
+          </option>
+
+        </select>
+
         <label for="vehiclePlate">
-          Nombor Pendaftaran
+          Nombor pendaftaran
         </label>
 
         <input
@@ -654,43 +971,21 @@
           placeholder="Contoh: ABC1234"
         >
 
-        <label for="driverPackage">
-          Pakej Driver
+        <label class="checkbox-row">
+
+          <input
+            id="registeredVehicleConfirmed"
+            type="checkbox"
+          >
+
+          <span>
+            Saya mengesahkan bahawa kenderaan ini
+            berdaftar secara sah dan saya mempunyai
+            kebenaran untuk menggunakannya sebagai
+            kenderaan UiTM RIDE.
+          </span>
+
         </label>
-
-        <select id="driverPackage">
-
-          <option value="1day">
-            1 Hari — RM5
-          </option>
-
-          <option value="7days">
-            7 Hari — RM10
-          </option>
-
-          <option value="30days">
-            30 Hari — RM25
-          </option>
-
-        </select>
-
-        <div class="notice">
-          <strong>Maklumat pakej</strong><br><br>
-
-          1 Hari — RM5<br>
-          KLIA: Tidak layak<br>
-          Tuntutan pampasan: 0
-          <br><br>
-
-          7 Hari — RM10<br>
-          KLIA: Layak<br>
-          Tuntutan pampasan: sehingga 3
-          <br><br>
-
-          30 Hari — RM25<br>
-          KLIA: Layak / keutamaan<br>
-          Tuntutan pampasan: sehingga 6
-        </div>
 
         <button
           id="submitDriverApplicationBtn"
@@ -701,13 +996,20 @@
         </button>
 
       </div>
+
     </section>
 
-    <!-- PROFILE -->
-    <section id="profilePage" class="hidden">
+
+    <!-- =====================================================
+         DRIVER COMMUNITY
+    ====================================================== -->
+    <section id="driverCommunityPage" class="hidden">
 
       <div class="topbar">
-        <h2>Profil</h2>
+
+        <h2>
+          Driver Community
+        </h2>
 
         <button
           class="small-btn"
@@ -716,6 +1018,71 @@
         >
           Kembali
         </button>
+
+      </div>
+
+      <div class="card">
+
+        <h3>
+          🚗 UiTM RIDE Driver Community
+        </h3>
+
+        <p class="muted">
+          Ruang khas untuk pemandu UiTM RIDE berkongsi
+          keadaan trafik, cuaca, kawasan pickup/drop-off
+          dan maklumat semasa.
+        </p>
+
+        <div class="notice info">
+          Hanya pemandu yang layak serta Founder/Pihak
+          Pengurusan dibenarkan menyertai group ini.
+        </div>
+
+        <div class="telegram-card">
+
+          <strong>
+            🔒 Private Telegram Group
+          </strong>
+
+          <p class="muted">
+            Content Protection akan digunakan untuk
+            menghadkan copy, save dan forward.
+          </p>
+
+          <button
+            id="joinDriverCommunityBtn"
+            class="btn btn-primary"
+            type="button"
+          >
+            Sertai Driver Community
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PROFILE
+    ====================================================== -->
+    <section id="profilePage" class="hidden">
+
+      <div class="topbar">
+
+        <h2>
+          Profil
+        </h2>
+
+        <button
+          class="small-btn"
+          type="button"
+          data-back="main"
+        >
+          Kembali
+        </button>
+
       </div>
 
       <div class="card">
@@ -734,11 +1101,17 @@
 
     </section>
 
-    <!-- ADMIN -->
+
+    <!-- =====================================================
+         ADMIN / MANAGEMENT
+    ====================================================== -->
     <section id="adminPage" class="hidden">
 
       <div class="topbar">
-        <h2>Admin</h2>
+
+        <h2>
+          Pengurusan
+        </h2>
 
         <button
           class="small-btn"
@@ -747,27 +1120,179 @@
         >
           Kembali
         </button>
+
       </div>
 
       <div class="card">
 
-        <h3>Dashboard</h3>
+        <h3>
+          Dashboard
+        </h3>
 
         <div id="adminStats"></div>
 
       </div>
 
+
+      <!-- DRIVER APPLICATIONS -->
       <div class="card">
 
-        <h3>Permohonan Driver</h3>
+        <h3>
+          Permohonan Driver
+        </h3>
 
         <div id="driverApplicationsList"></div>
 
       </div>
 
+
+      <!-- DRIVER COMMUNITY SETTINGS -->
       <div class="card">
 
-        <h3>Tetapan Tambang</h3>
+        <h3>
+          👥 Driver Community
+        </h3>
+
+        <p class="muted">
+          Link Telegram akan dimasukkan selepas private
+          group sebenar telah dibuat.
+        </p>
+
+        <label for="driverCommunityLinkInput">
+          Link Driver Community
+        </label>
+
+        <input
+          id="driverCommunityLinkInput"
+          class="input"
+          type="text"
+          placeholder="https://t.me/..."
+        >
+
+        <button
+          id="saveDriverCommunityLinkBtn"
+          class="btn btn-primary"
+          type="button"
+        >
+          Simpan Link
+        </button>
+
+      </div>
+
+
+      <!-- MANAGEMENT CHANNEL -->
+      <div class="card">
+
+        <h3>
+          🛠️ Management Channel
+        </h3>
+
+        <p class="muted">
+          Channel private untuk Founder/Pihak Pengurusan.
+        </p>
+
+        <label for="managementChannelLinkInput">
+          Link Management Channel
+        </label>
+
+        <input
+          id="managementChannelLinkInput"
+          class="input"
+          type="text"
+          placeholder="https://t.me/..."
+        >
+
+        <button
+          id="saveManagementChannelLinkBtn"
+          class="btn btn-primary"
+          type="button"
+        >
+          Simpan Link
+        </button>
+
+      </div>
+
+
+      <!-- OPTIONAL CHARGE -->
+      <div class="card">
+
+        <h3>
+          💰 Optional Charge
+        </h3>
+
+        <div class="notice">
+          Caj tambahan ialah <strong>RM1</strong>.
+          Ia hanya dipaparkan dan dimasukkan ke jumlah
+          akhir apabila diaktifkan oleh pihak pengurusan.
+        </div>
+
+        <label for="optionalChargeAreaInput">
+          Kawasan
+        </label>
+
+        <input
+          id="optionalChargeAreaInput"
+          class="input"
+          type="text"
+          placeholder="Contoh: i-City Central"
+        >
+
+        <label for="optionalChargeReasonInput">
+          Sebab
+        </label>
+
+        <select id="optionalChargeReasonInput">
+
+          <option value="Hujan">
+            Hujan
+          </option>
+
+          <option value="Kesesakan jalan raya">
+            Kesesakan jalan raya
+          </option>
+
+          <option value="Hujan / Kesesakan jalan raya">
+            Hujan / Kesesakan jalan raya
+          </option>
+
+        </select>
+
+        <div class="notice info">
+          Tempoh caj kawasan adalah maksimum
+          <strong>20 minit</strong> dan akan dihentikan
+          secara automatik selepas tempoh tersebut.
+        </div>
+
+        <button
+          id="activateOptionalChargeBtn"
+          class="btn btn-primary"
+          type="button"
+        >
+          Aktifkan Caj RM1 — 20 Minit
+        </button>
+
+        <button
+          id="stopOptionalChargeBtn"
+          class="btn btn-danger"
+          type="button"
+        >
+          Hentikan Caj Sekarang
+        </button>
+
+        <div
+          id="optionalChargeStatus"
+          class="notice"
+        ></div>
+
+      </div>
+
+
+      <!-- FARE SETTINGS -->
+      <div class="card">
+
+        <h3>
+          Tetapan Tambang
+        </h3>
 
         <label for="baseFareInput">
           Tambang asas
@@ -861,40 +1386,54 @@
   </div>
 </div>
 
+
 <!-- Telegram WebApp SDK -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <script>
 "use strict";
 
+
 /* =========================================================
-   BASIC HELPERS
+   HELPERS
 ========================================================= */
 
 function $(id) {
   return document.getElementById(id);
 }
 
+
 function safeJsonParse(value, fallback) {
+
   try {
     return JSON.parse(value);
   } catch (e) {
     return fallback;
   }
+
 }
+
 
 function money(value) {
-  const number = Number(value) || 0;
-  return "RM" + number.toFixed(2);
+
+  const number =
+    Number(value) || 0;
+
+  return "RM" +
+    number.toFixed(2);
+
 }
 
+
 function escapeHtml(value) {
+
   return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+
 }
 
 
@@ -903,39 +1442,58 @@ function escapeHtml(value) {
 ========================================================= */
 
 let language =
-  localStorage.getItem("uitmRideLanguage") || "ms";
+  localStorage.getItem(
+    "uitmRideLanguage"
+  ) || "ms";
+
 
 let currentUser =
   safeJsonParse(
-    localStorage.getItem("uitmRideUser") || "null",
+    localStorage.getItem(
+      "uitmRideUser"
+    ) || "null",
     null
   );
+
 
 let bookings =
   safeJsonParse(
-    localStorage.getItem("uitmRideBookings") || "[]",
+    localStorage.getItem(
+      "uitmRideBookings"
+    ) || "[]",
     []
   );
+
 
 let driverApplications =
   safeJsonParse(
-    localStorage.getItem("uitmRideDriverApplications") || "[]",
+    localStorage.getItem(
+      "uitmRideDriverApplications"
+    ) || "[]",
     []
   );
 
+
 let driverStatus =
-  localStorage.getItem("uitmRideDriverStatus") ||
-  "available";
+  localStorage.getItem(
+    "uitmRideDriverStatus"
+  ) || "available";
+
 
 let activeTrip =
   safeJsonParse(
-    localStorage.getItem("uitmRideActiveTrip") || "null",
+    localStorage.getItem(
+      "uitmRideActiveTrip"
+    ) || "null",
     null
   );
 
+
 let income =
   safeJsonParse(
-    localStorage.getItem("uitmRideIncome") ||
+    localStorage.getItem(
+      "uitmRideIncome"
+    ) ||
     '{"trips":0,"fare":0,"compensation":0}',
     {
       trips: 0,
@@ -944,9 +1502,12 @@ let income =
     }
   );
 
+
 let fareSettings =
   safeJsonParse(
-    localStorage.getItem("uitmRideFareSettings"),
+    localStorage.getItem(
+      "uitmRideFareSettings"
+    ),
     {
       baseFare: 5,
       rate1: 1,
@@ -960,30 +1521,71 @@ let fareSettings =
 
 
 /* =========================================================
+   OPTIONAL CHARGE STATE
+========================================================= */
+
+let optionalCharge =
+  safeJsonParse(
+    localStorage.getItem(
+      "uitmRideOptionalCharge"
+    ),
+    {
+      active: false,
+      amount: 1,
+      area: "",
+      reason: "",
+      activatedAt: null,
+      expiresAt: null
+    }
+  );
+
+
+let driverCommunityLink =
+  localStorage.getItem(
+    "uitmRideDriverCommunityLink"
+  ) || "";
+
+
+let managementChannelLink =
+  localStorage.getItem(
+    "uitmRideManagementChannelLink"
+  ) || "";
+
+
+/* =========================================================
    TELEGRAM
 ========================================================= */
 
 const BACKEND_URL =
   "https://domestic-condo-its-groups.trycloudflare.com";
 
+
 let telegramUser = null;
+
 let telegramInitData = "";
 
+
 try {
+
   if (
     window.Telegram &&
     Telegram.WebApp
   ) {
 
     Telegram.WebApp.ready();
+
     Telegram.WebApp.expand();
 
     telegramInitData =
-      Telegram.WebApp.initData || "";
+      Telegram.WebApp.initData ||
+      "";
 
     telegramUser =
-      Telegram.WebApp.initDataUnsafe?.user ||
+      Telegram.WebApp
+        .initDataUnsafe
+        ?.user ||
       null;
+
   }
 
 } catch (error) {
@@ -992,10 +1594,20 @@ try {
     "Telegram WebApp error:",
     error
   );
+
 }
 
 
-async function authenticateTelegram(name) {
+/* =========================================================
+   TELEGRAM AUTH
+========================================================= */
+
+async function authenticateTelegram(
+  name,
+  phone,
+  userStatus,
+  campus
+) {
 
   if (!telegramInitData) {
 
@@ -1004,7 +1616,9 @@ async function authenticateTelegram(name) {
         ? "Sila buka UiTM RIDE melalui Telegram."
         : "Please open UiTM RIDE through Telegram."
     );
+
   }
+
 
   const response =
     await fetch(
@@ -1013,18 +1627,35 @@ async function authenticateTelegram(name) {
         method: "POST",
 
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type":
+            "application/json"
         },
 
         body: JSON.stringify({
-          initData: telegramInitData,
-          name: name
+
+          initData:
+            telegramInitData,
+
+          name:
+            name,
+
+          phone:
+            phone,
+
+          userStatus:
+            userStatus,
+
+          campus:
+            campus
+
         })
       }
     );
 
+
   const data =
     await response.json();
+
 
   if (!response.ok) {
 
@@ -1036,10 +1667,18 @@ async function authenticateTelegram(name) {
           : "Telegram authentication failed."
       )
     );
+
   }
 
+
   const user =
-    data.user || data;
+    data.user ||
+    data;
+
+
+  const existing =
+    currentUser || {};
+
 
   currentUser = {
 
@@ -1048,6 +1687,7 @@ async function authenticateTelegram(name) {
       user.user_id ||
       user.telegram_id ||
       telegramUser?.id ||
+      existing.id ||
       ""
     ),
 
@@ -1056,25 +1696,68 @@ async function authenticateTelegram(name) {
       user.full_name ||
       name,
 
+    phone:
+      user.phone ||
+      phone,
+
+    userStatus:
+      user.userStatus ||
+      user.user_status ||
+      userStatus,
+
+    campus:
+      user.campus ||
+      campus,
+
     roles:
       user.roles ||
       data.roles ||
+      existing.roles ||
       ["passenger"],
 
     driverApproved:
       Boolean(
         user.driverApproved ??
         user.driver_approved ??
+        existing.driverApproved ??
         false
-      )
+      ),
+
+    driverStatus:
+      user.driverStatus ||
+      user.driver_status ||
+      existing.driverStatus ||
+      null,
+
+    driverPackage:
+      user.driverPackage ||
+      user.driver_package ||
+      existing.driverPackage ||
+      null,
+
+    driverPackageStart:
+      user.driverPackageStart ||
+      existing.driverPackageStart ||
+      null,
+
+    driverPackageEnd:
+      user.driverPackageEnd ||
+      existing.driverPackageEnd ||
+      null
+
   };
+
 
   localStorage.setItem(
     "uitmRideUser",
-    JSON.stringify(currentUser)
+    JSON.stringify(
+      currentUser
+    )
   );
 
+
   return currentUser;
+
 }
 
 
@@ -1083,6 +1766,7 @@ async function authenticateTelegram(name) {
 ========================================================= */
 
 const pages = [
+
   "registerPage",
   "mainPage",
   "passengerPage",
@@ -1091,21 +1775,30 @@ const pages = [
   "driverPage",
   "arrivedPage",
   "driverRegisterPage",
+  "driverCommunityPage",
   "profilePage",
   "adminPage"
+
 ];
+
 
 function hideAllPages() {
 
-  pages.forEach(function(id) {
+  pages.forEach(
+    function(id) {
 
-    const element = $(id);
+      const element =
+        $(id);
 
-    if (element) {
-      element.classList.add("hidden");
+      if (element) {
+        element.classList.add(
+          "hidden"
+        );
+      }
+
     }
+  );
 
-  });
 }
 
 
@@ -1113,19 +1806,119 @@ function showPage(id) {
 
   hideAllPages();
 
-  const page = $(id);
+  const page =
+    $(id);
 
   if (page) {
-    page.classList.remove("hidden");
+    page.classList.remove(
+      "hidden"
+    );
   }
+
 }
 
 
 function showMain() {
 
-  showPage("mainPage");
+  showPage(
+    "mainPage"
+  );
 
   updateMainPage();
+
+}
+
+
+function getRoles() {
+
+  return Array.isArray(
+    currentUser?.roles
+  )
+    ? currentUser.roles
+    : ["passenger"];
+
+}
+
+
+function isManagement() {
+
+  const roles =
+    getRoles();
+
+  return (
+    roles.includes("founder") ||
+    roles.includes("admin") ||
+    roles.includes("management")
+  );
+
+}
+
+
+function isDriverApproved() {
+
+  if (!currentUser) {
+    return false;
+  }
+
+
+  if (
+    currentUser.driverApproved
+  ) {
+    return true;
+  }
+
+
+  const application =
+    driverApplications.find(
+      function(item) {
+
+        return (
+          String(
+            item.userId
+          ) ===
+          String(
+            currentUser.id
+          ) &&
+          item.status ===
+          "approved"
+        );
+
+      }
+    );
+
+
+  return Boolean(
+    application
+  );
+
+}
+
+
+function getDriverApplication() {
+
+  if (!currentUser) {
+    return null;
+  }
+
+
+  return (
+    driverApplications
+      .slice()
+      .reverse()
+      .find(
+        function(item) {
+
+          return String(
+            item.userId
+          ) ===
+          String(
+            currentUser.id
+          );
+
+        }
+      ) ||
+    null
+  );
 
 }
 
@@ -1136,43 +1929,57 @@ function updateMainPage() {
     return;
   }
 
+
   $("welcomeName").textContent =
-    currentUser.name || "Pengguna";
+    currentUser.name ||
+    "Pengguna";
+
 
   const roles =
-    Array.isArray(currentUser.roles)
-      ? currentUser.roles
-      : ["passenger"];
+    getRoles();
+
 
   $("roleText").textContent =
-    roles.join(" / ");
+    roles.join(
+      " / "
+    );
+
 
   if (
-    roles.includes("driver") ||
-    currentUser.driverApproved
+    isDriverApproved()
   ) {
 
     $("driverMenuBtn")
-      .classList.remove("hidden");
+      .classList.remove(
+        "hidden"
+      );
 
   } else {
 
     $("driverMenuBtn")
-      .classList.add("hidden");
+      .classList.add(
+        "hidden"
+      );
+
   }
 
+
   if (
-    roles.includes("admin") ||
-    roles.includes("founder")
+    isManagement()
   ) {
 
     $("adminBtn")
-      .classList.remove("hidden");
+      .classList.remove(
+        "hidden"
+      );
 
   } else {
 
     $("adminBtn")
-      .classList.add("hidden");
+      .classList.add(
+        "hidden"
+      );
+
   }
 
 }
@@ -1184,17 +1991,17 @@ function updateMainPage() {
 
 function updateLanguageButton() {
 
-  const text =
+  $("languageBtn").textContent =
     language === "ms"
       ? "Bahasa: Melayu"
       : "Language: English";
 
-  $("languageBtn").textContent = text;
 
   $("languageMainBtn").textContent =
     language === "ms"
       ? "BM"
       : "EN";
+
 }
 
 
@@ -1205,12 +2012,15 @@ function toggleLanguage() {
       ? "en"
       : "ms";
 
+
   localStorage.setItem(
     "uitmRideLanguage",
     language
   );
 
+
   updateLanguageButton();
+
 }
 
 
@@ -1218,44 +2028,107 @@ function toggleLanguage() {
    REGISTRATION
 ========================================================= */
 
-$("registerBtn").addEventListener(
-  "click",
-  registerUser
-);
+$("registerBtn")
+  .addEventListener(
+    "click",
+    registerUser
+  );
 
 
 async function registerUser() {
 
   const name =
-    $("nameInput").value.trim();
+    $("nameInput")
+      .value
+      .trim();
+
+
+  const phone =
+    $("phoneInput")
+      .value
+      .trim();
+
+
+  const userStatus =
+    $("userStatusInput")
+      .value
+      .trim();
+
+
+  const campus =
+    $("campusInput")
+      .value
+      .trim();
+
 
   if (!name) {
 
     alert(
-      language === "ms"
-        ? "Sila masukkan nama."
-        : "Please enter your name."
+      "Sila masukkan nama penuh."
     );
 
     return;
+
   }
+
+
+  if (!phone) {
+
+    alert(
+      "Sila masukkan nombor telefon."
+    );
+
+    return;
+
+  }
+
+
+  if (!userStatus) {
+
+    alert(
+      "Sila masukkan status pengguna."
+    );
+
+    return;
+
+  }
+
+
+  if (!campus) {
+
+    alert(
+      "Sila masukkan kampus."
+    );
+
+    return;
+
+  }
+
 
   const btn =
     $("registerBtn");
 
+
   const oldText =
     btn.textContent;
 
+
   btn.disabled = true;
 
+
   btn.textContent =
-    language === "ms"
-      ? "⏳ Mengesahkan..."
-      : "⏳ Verifying...";
+    "⏳ Mengesahkan...";
+
 
   try {
 
-    await authenticateTelegram(name);
+    await authenticateTelegram(
+      name,
+      phone,
+      userStatus,
+      campus
+    );
+
 
     showMain();
 
@@ -1266,141 +2139,569 @@ async function registerUser() {
       error
     );
 
+
     alert(
       error.message ||
-      (
-        language === "ms"
-          ? "Tidak dapat mengesahkan Telegram."
-          : "Unable to verify Telegram."
-      )
+      "Tidak dapat mengesahkan Telegram."
     );
 
   } finally {
 
     btn.disabled = false;
-    btn.textContent = oldText;
+
+    btn.textContent =
+      oldText;
 
   }
+
 }
 
 
 /* =========================================================
-   NAVIGATION BUTTONS
+   MAIN NAVIGATION
 ========================================================= */
 
-$("languageBtn").addEventListener(
-  "click",
-  toggleLanguage
-);
-
-$("languageMainBtn").addEventListener(
-  "click",
-  toggleLanguage
-);
+$("languageBtn")
+  .addEventListener(
+    "click",
+    toggleLanguage
+  );
 
 
-$("passengerMenuBtn").addEventListener(
-  "click",
-  function() {
+$("languageMainBtn")
+  .addEventListener(
+    "click",
+    toggleLanguage
+  );
 
-    showPage("passengerPage");
 
-    const today =
-      new Date().toISOString().split("T")[0];
+$("passengerMenuBtn")
+  .addEventListener(
+    "click",
+    function() {
 
-    if (!$("rideDate").value) {
-      $("rideDate").value = today;
+      showPage(
+        "passengerPage"
+      );
+
+
+      const today =
+        new Date()
+          .toISOString()
+          .split("T")[0];
+
+
+      if (!$("rideDate").value) {
+        $("rideDate").value =
+          today;
+      }
+
+
+      if (!$("rideTime").value) {
+        $("rideTime").value =
+          "10:00";
+      }
+
     }
+  );
 
-    if (!$("rideTime").value) {
-      $("rideTime").value = "10:00";
+
+$("myBookingsBtn")
+  .addEventListener(
+    "click",
+    function() {
+
+      showPage(
+        "myBookingsPage"
+      );
+
+      renderBookings();
+
     }
-
-  }
-);
+  );
 
 
-$("myBookingsBtn").addEventListener(
-  "click",
-  function() {
+$("driverMenuBtn")
+  .addEventListener(
+    "click",
+    function() {
 
-    showPage("myBookingsPage");
+      if (!isDriverApproved()) {
 
-    renderBookings();
+        alert(
+          "Akaun driver anda belum diluluskan."
+        );
 
-  }
-);
+        return;
 
-
-$("driverMenuBtn").addEventListener(
-  "click",
-  function() {
-
-    showPage("driverPage");
-
-    renderDriverPage();
-
-  }
-);
+      }
 
 
-$("driverRegisterBtn").addEventListener(
-  "click",
-  function() {
+      showPage(
+        "driverPage"
+      );
 
-    showPage("driverRegisterPage");
+      renderDriverPage();
 
-  }
-);
-
-
-$("profileBtn").addEventListener(
-  "click",
-  function() {
-
-    showPage("profilePage");
-
-    renderProfile();
-
-  }
-);
+    }
+  );
 
 
-$("adminBtn").addEventListener(
-  "click",
-  function() {
+$("driverRegisterBtn")
+  .addEventListener(
+    "click",
+    function() {
 
-    showPage("adminPage");
+      showPage(
+        "driverRegisterPage"
+      );
 
-    renderAdmin();
+      prepareDriverRegistration();
 
-  }
-);
+    }
+  );
+
+
+$("driverCommunityBtn")
+  .addEventListener(
+    "click",
+    function() {
+
+      openDriverCommunity();
+
+    }
+  );
+
+
+$("profileBtn")
+  .addEventListener(
+    "click",
+    function() {
+
+      showPage(
+        "profilePage"
+      );
+
+      renderProfile();
+
+    }
+  );
+
+
+$("adminBtn")
+  .addEventListener(
+    "click",
+    function() {
+
+      showPage(
+        "adminPage"
+      );
+
+      renderAdmin();
+
+    }
+  );
 
 
 document
-  .querySelectorAll("[data-back]")
-  .forEach(function(button) {
+  .querySelectorAll(
+    "[data-back]"
+  )
+  .forEach(
+    function(button) {
 
-    button.addEventListener(
-      "click",
-      function() {
+      button.addEventListener(
+        "click",
+        function() {
 
-        const target =
-          button.getAttribute("data-back");
+          const target =
+            button.getAttribute(
+              "data-back"
+            );
 
-        if (target === "main") {
-          showMain();
+
+          if (
+            target ===
+            "main"
+          ) {
+
+            showMain();
+
+          }
+
+
+          if (
+            target ===
+            "passenger"
+          ) {
+
+            showPage(
+              "passengerPage"
+            );
+
+          }
+
         }
+      );
 
-        if (target === "passenger") {
-          showPage("passengerPage");
-        }
+    }
+  );
 
-      }
+
+/* =========================================================
+   OPTIONAL CHARGE
+========================================================= */
+
+function refreshOptionalCharge() {
+
+  if (
+    optionalCharge.active &&
+    optionalCharge.expiresAt
+  ) {
+
+    const now =
+      Date.now();
+
+
+    if (
+      now >=
+      Number(
+        optionalCharge.expiresAt
+      )
+    ) {
+
+      optionalCharge.active =
+        false;
+
+      optionalCharge.expiresAt =
+        null;
+
+      localStorage.setItem(
+        "uitmRideOptionalCharge",
+        JSON.stringify(
+          optionalCharge
+        )
+      );
+
+    }
+
+  }
+
+}
+
+
+function saveOptionalCharge() {
+
+  localStorage.setItem(
+    "uitmRideOptionalCharge",
+    JSON.stringify(
+      optionalCharge
+    )
+  );
+
+}
+
+
+function normalizeLocation(value) {
+
+  return String(
+    value || ""
+  )
+    .trim()
+    .toLowerCase();
+
+}
+
+
+function locationMatchesOptionalCharge(
+  location
+) {
+
+  refreshOptionalCharge();
+
+
+  if (
+    !optionalCharge.active ||
+    !optionalCharge.area
+  ) {
+
+    return false;
+
+  }
+
+
+  const target =
+    normalizeLocation(
+      optionalCharge.area
     );
 
-  });
+
+  const actual =
+    normalizeLocation(
+      location
+    );
+
+
+  if (!target || !actual) {
+    return false;
+  }
+
+
+  return (
+    actual.includes(target) ||
+    target.includes(actual)
+  );
+
+}
+
+
+function getOptionalChargeForBooking(
+  pickup,
+  destination
+) {
+
+  refreshOptionalCharge();
+
+
+  if (
+    !optionalCharge.active
+  ) {
+
+    return 0;
+
+  }
+
+
+  const pickupMatch =
+    locationMatchesOptionalCharge(
+      pickup
+    );
+
+
+  const destinationMatch =
+    locationMatchesOptionalCharge(
+      destination
+    );
+
+
+  return (
+    pickupMatch ||
+    destinationMatch
+  )
+    ? Number(
+        optionalCharge.amount
+      ) || 1
+    : 0;
+
+}
+
+
+function renderOptionalChargeStatus() {
+
+  refreshOptionalCharge();
+
+
+  const element =
+    $("optionalChargeStatus");
+
+
+  if (!element) {
+    return;
+  }
+
+
+  if (
+    !optionalCharge.active
+  ) {
+
+    element.className =
+      "notice";
+
+
+    element.innerHTML = `
+      🔴 <strong>Caj tambahan tidak aktif.</strong><br>
+      Tiada caj RM1 akan dikenakan.
+    `;
+
+
+    return;
+
+  }
+
+
+  const expires =
+    optionalCharge.expiresAt
+      ? new Date(
+          Number(
+            optionalCharge.expiresAt
+          )
+        ).toLocaleTimeString(
+          "ms-MY",
+          {
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        )
+      : "-";
+
+
+  element.className =
+    "notice success";
+
+
+  element.innerHTML = `
+    🟢 <strong>Caj tambahan sedang aktif.</strong><br>
+    Kawasan: ${escapeHtml(
+      optionalCharge.area
+    )}<br>
+    Sebab: ${escapeHtml(
+      optionalCharge.reason
+    )}<br>
+    Caj: RM1.00<br>
+    Tamat automatik pada: ${expires}
+  `;
+
+}
+
+
+$("activateOptionalChargeBtn")
+  .addEventListener(
+    "click",
+    function() {
+
+      if (!isManagement()) {
+
+        alert(
+          "Hanya Founder/Pihak Pengurusan boleh mengaktifkan caj tambahan."
+        );
+
+        return;
+
+      }
+
+
+      const area =
+        $("optionalChargeAreaInput")
+          .value
+          .trim();
+
+
+      const reason =
+        $("optionalChargeReasonInput")
+          .value;
+
+
+      if (!area) {
+
+        alert(
+          "Sila masukkan kawasan."
+        );
+
+        return;
+
+      }
+
+
+      const now =
+        Date.now();
+
+
+      optionalCharge = {
+
+        active:
+          true,
+
+        amount:
+          1,
+
+        area:
+          area,
+
+        reason:
+          reason,
+
+        activatedAt:
+          now,
+
+        expiresAt:
+          now +
+          (
+            20 *
+            60 *
+            1000
+          )
+
+      };
+
+
+      saveOptionalCharge();
+
+      renderOptionalChargeStatus();
+
+
+      alert(
+        `Caj tambahan RM1 telah diaktifkan untuk ${area} selama 20 minit.`
+      );
+
+    }
+  );
+
+
+$("stopOptionalChargeBtn")
+  .addEventListener(
+    "click",
+    function() {
+
+      if (!isManagement()) {
+
+        alert(
+          "Hanya Founder/Pihak Pengurusan boleh menghentikan caj tambahan."
+        );
+
+        return;
+
+      }
+
+
+      optionalCharge.active =
+        false;
+
+      optionalCharge.expiresAt =
+        null;
+
+
+      saveOptionalCharge();
+
+      renderOptionalChargeStatus();
+
+
+      alert(
+        "Caj tambahan telah dihentikan."
+      );
+
+    }
+  );
+
+
+setInterval(
+  function() {
+
+    refreshOptionalCharge();
+
+    if (
+      $("adminPage") &&
+      !$("adminPage")
+        .classList
+        .contains("hidden")
+    ) {
+
+      renderOptionalChargeStatus();
+
+    }
+
+  },
+  1000
+);
 
 
 /* =========================================================
@@ -1416,10 +2717,13 @@ function roundHalfUp(value) {
 }
 
 
-function calculateBaseFare(distance) {
+function calculateBaseFare(
+  distance
+) {
 
   distance =
     Number(distance) || 0;
+
 
   if (distance <= 3) {
 
@@ -1429,32 +2733,42 @@ function calculateBaseFare(distance) {
 
   }
 
+
   if (distance <= 3.5) {
     return 5;
   }
+
 
   if (distance <= 4.5) {
     return 6;
   }
 
+
   if (distance <= 5.5) {
     return 7;
   }
+
 
   if (distance <= 6.5) {
     return 8;
   }
 
+
   if (distance <= 7) {
     return 9;
   }
 
+
   const extra =
     distance - 7;
 
+
   return 9 +
     roundHalfUp(
-      extra * Number(fareSettings.rate2)
+      extra *
+      Number(
+        fareSettings.rate2
+      )
     );
 
 }
@@ -1466,15 +2780,26 @@ function isPeakTime(time) {
     return false;
   }
 
+
   const parts =
     time.split(":");
 
+
   const hour =
-    Number(parts[0]);
+    Number(
+      parts[0]
+    );
+
 
   return (
-    (hour >= 7 && hour < 9) ||
-    (hour >= 17 && hour < 19)
+    (
+      hour >= 7 &&
+      hour < 9
+    ) ||
+    (
+      hour >= 17 &&
+      hour < 19
+    )
   );
 
 }
@@ -1486,11 +2811,16 @@ function isNightTime(time) {
     return false;
   }
 
+
   const parts =
     time.split(":");
 
+
   const hour =
-    Number(parts[0]);
+    Number(
+      parts[0]
+    );
+
 
   return (
     hour >= 0 &&
@@ -1510,27 +2840,38 @@ function calculateAreaCharge(
     pickupType === "uitm" &&
     destinationType === "uitm"
   ) {
+
     return 0;
+
   }
+
 
   if (
     pickupType === "uitm" ||
     destinationType === "uitm"
   ) {
-    return Number(
-      fareSettings.area
-    );
-  }
-
-  if (Number(distance) >= 2.1) {
 
     return Number(
       fareSettings.area
     );
 
   }
+
+
+  if (
+    Number(distance) >=
+    2.1
+  ) {
+
+    return Number(
+      fareSettings.area
+    );
+
+  }
+
 
   return 0;
+
 }
 
 
@@ -1538,26 +2879,52 @@ function calculateFareDetails() {
 
   const distance =
     Number(
-      $("distanceInput").value
+      $("distanceInput")
+        .value
     );
 
+
   const pickupType =
-    $("pickupType").value;
+    $("pickupType")
+      .value;
+
 
   const destinationType =
-    $("destinationType").value;
+    $("destinationType")
+      .value;
+
 
   const seatType =
-    $("seatType").value;
+    $("seatType")
+      .value;
+
 
   const date =
-    $("rideDate").value;
+    $("rideDate")
+      .value;
+
 
   const time =
-    $("rideTime").value;
+    $("rideTime")
+      .value;
+
+
+  const pickup =
+    $("pickupInput")
+      .value
+      .trim();
+
+
+  const destination =
+    $("destinationInput")
+      .value
+      .trim();
+
 
   if (
-    !Number.isFinite(distance) ||
+    !Number.isFinite(
+      distance
+    ) ||
     distance <= 0
   ) {
 
@@ -1567,8 +2934,30 @@ function calculateFareDetails() {
 
   }
 
+
+  if (!pickup) {
+
+    throw new Error(
+      "Sila masukkan lokasi pickup."
+    );
+
+  }
+
+
+  if (!destination) {
+
+    throw new Error(
+      "Sila masukkan destinasi."
+    );
+
+  }
+
+
   let baseFare =
-    calculateBaseFare(distance);
+    calculateBaseFare(
+      distance
+    );
+
 
   let areaCharge =
     calculateAreaCharge(
@@ -1577,29 +2966,34 @@ function calculateFareDetails() {
       distance
     );
 
+
   let peakCharge = 0;
+
   let nightCharge = 0;
+
   let sixSeaterCharge = 0;
 
-  const destination =
-    $("destinationInput")
-      .value
-      .trim()
-      .toLowerCase();
 
-  const pickup =
-    $("pickupInput")
-      .value
-      .trim()
-      .toLowerCase();
+  const destinationLower =
+    destination.toLowerCase();
+
 
   const isKlia =
-    destination.includes("klia") ||
-    destination.includes("kuala lumpur international airport");
+    destinationLower
+      .includes("klia") ||
+    destinationLower
+      .includes(
+        "kuala lumpur international airport"
+      );
+
 
   if (!isKlia) {
 
-    if (isPeakTime(time)) {
+    if (
+      isPeakTime(
+        time
+      )
+    ) {
 
       peakCharge =
         Number(
@@ -1608,7 +3002,12 @@ function calculateFareDetails() {
 
     }
 
-    if (isNightTime(time)) {
+
+    if (
+      isNightTime(
+        time
+      )
+    ) {
 
       nightCharge =
         Number(
@@ -1617,7 +3016,11 @@ function calculateFareDetails() {
 
     }
 
-    if (seatType === "six") {
+
+    if (
+      seatType ===
+      "six"
+    ) {
 
       sixSeaterCharge =
         Number(
@@ -1628,28 +3031,47 @@ function calculateFareDetails() {
 
   }
 
+
   let kliaFare = 0;
+
 
   if (isKlia) {
 
     kliaFare = 65;
 
     baseFare = 0;
+
     areaCharge = 0;
+
     peakCharge = 0;
+
     nightCharge = 0;
+
     sixSeaterCharge = 0;
 
   }
 
+
+  const optionalChargeAmount =
+    isKlia
+      ? 0
+      : getOptionalChargeForBooking(
+          pickup,
+          destination
+        );
+
+
   const total =
     isKlia
-      ? kliaFare
+      ? kliaFare +
+        optionalChargeAmount
       : baseFare +
         areaCharge +
         peakCharge +
         nightCharge +
-        sixSeaterCharge;
+        sixSeaterCharge +
+        optionalChargeAmount;
+
 
   return {
 
@@ -1661,13 +3083,34 @@ function calculateFareDetails() {
     pickupType,
     destinationType,
     seatType,
+
     baseFare,
+
     areaCharge,
+
     peakCharge,
+
     nightCharge,
+
     sixSeaterCharge,
+
+    optionalCharge:
+      optionalChargeAmount,
+
+    optionalChargeArea:
+      optionalChargeAmount > 0
+        ? optionalCharge.area
+        : "",
+
+    optionalChargeReason:
+      optionalChargeAmount > 0
+        ? optionalCharge.reason
+        : "",
+
     kliaFare,
+
     total,
+
     isKlia
 
   };
@@ -1675,89 +3118,169 @@ function calculateFareDetails() {
 }
 
 
-function renderFare(details) {
+function renderFare(
+  details
+) {
 
-  $("fareResult").innerHTML = `
+  $("fareResult")
+    .innerHTML = `
 
-    <div class="row">
-      <span>Tambang asas</span>
-      <strong>${money(details.baseFare)}</strong>
-    </div>
+      <div class="row">
+        <span>
+          Tambang asas
+        </span>
 
-    ${
-      details.areaCharge > 0
-        ? `
-          <div class="row">
-            <span>Caj kawasan</span>
-            <strong>${money(details.areaCharge)}</strong>
-          </div>
-        `
-        : ""
-    }
+        <strong>
+          ${money(
+            details.baseFare
+          )}
+        </strong>
+      </div>
 
-    ${
-      details.peakCharge > 0
-        ? `
-          <div class="row">
-            <span>Waktu puncak</span>
-            <strong>${money(details.peakCharge)}</strong>
-          </div>
-        `
-        : ""
-    }
 
-    ${
-      details.nightCharge > 0
-        ? `
-          <div class="row">
-            <span>Caj malam</span>
-            <strong>${money(details.nightCharge)}</strong>
-          </div>
-        `
-        : ""
-    }
+      ${
+        details.areaCharge > 0
+          ? `
+            <div class="row">
+              <span>
+                Caj kawasan
+              </span>
 
-    ${
-      details.sixSeaterCharge > 0
-        ? `
-          <div class="row">
-            <span>6-seater</span>
-            <strong>${money(details.sixSeaterCharge)}</strong>
-          </div>
-        `
-        : ""
-    }
+              <strong>
+                ${money(
+                  details.areaCharge
+                )}
+              </strong>
+            </div>
+          `
+          : ""
+      }
 
-    ${
-      details.isKlia
-        ? `
-          <div class="row">
-            <span>KLIA</span>
-            <strong>RM65.00</strong>
-          </div>
-        `
-        : ""
-    }
 
-    <hr>
+      ${
+        details.peakCharge > 0
+          ? `
+            <div class="row">
+              <span>
+                Waktu puncak
+              </span>
 
-    <div>
-      Jumlah tambang
-    </div>
+              <strong>
+                ${money(
+                  details.peakCharge
+                )}
+              </strong>
+            </div>
+          `
+          : ""
+      }
 
-    <div class="fare-total">
-      ${money(details.total)}
-    </div>
 
-  `;
+      ${
+        details.nightCharge > 0
+          ? `
+            <div class="row">
+              <span>
+                Caj malam
+              </span>
+
+              <strong>
+                ${money(
+                  details.nightCharge
+                )}
+              </strong>
+            </div>
+          `
+          : ""
+      }
+
+
+      ${
+        details.sixSeaterCharge > 0
+          ? `
+            <div class="row">
+              <span>
+                6-seater
+              </span>
+
+              <strong>
+                ${money(
+                  details.sixSeaterCharge
+                )}
+              </strong>
+            </div>
+          `
+          : ""
+      }
+
+
+      ${
+        details.isKlia
+          ? `
+            <div class="row">
+              <span>
+                KLIA
+              </span>
+
+              <strong>
+                RM65.00
+              </strong>
+            </div>
+          `
+          : ""
+      }
+
+
+      ${
+        details.optionalCharge > 0
+          ? `
+            <div class="optional-charge">
+
+              <strong>
+                Caj tambahan: RM1
+              </strong>
+
+              Dikenakan atas faktor
+              cuaca/kesesakan.
+              Caj tambahan ini akan
+              dimasukkan terus dalam
+              jumlah akhir.
+
+            </div>
+          `
+          : ""
+      }
+
+
+      <hr>
+
+
+      <div>
+        Jumlah akhir
+      </div>
+
+
+      <div class="fare-total">
+        ${money(
+          details.total
+        )}
+      </div>
+
+    `;
+
 
   $("fareResult")
     .classList
-    .remove("hidden");
+    .remove(
+      "hidden"
+    );
+
 
   $("confirmBookingBtn")
     .classList
-    .remove("hidden");
+    .remove(
+      "hidden"
+    );
 
 }
 
@@ -1769,117 +3292,176 @@ function renderFare(details) {
 let pendingBooking = null;
 
 
-$("calculateFareBtn").addEventListener(
-  "click",
-  function() {
+$("calculateFareBtn")
+  .addEventListener(
+    "click",
+    function() {
 
-    try {
+      try {
 
-      pendingBooking =
-        calculateFareDetails();
+        pendingBooking =
+          calculateFareDetails();
 
-      renderFare(
-        pendingBooking
-      );
 
-    } catch (error) {
+        renderFare(
+          pendingBooking
+        );
 
-      alert(
-        error.message
-      );
+      } catch (error) {
+
+        alert(
+          error.message
+        );
+
+      }
 
     }
-
-  }
-);
+  );
 
 
-$("confirmBookingBtn").addEventListener(
-  "click",
-  function() {
+$("confirmBookingBtn")
+  .addEventListener(
+    "click",
+    function() {
 
-    if (!pendingBooking) {
+      if (!pendingBooking) {
 
-      alert(
-        "Sila kira tambang dahulu."
-      );
+        alert(
+          "Sila kira tambang dahulu."
+        );
 
-      return;
-    }
+        return;
 
-    $("bookingSummary").innerHTML = `
+      }
 
-      <div class="row">
-        <span>Pickup</span>
-        <strong>
-          ${escapeHtml(
-            pendingBooking.pickup
-          )}
-        </strong>
-      </div>
 
-      <div class="row">
-        <span>Destinasi</span>
-        <strong>
-          ${escapeHtml(
-            pendingBooking.destination
-          )}
-        </strong>
-      </div>
+      $("bookingSummary")
+        .innerHTML = `
 
-      <div class="row">
-        <span>Tarikh</span>
-        <strong>
-          ${escapeHtml(
-            pendingBooking.date
-          )}
-        </strong>
-      </div>
+          <div class="row">
+            <span>
+              Pickup
+            </span>
 
-      <div class="row">
-        <span>Masa</span>
-        <strong>
-          ${escapeHtml(
-            pendingBooking.time
-          )}
-        </strong>
-      </div>
+            <strong>
+              ${escapeHtml(
+                pendingBooking.pickup
+              )}
+            </strong>
+          </div>
 
-      <div class="row">
-        <span>Jarak</span>
-        <strong>
-          ${pendingBooking.distance} km
-        </strong>
-      </div>
 
-      <div class="row">
-        <span>Jenis</span>
-        <strong>
+          <div class="row">
+            <span>
+              Destinasi
+            </span>
+
+            <strong>
+              ${escapeHtml(
+                pendingBooking.destination
+              )}
+            </strong>
+          </div>
+
+
+          <div class="row">
+            <span>
+              Tarikh
+            </span>
+
+            <strong>
+              ${escapeHtml(
+                pendingBooking.date
+              )}
+            </strong>
+          </div>
+
+
+          <div class="row">
+            <span>
+              Masa
+            </span>
+
+            <strong>
+              ${escapeHtml(
+                pendingBooking.time
+              )}
+            </strong>
+          </div>
+
+
+          <div class="row">
+            <span>
+              Jarak
+            </span>
+
+            <strong>
+              ${pendingBooking.distance}
+              km
+            </strong>
+          </div>
+
+
+          <div class="row">
+            <span>
+              Jenis
+            </span>
+
+            <strong>
+              ${
+                pendingBooking.seatType ===
+                "six"
+                  ? "6-seater"
+                  : "4-seater"
+              }
+            </strong>
+          </div>
+
+
           ${
-            pendingBooking.seatType === "six"
-              ? "6-seater"
-              : "4-seater"
+            pendingBooking.optionalCharge > 0
+              ? `
+                <div class="optional-charge">
+
+                  <strong>
+                    Caj tambahan: RM1
+                  </strong>
+
+                  Dikenakan atas faktor
+                  cuaca/kesesakan.
+                  Caj tambahan ini akan
+                  dimasukkan terus dalam
+                  jumlah akhir.
+
+                </div>
+              `
+              : ""
           }
-        </strong>
-      </div>
 
-      <div class="fare-box">
-        <div>Jumlah</div>
-        <div class="fare-total">
-          ${money(
-            pendingBooking.total
-          )}
-        </div>
-      </div>
 
-    `;
+          <div class="fare-box">
 
-    showPage(
-      "bookingSummaryPage"
-    );
+            <div>
+              Jumlah akhir
+            </div>
 
-  }
-);
+            <div class="fare-total">
+              ${money(
+                pendingBooking.total
+              )}
+            </div>
+
+          </div>
+
+        `;
+
+
+      showPage(
+        "bookingSummaryPage"
+      );
+
+    }
+  );
 
 
 $("finalConfirmBookingBtn")
@@ -1894,7 +3476,9 @@ $("finalConfirmBookingBtn")
         );
 
         return;
+
       }
+
 
       if (!pendingBooking) {
 
@@ -1903,7 +3487,9 @@ $("finalConfirmBookingBtn")
         );
 
         return;
+
       }
+
 
       const booking = {
 
@@ -1944,6 +3530,30 @@ $("finalConfirmBookingBtn")
         fare:
           pendingBooking.total,
 
+        baseFare:
+          pendingBooking.baseFare,
+
+        areaCharge:
+          pendingBooking.areaCharge,
+
+        peakCharge:
+          pendingBooking.peakCharge,
+
+        nightCharge:
+          pendingBooking.nightCharge,
+
+        sixSeaterCharge:
+          pendingBooking.sixSeaterCharge,
+
+        optionalCharge:
+          pendingBooking.optionalCharge,
+
+        optionalChargeArea:
+          pendingBooking.optionalChargeArea,
+
+        optionalChargeReason:
+          pendingBooking.optionalChargeReason,
+
         isKlia:
           pendingBooking.isKlia,
 
@@ -1951,7 +3561,8 @@ $("finalConfirmBookingBtn")
           "pending",
 
         createdAt:
-          new Date().toISOString(),
+          new Date()
+            .toISOString(),
 
         driverId:
           null,
@@ -1961,26 +3572,33 @@ $("finalConfirmBookingBtn")
 
       };
 
+
       bookings.push(
         booking
       );
 
+
       localStorage.setItem(
         "uitmRideBookings",
-        JSON.stringify(bookings)
+        JSON.stringify(
+          bookings
+        )
       );
 
-      pendingBooking = null;
+
+      pendingBooking =
+        null;
+
 
       alert(
-        language === "ms"
-          ? "Tempahan berjaya dihantar."
-          : "Booking submitted successfully."
+        "Tempahan berjaya dihantar."
       );
+
 
       showPage(
         "myBookingsPage"
       );
+
 
       renderBookings();
 
@@ -1989,21 +3607,35 @@ $("finalConfirmBookingBtn")
 
 
 /* =========================================================
-   BOOKINGS DISPLAY
+   BOOKINGS
 ========================================================= */
 
-function statusLabel(status) {
+function statusLabel(
+  status
+) {
 
   const labels = {
 
-    pending: "Menunggu driver",
-    accepted: "Driver menerima",
-    arrived: "Driver tiba",
-    ongoing: "Dalam perjalanan",
-    completed: "Selesai",
-    cancelled: "Dibatalkan"
+    pending:
+      "Menunggu driver",
+
+    accepted:
+      "Driver menerima",
+
+    arrived:
+      "Driver tiba",
+
+    ongoing:
+      "Dalam perjalanan",
+
+    completed:
+      "Selesai",
+
+    cancelled:
+      "Dibatalkan"
 
   };
+
 
   return labels[status] ||
     status;
@@ -2016,8 +3648,10 @@ function renderBookings() {
   const list =
     $("bookingsList");
 
+
   const userId =
     currentUser?.id;
+
 
   const userBookings =
     bookings.filter(
@@ -2025,12 +3659,18 @@ function renderBookings() {
 
         return String(
           booking.passengerId
-        ) === String(userId);
+        ) ===
+        String(
+          userId
+        );
 
       }
     );
 
-  if (!userBookings.length) {
+
+  if (
+    !userBookings.length
+  ) {
 
     list.innerHTML = `
 
@@ -2043,7 +3683,9 @@ function renderBookings() {
     `;
 
     return;
+
   }
+
 
   list.innerHTML =
     userBookings
@@ -2082,7 +3724,8 @@ function renderBookings() {
               </p>
 
               <div>
-                ${booking.distance} km
+                ${booking.distance}
+                km
               </div>
 
               <strong>
@@ -2091,24 +3734,42 @@ function renderBookings() {
                 )}
               </strong>
 
+              ${
+                Number(
+                  booking.optionalCharge
+                ) > 0
+                  ? `
+                    <div class="optional-charge">
+                      Caj tambahan: RM1
+                    </div>
+                  `
+                  : ""
+              }
+
               <br>
 
               <span class="status ${
-                booking.status === "cancelled"
+                booking.status ===
+                "cancelled"
                   ? "status-cancelled"
-                  : booking.status === "completed"
+                  : booking.status ===
+                    "completed"
                     ? "status-active"
                     : ""
               }">
+
                 ${escapeHtml(
                   statusLabel(
                     booking.status
                   )
                 )}
+
               </span>
 
+
               ${
-                booking.status === "pending"
+                booking.status ===
+                "pending"
                   ? `
                     <button
                       class="btn btn-danger cancel-booking"
@@ -2131,8 +3792,11 @@ function renderBookings() {
       )
       .join("");
 
+
   document
-    .querySelectorAll(".cancel-booking")
+    .querySelectorAll(
+      ".cancel-booking"
+    )
     .forEach(
       function(button) {
 
@@ -2158,16 +3822,22 @@ function cancelBooking(id) {
   const booking =
     bookings.find(
       function(item) {
-        return item.id === id;
+
+        return item.id ===
+          id;
+
       }
     );
+
 
   if (!booking) {
     return;
   }
 
+
   if (
-    booking.status !== "pending"
+    booking.status !==
+    "pending"
   ) {
 
     alert(
@@ -2175,18 +3845,26 @@ function cancelBooking(id) {
     );
 
     return;
+
   }
+
 
   booking.status =
     "cancelled";
 
+
   booking.cancelledAt =
-    new Date().toISOString();
+    new Date()
+      .toISOString();
+
 
   localStorage.setItem(
     "uitmRideBookings",
-    JSON.stringify(bookings)
+    JSON.stringify(
+      bookings
+    )
   );
+
 
   renderBookings();
 
@@ -2197,32 +3875,301 @@ function cancelBooking(id) {
    DRIVER
 ========================================================= */
 
+function getDriverPackageInfo() {
+
+  const application =
+    getDriverApplication();
+
+
+  if (
+    !application
+  ) {
+
+    return {
+      status:
+        "none",
+      package:
+        null,
+      start:
+        null,
+      end:
+        null
+    };
+
+  }
+
+
+  return {
+
+    status:
+      application.driverStatus ||
+      application.status,
+
+    package:
+      application.package ||
+      null,
+
+    start:
+      application.packageStart ||
+      null,
+
+    end:
+      application.packageEnd ||
+      null
+
+  };
+
+}
+
+
 function renderDriverPage() {
 
-  $("driverStatusText").textContent =
-    driverStatus === "available"
-      ? "Tersedia"
-      : "Tidak tersedia";
+  const application =
+    getDriverApplication();
+
+
+  if (
+    !application ||
+    application.status !==
+    "approved"
+  ) {
+
+    $("driverStatusCard")
+      .innerHTML = `
+
+        <div class="notice">
+          🟡 <strong>Menunggu kelulusan</strong><br><br>
+          Permohonan driver anda masih menunggu
+          semakan pihak pengurusan.
+        </div>
+
+      `;
+
+    $("driverPackageCard")
+      .innerHTML = `
+
+        <div class="notice info">
+          Pakej driver hanya boleh dipilih
+          selepas permohonan diluluskan.
+        </div>
+
+      `;
+
+    return;
+
+  }
+
+
+  const driverInfo =
+    getDriverPackageInfo();
+
+
+  let statusText =
+    "Diluluskan";
+
+
+  if (
+    driverInfo.status ===
+    "active"
+  ) {
+
+    statusText =
+      "🟢 Aktif";
+
+  }
+
+
+  if (
+    driverInfo.status ===
+    "expired"
+  ) {
+
+    statusText =
+      "🔴 Tamat tempoh";
+
+  }
+
+
+  $("driverStatusCard")
+    .innerHTML = `
+
+      <div class="row">
+        <strong>
+          Status Driver
+        </strong>
+
+        <strong>
+          ${statusText}
+        </strong>
+      </div>
+
+      <div class="row">
+        <span>
+          Kenderaan
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            application.vehicleModel
+          )}
+        </strong>
+      </div>
+
+      <div class="row">
+        <span>
+          Warna
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            application.vehicleColor
+          )}
+        </strong>
+      </div>
+
+      <div class="row">
+        <span>
+          No. pendaftaran
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            application.vehiclePlate
+          )}
+        </strong>
+      </div>
+
+    `;
+
+
+  $("driverPackageCard")
+    .innerHTML = `
+
+      <h3>
+        Pakej Driver
+      </h3>
+
+      ${
+        driverInfo.package
+          ? `
+            <div class="package-card">
+
+              <strong>
+                Pakej semasa
+              </strong>
+
+              <div class="package-price">
+                ${packageLabel(
+                  driverInfo.package
+                )}
+              </div>
+
+              ${
+                driverInfo.end
+                  ? `
+                    <div>
+                      Tamat:
+                      ${escapeHtml(
+                        driverInfo.end
+                      )}
+                    </div>
+                  `
+                  : ""
+              }
+
+            </div>
+          `
+          : `
+            <div class="notice info">
+
+              Permohonan telah diluluskan.
+              Pakej boleh dipilih selepas
+              proses kelulusan dan bayaran
+              disediakan.
+
+            </div>
+          `
+      }
+
+      <div class="package-card">
+        <strong>
+          1 Hari
+        </strong>
+        <div class="package-price">
+          RM5
+        </div>
+      </div>
+
+      <div class="package-card">
+        <strong>
+          7 Hari
+        </strong>
+        <div class="package-price">
+          RM15
+        </div>
+      </div>
+
+      <div class="package-card">
+        <strong>
+          30 Hari
+        </strong>
+        <div class="package-price">
+          RM25
+        </div>
+      </div>
+
+    `;
+
 
   renderDriverBookings();
 
 }
 
 
+function packageLabel(
+  packageType
+) {
+
+  const labels = {
+
+    "1day":
+      "1 Hari — RM5",
+
+    "7days":
+      "7 Hari — RM15",
+
+    "30days":
+      "30 Hari — RM25"
+
+  };
+
+
+  return labels[
+    packageType
+  ] ||
+    packageType ||
+    "-";
+
+}
+
+
 $("toggleDriverStatusBtn")
-  .addEventListener(
+  ?.addEventListener(
     "click",
     function() {
 
       driverStatus =
-        driverStatus === "available"
+        driverStatus ===
+        "available"
           ? "offline"
           : "available";
+
 
       localStorage.setItem(
         "uitmRideDriverStatus",
         driverStatus
       );
+
 
       renderDriverPage();
 
@@ -2235,39 +4182,45 @@ function renderDriverBookings() {
   const list =
     $("driverBookingsList");
 
+
   const driverId =
     currentUser?.id;
+
 
   const driverBookings =
     bookings.filter(
       function(booking) {
 
-        return (
-          String(
-            booking.driverId
-          ) === String(driverId)
+        return String(
+          booking.driverId
+        ) ===
+        String(
+          driverId
         );
 
       }
     );
+
 
   const pendingBookings =
     bookings.filter(
       function(booking) {
 
         return (
-          booking.status === "pending" &&
+          booking.status ===
+          "pending" &&
           !booking.driverId
         );
 
       }
     );
 
-  const all =
-    [
-      ...pendingBookings,
-      ...driverBookings
-    ];
+
+  const all = [
+    ...pendingBookings,
+    ...driverBookings
+  ];
+
 
   if (!all.length) {
 
@@ -2277,7 +4230,9 @@ function renderDriverBookings() {
       </p>`;
 
     return;
+
   }
+
 
   list.innerHTML =
     all.map(
@@ -2304,13 +4259,18 @@ function renderDriverBookings() {
             </p>
 
             <p>
-              ${booking.date}
-              ${booking.time}
+              ${escapeHtml(
+                booking.date
+              )}
+              ${escapeHtml(
+                booking.time
+              )}
             </p>
 
             <p>
               Jarak:
-              ${booking.distance} km
+              ${booking.distance}
+              km
             </p>
 
             <strong>
@@ -2318,6 +4278,18 @@ function renderDriverBookings() {
                 booking.fare
               )}
             </strong>
+
+            ${
+              Number(
+                booking.optionalCharge
+              ) > 0
+                ? `
+                  <div class="optional-charge">
+                    Caj tambahan RM1
+                  </div>
+                `
+                : ""
+            }
 
             <br>
 
@@ -2330,7 +4302,8 @@ function renderDriverBookings() {
             </span>
 
             ${
-              booking.status === "pending" &&
+              booking.status ===
+                "pending" &&
               !booking.driverId
                 ? `
                   <button
@@ -2350,8 +4323,12 @@ function renderDriverBookings() {
               booking.driverId &&
               String(
                 booking.driverId
-              ) === String(driverId) &&
-              booking.status === "accepted"
+              ) ===
+              String(
+                driverId
+              ) &&
+              booking.status ===
+              "accepted"
                 ? `
                   <button
                     class="btn btn-primary start-trip"
@@ -2374,8 +4351,11 @@ function renderDriverBookings() {
     )
     .join("");
 
+
   document
-    .querySelectorAll(".accept-booking")
+    .querySelectorAll(
+      ".accept-booking"
+    )
     .forEach(
       function(button) {
 
@@ -2393,8 +4373,11 @@ function renderDriverBookings() {
       }
     );
 
+
   document
-    .querySelectorAll(".start-trip")
+    .querySelectorAll(
+      ".start-trip"
+    )
     .forEach(
       function(button) {
 
@@ -2417,19 +4400,38 @@ function renderDriverBookings() {
 
 function acceptBooking(id) {
 
+  if (
+    !isDriverApproved()
+  ) {
+
+    alert(
+      "Akaun driver belum diluluskan."
+    );
+
+    return;
+
+  }
+
+
   const booking =
     bookings.find(
       function(item) {
-        return item.id === id;
+
+        return item.id ===
+          id;
+
       }
     );
+
 
   if (!booking) {
     return;
   }
 
+
   if (
-    booking.status !== "pending" ||
+    booking.status !==
+    "pending" ||
     booking.driverId
   ) {
 
@@ -2438,28 +4440,39 @@ function acceptBooking(id) {
     );
 
     return;
+
   }
+
 
   booking.driverId =
     currentUser.id;
 
+
   booking.driverName =
     currentUser.name;
+
 
   booking.status =
     "accepted";
 
+
   booking.acceptedAt =
-    new Date().toISOString();
+    new Date()
+      .toISOString();
+
 
   localStorage.setItem(
     "uitmRideBookings",
-    JSON.stringify(bookings)
+    JSON.stringify(
+      bookings
+    )
   );
+
 
   alert(
     "Tempahan berjaya diterima."
   );
+
 
   renderDriverPage();
 
@@ -2471,33 +4484,47 @@ function startTrip(id) {
   const booking =
     bookings.find(
       function(item) {
-        return item.id === id;
+
+        return item.id ===
+          id;
+
       }
     );
+
 
   if (!booking) {
     return;
   }
 
+
   booking.status =
     "arrived";
+
 
   activeTrip =
     booking;
 
+
   localStorage.setItem(
     "uitmRideBookings",
-    JSON.stringify(bookings)
+    JSON.stringify(
+      bookings
+    )
   );
+
 
   localStorage.setItem(
     "uitmRideActiveTrip",
-    JSON.stringify(activeTrip)
+    JSON.stringify(
+      activeTrip
+    )
   );
+
 
   showPage(
     "arrivedPage"
   );
+
 
   renderActiveTrip();
 
@@ -2512,73 +4539,96 @@ function renderActiveTrip() {
 
   if (!activeTrip) {
 
-    $("activeTripInfo").innerHTML =
+    $("activeTripInfo")
+      .innerHTML =
       `<p class="muted">
         Tiada perjalanan aktif.
       </p>`;
 
     return;
+
   }
 
-  $("activeTripInfo").innerHTML = `
 
-    <div class="booking-item">
+  $("activeTripInfo")
+    .innerHTML = `
 
-      <strong>
-        ${escapeHtml(
-          activeTrip.id
-        )}
-      </strong>
+      <div class="booking-item">
 
-      <p>
-        ${escapeHtml(
-          activeTrip.pickup
-        )}
-        →
-        ${escapeHtml(
-          activeTrip.destination
-        )}
-      </p>
-
-      <p>
-        Tambang:
         <strong>
-          ${money(
-            activeTrip.fare
+          ${escapeHtml(
+            activeTrip.id
           )}
         </strong>
-      </p>
 
-      <p>
-        Tol:
-        <strong>
-          ${money(
-            activeTrip.toll || 0
+        <p>
+          ${escapeHtml(
+            activeTrip.pickup
           )}
-        </strong>
-      </p>
-
-      <p>
-        Jumlah:
-        <strong>
-          ${money(
-            Number(activeTrip.fare || 0) +
-            Number(activeTrip.toll || 0)
+          →
+          ${escapeHtml(
+            activeTrip.destination
           )}
-        </strong>
-      </p>
+        </p>
 
-      <span class="status status-active">
-        ${escapeHtml(
-          statusLabel(
-            activeTrip.status
-          )
-        )}
-      </span>
+        <p>
+          Tambang:
+          <strong>
+            ${money(
+              activeTrip.fare
+            )}
+          </strong>
+        </p>
 
-    </div>
+        ${
+          Number(
+            activeTrip.optionalCharge
+          ) > 0
+            ? `
+              <div class="optional-charge">
+                Caj tambahan: RM1
+              </div>
+            `
+            : ""
+        }
 
-  `;
+        <p>
+          Tol:
+          <strong>
+            ${money(
+              activeTrip.toll ||
+              0
+            )}
+          </strong>
+        </p>
+
+        <p>
+          Jumlah:
+          <strong>
+            ${money(
+              Number(
+                activeTrip.fare ||
+                0
+              ) +
+              Number(
+                activeTrip.toll ||
+                0
+              )
+            )}
+          </strong>
+        </p>
+
+        <span class="status status-active">
+          ${escapeHtml(
+            statusLabel(
+              activeTrip.status
+            )
+          )}
+        </span>
+
+      </div>
+
+    `;
 
 }
 
@@ -2592,12 +4642,15 @@ $("arrivedBtn")
         return;
       }
 
+
       activeTrip.status =
         "ongoing";
+
 
       updateActiveBooking();
 
       renderActiveTrip();
+
 
       alert(
         "Perjalanan telah bermula."
@@ -2616,20 +4669,28 @@ $("tollBtn")
         return;
       }
 
+
       const input =
         prompt(
           "Masukkan jumlah tol (RM):"
         );
 
-      if (input === null) {
+
+      if (
+        input === null
+      ) {
         return;
       }
+
 
       const toll =
         Number(input);
 
+
       if (
-        !Number.isFinite(toll) ||
+        !Number.isFinite(
+          toll
+        ) ||
         toll < 0
       ) {
 
@@ -2638,12 +4699,17 @@ $("tollBtn")
         );
 
         return;
+
       }
+
 
       activeTrip.toll =
         Number(
-          activeTrip.toll || 0
-        ) + toll;
+          activeTrip.toll ||
+          0
+        ) +
+        toll;
+
 
       updateActiveBooking();
 
@@ -2665,50 +4731,71 @@ $("finishTripBtn")
         );
 
         return;
+
       }
+
 
       activeTrip.status =
         "completed";
 
+
       activeTrip.completedAt =
-        new Date().toISOString();
+        new Date()
+          .toISOString();
+
 
       updateActiveBooking();
 
+
       income.trips =
         Number(
-          income.trips || 0
-        ) + 1;
+          income.trips ||
+          0
+        ) +
+        1;
+
 
       income.fare =
         Number(
-          income.fare || 0
+          income.fare ||
+          0
         ) +
         Number(
-          activeTrip.fare || 0
+          activeTrip.fare ||
+          0
         ) +
         Number(
-          activeTrip.toll || 0
+          activeTrip.toll ||
+          0
         );
+
 
       localStorage.setItem(
         "uitmRideIncome",
-        JSON.stringify(income)
+        JSON.stringify(
+          income
+        )
       );
 
-      activeTrip = null;
+
+      activeTrip =
+        null;
+
 
       localStorage.removeItem(
         "uitmRideActiveTrip"
       );
 
+
       alert(
         "Perjalanan selesai."
       );
 
+
       showPage(
         "driverPage"
       );
+
 
       renderDriverPage();
 
@@ -2722,30 +4809,42 @@ function updateActiveBooking() {
     return;
   }
 
+
   const booking =
     bookings.find(
       function(item) {
-        return item.id === activeTrip.id;
+
+        return item.id ===
+          activeTrip.id;
+
       }
     );
+
 
   if (!booking) {
     return;
   }
+
 
   Object.assign(
     booking,
     activeTrip
   );
 
+
   localStorage.setItem(
     "uitmRideBookings",
-    JSON.stringify(bookings)
+    JSON.stringify(
+      bookings
+    )
   );
+
 
   localStorage.setItem(
     "uitmRideActiveTrip",
-    JSON.stringify(activeTrip)
+    JSON.stringify(
+      activeTrip
+    )
   );
 
 }
@@ -2755,101 +4854,347 @@ function updateActiveBooking() {
    DRIVER REGISTRATION
 ========================================================= */
 
+function prepareDriverRegistration() {
+
+  if (!currentUser) {
+    return;
+  }
+
+
+  $("driverFullName").value =
+    currentUser.name ||
+    "";
+
+
+  $("driverTelegramId").value =
+    currentUser.id ||
+    "";
+
+
+  $("driverPhone").value =
+    currentUser.phone ||
+    "";
+
+
+  const existing =
+    getDriverApplication();
+
+
+  if (existing) {
+
+    $("driverPhone").value =
+      existing.phone ||
+      currentUser.phone ||
+      "";
+
+
+    $("vehicleModel").value =
+      existing.vehicleModel ||
+      "";
+
+
+    $("vehicleColor").value =
+      existing.vehicleColor ||
+      "";
+
+
+    $("vehicleCategory").value =
+      existing.vehicleCategory ||
+      "Sedan";
+
+
+    $("passengerCapacity").value =
+      String(
+        existing.passengerCapacity ||
+        "4"
+      );
+
+
+    $("vehiclePlate").value =
+      existing.vehiclePlate ||
+      "";
+
+
+    $("registeredVehicleConfirmed")
+      .checked =
+      Boolean(
+        existing.registeredVehicleConfirmed
+      );
+
+  }
+
+}
+
+
 $("submitDriverApplicationBtn")
   .addEventListener(
     "click",
+    submitDriverApplication
+  );
+
+
+function submitDriverApplication() {
+
+  if (!currentUser) {
+
+    alert(
+      "Sila daftar dahulu."
+    );
+
+    return;
+
+  }
+
+
+  const phone =
+    $("driverPhone")
+      .value
+      .trim();
+
+
+  const model =
+    $("vehicleModel")
+      .value
+      .trim();
+
+
+  const color =
+    $("vehicleColor")
+      .value
+      .trim();
+
+
+  const category =
+    $("vehicleCategory")
+      .value;
+
+
+  const capacity =
+    Number(
+      $("passengerCapacity")
+        .value
+    );
+
+
+  const plate =
+    $("vehiclePlate")
+      .value
+      .trim()
+      .toUpperCase();
+
+
+  const confirmed =
+    $("registeredVehicleConfirmed")
+      .checked;
+
+
+  if (
+    !phone ||
+    !model ||
+    !color ||
+    !category ||
+    !capacity ||
+    !plate
+  ) {
+
+    alert(
+      "Sila lengkapkan semua maklumat."
+    );
+
+    return;
+
+  }
+
+
+  if (!confirmed) {
+
+    alert(
+      "Sila sahkan bahawa kenderaan anda berdaftar secara sah."
+    );
+
+    return;
+
+  }
+
+
+  const existing =
+    getDriverApplication();
+
+
+  if (
+    existing &&
+    existing.status ===
+    "pending"
+  ) {
+
+    alert(
+      "Anda sudah mempunyai permohonan driver yang sedang menunggu kelulusan."
+    );
+
+    return;
+
+  }
+
+
+  const application = {
+
+    id:
+      "DRV-" +
+      Date.now(),
+
+    userId:
+      currentUser.id,
+
+    name:
+      currentUser.name,
+
+    telegramId:
+      currentUser.id,
+
+    phone,
+
+    vehicleModel:
+      model,
+
+    vehicleColor:
+      color,
+
+    vehicleCategory:
+      category,
+
+    passengerCapacity:
+      capacity,
+
+    vehiclePlate:
+      plate,
+
+    registeredVehicleConfirmed:
+      confirmed,
+
+    status:
+      "pending",
+
+    driverStatus:
+      "pending",
+
+    package:
+      null,
+
+    packageStart:
+      null,
+
+    packageEnd:
+      null,
+
+    createdAt:
+      new Date()
+        .toISOString()
+
+  };
+
+
+  driverApplications.push(
+    application
+  );
+
+
+  localStorage.setItem(
+    "uitmRideDriverApplications",
+    JSON.stringify(
+      driverApplications
+    )
+  );
+
+
+  currentUser.driverStatus =
+    "pending";
+
+
+  localStorage.setItem(
+    "uitmRideUser",
+    JSON.stringify(
+      currentUser
+    )
+  );
+
+
+  alert(
+    "Permohonan driver berjaya dihantar.\n\nStatus: 🟡 Menunggu kelulusan"
+  );
+
+
+  showMain();
+
+}
+
+
+/* =========================================================
+   DRIVER COMMUNITY
+========================================================= */
+
+function openDriverCommunity() {
+
+  if (!currentUser) {
+    return;
+  }
+
+
+  const application =
+    getDriverApplication();
+
+
+  const allowed =
+    isManagement() ||
+    (
+      application &&
+      (
+        application.status ===
+        "approved" ||
+        application.status ===
+        "expired"
+      )
+    );
+
+
+  if (!allowed) {
+
+    alert(
+      "Akses Driver Community hanya diberikan kepada driver yang telah diluluskan dan pihak pengurusan."
+    );
+
+    return;
+
+  }
+
+
+  showPage(
+    "driverCommunityPage"
+  );
+
+
+  $("joinDriverCommunityBtn")
+    .onclick =
     function() {
 
-      if (!currentUser) {
+      if (!driverCommunityLink) {
 
         alert(
-          "Sila daftar dahulu."
+          "Link Driver Community belum ditetapkan oleh pihak pengurusan."
         );
 
         return;
+
       }
 
-      const phone =
-        $("driverPhone")
-          .value
-          .trim();
 
-      const model =
-        $("vehicleModel")
-          .value
-          .trim();
-
-      const plate =
-        $("vehiclePlate")
-          .value
-          .trim();
-
-      const packageType =
-        $("driverPackage")
-          .value;
-
-      if (
-        !phone ||
-        !model ||
-        !plate
-      ) {
-
-        alert(
-          "Sila lengkapkan semua maklumat."
-        );
-
-        return;
-      }
-
-      const application = {
-
-        id:
-          "DRV-" +
-          Date.now(),
-
-        userId:
-          currentUser.id,
-
-        name:
-          currentUser.name,
-
-        phone,
-        vehicleModel:
-          model,
-
-        vehiclePlate:
-          plate,
-
-        package:
-          packageType,
-
-        status:
-          "pending",
-
-        createdAt:
-          new Date().toISOString()
-
-      };
-
-      driverApplications.push(
-        application
+      window.open(
+        driverCommunityLink,
+        "_blank"
       );
 
-      localStorage.setItem(
-        "uitmRideDriverApplications",
-        JSON.stringify(
-          driverApplications
-        )
-      );
+    };
 
-      alert(
-        "Permohonan driver berjaya dihantar."
-      );
-
-      showMain();
-
-    }
-  );
+}
 
 
 /* =========================================================
@@ -2862,54 +5207,162 @@ function renderProfile() {
     return;
   }
 
+
   const roles =
-    Array.isArray(
-      currentUser.roles
-    )
-      ? currentUser.roles
-      : [];
+    getRoles();
 
-  $("profileInfo").innerHTML = `
 
-    <div class="row">
-      <span>Nama</span>
-      <strong>
-        ${escapeHtml(
-          currentUser.name
-        )}
-      </strong>
-    </div>
+  const application =
+    getDriverApplication();
 
-    <div class="row">
-      <span>Telegram ID</span>
-      <strong>
-        ${escapeHtml(
-          currentUser.id
-        )}
-      </strong>
-    </div>
 
-    <div class="row">
-      <span>Peranan</span>
-      <strong>
-        ${escapeHtml(
-          roles.join(", ")
-        )}
-      </strong>
-    </div>
+  let driverStatusText =
+    "Belum mendaftar";
 
-    <div class="row">
-      <span>Driver</span>
-      <strong>
-        ${
-          currentUser.driverApproved
-            ? "Diluluskan"
-            : "Belum diluluskan"
-        }
-      </strong>
-    </div>
 
-  `;
+  if (
+    application
+  ) {
+
+    if (
+      application.status ===
+      "pending"
+    ) {
+
+      driverStatusText =
+        "🟡 Menunggu kelulusan";
+
+    } else if (
+      application.status ===
+      "approved"
+    ) {
+
+      driverStatusText =
+        application.driverStatus ===
+        "active"
+          ? "🟢 Aktif"
+          : "🟢 Diluluskan";
+
+    } else if (
+      application.status ===
+      "expired"
+    ) {
+
+      driverStatusText =
+        "🔴 Tamat tempoh";
+
+    } else if (
+      application.status ===
+      "rejected"
+    ) {
+
+      driverStatusText =
+        "❌ Ditolak";
+
+    }
+
+  }
+
+
+  $("profileInfo")
+    .innerHTML = `
+
+      <div class="row">
+        <span>
+          Nama
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            currentUser.name
+          )}
+        </strong>
+      </div>
+
+
+      <div class="row">
+        <span>
+          Telegram ID
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            currentUser.id
+          )}
+        </strong>
+      </div>
+
+
+      <div class="row">
+        <span>
+          No. telefon
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            currentUser.phone ||
+            "-"
+          )}
+        </strong>
+      </div>
+
+
+      <div class="row">
+        <span>
+          Status pengguna
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            currentUser.userStatus ||
+            "-"
+          )}
+        </strong>
+      </div>
+
+
+      <div class="row">
+        <span>
+          Kampus
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            currentUser.campus ||
+            "-"
+          )}
+        </strong>
+      </div>
+
+
+      <div class="row">
+        <span>
+          Peranan
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            roles.join(
+              " / "
+            )
+          )}
+        </strong>
+      </div>
+
+
+      <div class="row">
+        <span>
+          Status Driver
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            driverStatusText
+          )}
+        </strong>
+      </div>
+
+    `;
 
 }
 
@@ -2923,10 +5376,27 @@ $("logoutBtn")
         "uitmRideUser"
       );
 
-      currentUser = null;
+
+      currentUser =
+        null;
+
 
       $("nameInput").value =
         "";
+
+
+      $("phoneInput").value =
+        "";
+
+
+      $("userStatusInput")
+        .value =
+        "";
+
+
+      $("campusInput").value =
+        "";
+
 
       showPage(
         "registerPage"
@@ -2937,46 +5407,42 @@ $("logoutBtn")
 
 
 /* =========================================================
-   ADMIN
+   ADMIN / MANAGEMENT
 ========================================================= */
-
-function isAdmin() {
-
-  if (!currentUser) {
-    return false;
-  }
-
-  const roles =
-    Array.isArray(
-      currentUser.roles
-    )
-      ? currentUser.roles
-      : [];
-
-  return (
-    roles.includes("admin") ||
-    roles.includes("founder")
-  );
-
-}
-
 
 function renderAdmin() {
 
-  if (!isAdmin()) {
+  if (!isManagement()) {
 
     alert(
-      "Akses admin tidak dibenarkan."
+      "Akses pengurusan tidak dibenarkan."
     );
+
 
     showMain();
 
     return;
+
   }
 
+
   renderAdminStats();
+
   renderDriverApplications();
+
   loadFareSettings();
+
+  $("driverCommunityLinkInput")
+    .value =
+    driverCommunityLink;
+
+
+  $("managementChannelLinkInput")
+    .value =
+    managementChannelLink;
+
+
+  renderOptionalChargeStatus();
 
 }
 
@@ -2986,58 +5452,109 @@ function renderAdminStats() {
   const totalBookings =
     bookings.length;
 
+
   const completed =
     bookings.filter(
       function(item) {
-        return item.status === "completed";
+
+        return item.status ===
+          "completed";
+
       }
     ).length;
+
 
   const pending =
     bookings.filter(
       function(item) {
-        return item.status === "pending";
+
+        return item.status ===
+          "pending";
+
       }
     ).length;
 
-  const drivers =
+
+  const approvedDrivers =
     driverApplications.filter(
       function(item) {
-        return item.status === "approved";
+
+        return item.status ===
+          "approved";
+
       }
     ).length;
 
-  $("adminStats").innerHTML = `
 
-    <div class="row">
-      <span>Jumlah tempahan</span>
-      <strong>
-        ${totalBookings}
-      </strong>
-    </div>
+  const pendingDrivers =
+    driverApplications.filter(
+      function(item) {
 
-    <div class="row">
-      <span>Selesai</span>
-      <strong>
-        ${completed}
-      </strong>
-    </div>
+        return item.status ===
+          "pending";
 
-    <div class="row">
-      <span>Menunggu</span>
-      <strong>
-        ${pending}
-      </strong>
-    </div>
+      }
+    ).length;
 
-    <div class="row">
-      <span>Driver diluluskan</span>
-      <strong>
-        ${drivers}
-      </strong>
-    </div>
 
-  `;
+  $("adminStats")
+    .innerHTML = `
+
+      <div class="row">
+        <span>
+          Jumlah tempahan
+        </span>
+
+        <strong>
+          ${totalBookings}
+        </strong>
+      </div>
+
+
+      <div class="row">
+        <span>
+          Selesai
+        </span>
+
+        <strong>
+          ${completed}
+        </strong>
+      </div>
+
+
+      <div class="row">
+        <span>
+          Tempahan menunggu
+        </span>
+
+        <strong>
+          ${pending}
+        </strong>
+      </div>
+
+
+      <div class="row">
+        <span>
+          Driver diluluskan
+        </span>
+
+        <strong>
+          ${approvedDrivers}
+        </strong>
+      </div>
+
+
+      <div class="row">
+        <span>
+          Permohonan menunggu
+        </span>
+
+        <strong>
+          ${pendingDrivers}
+        </strong>
+      </div>
+
+    `;
 
 }
 
@@ -3046,6 +5563,7 @@ function renderDriverApplications() {
 
   const list =
     $("driverApplicationsList");
+
 
   if (
     !driverApplications.length
@@ -3057,7 +5575,9 @@ function renderDriverApplications() {
       </p>`;
 
     return;
+
   }
+
 
   list.innerHTML =
     driverApplications
@@ -3077,6 +5597,14 @@ function renderDriverApplications() {
               </strong>
 
               <p>
+                Telegram ID:
+                ${escapeHtml(
+                  application.telegramId ||
+                  application.userId
+                )}
+              </p>
+
+              <p>
                 Telefon:
                 ${escapeHtml(
                   application.phone
@@ -3091,27 +5619,63 @@ function renderDriverApplications() {
               </p>
 
               <p>
+                Warna:
+                ${escapeHtml(
+                  application.vehicleColor
+                )}
+              </p>
+
+              <p>
+                Kategori:
+                ${escapeHtml(
+                  application.vehicleCategory
+                )}
+              </p>
+
+              <p>
+                Kapasiti:
+                ${escapeHtml(
+                  application.passengerCapacity
+                )}
+                penumpang
+              </p>
+
+              <p>
                 No. pendaftaran:
                 ${escapeHtml(
                   application.vehiclePlate
                 )}
               </p>
 
-              <p>
-                Pakej:
-                ${escapeHtml(
-                  application.package
-                )}
-              </p>
+              <span class="status ${
+                application.status ===
+                "approved"
+                  ? "status-active"
+                  : application.status ===
+                    "rejected"
+                    ? "status-cancelled"
+                    : "status-pending"
+              }">
 
-              <span class="status">
-                ${escapeHtml(
-                  application.status
-                )}
+                ${
+                  application.status ===
+                  "pending"
+                    ? "🟡 Menunggu kelulusan"
+                    : application.status ===
+                      "approved"
+                      ? "🟢 Diluluskan"
+                      : application.status ===
+                        "expired"
+                        ? "🔴 Tamat tempoh"
+                        : "❌ Ditolak"
+                }
+
               </span>
 
+
               ${
-                application.status === "pending"
+                application.status ===
+                "pending"
                   ? `
 
                     <button
@@ -3138,6 +5702,21 @@ function renderDriverApplications() {
                   : ""
               }
 
+
+              ${
+                application.status ===
+                "approved"
+                  ? `
+
+                    <div class="notice info">
+                      Pakej perlu dipilih dan bayaran
+                      disahkan sebelum driver menjadi aktif.
+                    </div>
+
+                  `
+                  : ""
+              }
+
             </div>
 
           `;
@@ -3146,8 +5725,11 @@ function renderDriverApplications() {
       )
       .join("");
 
+
   document
-    .querySelectorAll(".approve-driver")
+    .querySelectorAll(
+      ".approve-driver"
+    )
     .forEach(
       function(button) {
 
@@ -3165,8 +5747,11 @@ function renderDriverApplications() {
       }
     );
 
+
   document
-    .querySelectorAll(".reject-driver")
+    .querySelectorAll(
+      ".reject-driver"
+    )
     .forEach(
       function(button) {
 
@@ -3189,19 +5774,40 @@ function renderDriverApplications() {
 
 function approveDriver(id) {
 
+  if (!isManagement()) {
+
+    alert(
+      "Akses tidak dibenarkan."
+    );
+
+    return;
+
+  }
+
+
   const application =
     driverApplications.find(
       function(item) {
-        return item.id === id;
+
+        return item.id ===
+          id;
+
       }
     );
+
 
   if (!application) {
     return;
   }
 
+
   application.status =
     "approved";
+
+
+  application.driverStatus =
+    "approved";
+
 
   localStorage.setItem(
     "uitmRideDriverApplications",
@@ -3210,9 +5816,38 @@ function approveDriver(id) {
     )
   );
 
+
+  if (
+    currentUser &&
+    String(
+      currentUser.id
+    ) ===
+    String(
+      application.userId
+    )
+  ) {
+
+    currentUser.driverApproved =
+      true;
+
+    currentUser.driverStatus =
+      "approved";
+
+
+    localStorage.setItem(
+      "uitmRideUser",
+      JSON.stringify(
+        currentUser
+      )
+    );
+
+  }
+
+
   alert(
     "Driver telah diluluskan."
   );
+
 
   renderAdmin();
 
@@ -3221,19 +5856,40 @@ function approveDriver(id) {
 
 function rejectDriver(id) {
 
+  if (!isManagement()) {
+
+    alert(
+      "Akses tidak dibenarkan."
+    );
+
+    return;
+
+  }
+
+
   const application =
     driverApplications.find(
       function(item) {
-        return item.id === id;
+
+        return item.id ===
+          id;
+
       }
     );
+
 
   if (!application) {
     return;
   }
 
+
   application.status =
     "rejected";
+
+
+  application.driverStatus =
+    "rejected";
+
 
   localStorage.setItem(
     "uitmRideDriverApplications",
@@ -3242,13 +5898,118 @@ function rejectDriver(id) {
     )
   );
 
+
+  if (
+    currentUser &&
+    String(
+      currentUser.id
+    ) ===
+    String(
+      application.userId
+    )
+  ) {
+
+    currentUser.driverApproved =
+      false;
+
+    currentUser.driverStatus =
+      "rejected";
+
+
+    localStorage.setItem(
+      "uitmRideUser",
+      JSON.stringify(
+        currentUser
+      )
+    );
+
+  }
+
+
   alert(
     "Permohonan driver telah ditolak."
   );
 
+
   renderAdmin();
 
 }
+
+
+/* =========================================================
+   COMMUNITY LINKS
+========================================================= */
+
+$("saveDriverCommunityLinkBtn")
+  .addEventListener(
+    "click",
+    function() {
+
+      if (!isManagement()) {
+
+        alert(
+          "Akses tidak dibenarkan."
+        );
+
+        return;
+
+      }
+
+
+      driverCommunityLink =
+        $("driverCommunityLinkInput")
+          .value
+          .trim();
+
+
+      localStorage.setItem(
+        "uitmRideDriverCommunityLink",
+        driverCommunityLink
+      );
+
+
+      alert(
+        "Link Driver Community telah disimpan."
+      );
+
+    }
+  );
+
+
+$("saveManagementChannelLinkBtn")
+  .addEventListener(
+    "click",
+    function() {
+
+      if (!isManagement()) {
+
+        alert(
+          "Akses tidak dibenarkan."
+        );
+
+        return;
+
+      }
+
+
+      managementChannelLink =
+        $("managementChannelLinkInput")
+          .value
+          .trim();
+
+
+      localStorage.setItem(
+        "uitmRideManagementChannelLink",
+        managementChannelLink
+      );
+
+
+      alert(
+        "Link Management Channel telah disimpan."
+      );
+
+    }
+  );
 
 
 /* =========================================================
@@ -3260,20 +6021,26 @@ function loadFareSettings() {
   $("baseFareInput").value =
     fareSettings.baseFare;
 
+
   $("rate1Input").value =
     fareSettings.rate1;
+
 
   $("rate2Input").value =
     fareSettings.rate2;
 
+
   $("sixSeaterInput").value =
     fareSettings.sixSeater;
+
 
   $("peakInput").value =
     fareSettings.peak;
 
+
   $("nightInput").value =
     fareSettings.night;
+
 
   $("areaInput").value =
     fareSettings.area;
@@ -3286,53 +6053,63 @@ $("saveFareSettingsBtn")
     "click",
     function() {
 
-      if (!isAdmin()) {
+      if (!isManagement()) {
 
         alert(
           "Akses tidak dibenarkan."
         );
 
         return;
+
       }
+
 
       fareSettings = {
 
         baseFare:
           Number(
-            $("baseFareInput").value
+            $("baseFareInput")
+              .value
           ),
 
         rate1:
           Number(
-            $("rate1Input").value
+            $("rate1Input")
+              .value
           ),
 
         rate2:
           Number(
-            $("rate2Input").value
+            $("rate2Input")
+              .value
           ),
 
         sixSeater:
           Number(
-            $("sixSeaterInput").value
+            $("sixSeaterInput")
+              .value
           ),
 
         peak:
           Number(
-            $("peakInput").value
+            $("peakInput")
+              .value
           ),
 
         night:
           Number(
-            $("nightInput").value
+            $("nightInput")
+              .value
           ),
 
         area:
           Number(
-            $("areaInput").value
+            $("areaInput")
+              .value
           )
 
       };
+
 
       localStorage.setItem(
         "uitmRideFareSettings",
@@ -3340,6 +6117,7 @@ $("saveFareSettingsBtn")
           fareSettings
         )
       );
+
 
       alert(
         "Tetapan tambang berjaya disimpan."
@@ -3354,6 +6132,9 @@ $("saveFareSettingsBtn")
 ========================================================= */
 
 updateLanguageButton();
+
+refreshOptionalCharge();
+
 
 if (currentUser) {
 
