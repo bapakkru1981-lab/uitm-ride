@@ -1767,18 +1767,12 @@ async function authenticateTelegram(
   return currentUser;
 
 }
-
 async function autoLoginTelegram() {
 
-alert("AUTO LOGIN DIPANGGIL");
-  
-console.log(
-    "TELEGRAM INIT DATA:",
-    telegramInitData
-  );
-  
   if (!telegramInitData) {
+    alert("TELEGRAM INIT DATA TIADA");
     return false;
+  }
   }
 
   try {
