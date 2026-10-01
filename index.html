@@ -1682,14 +1682,14 @@ async function authenticateTelegram(
 
   currentUser = {
 
-    id: String(
-      user.id ||
-      user.user_id ||
-      user.telegram_id ||
-      telegramUser?.id ||
-      existing.id ||
-      ""
-    ),
+ id: String(
+  user.telegram_id ||
+  telegramUser?.id ||
+  user.id ||
+  user.user_id ||
+  existing.id ||
+  ""
+),
 
     name:
       user.name ||
