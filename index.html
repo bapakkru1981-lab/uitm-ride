@@ -1847,6 +1847,60 @@ return false;
         telegramUser?.first_name ||
         "",
 
+async function autoLoginTelegram() {
+
+  if (!telegramInitData) {
+    return false;
+  }
+
+  try {
+
+    const response =
+      await fetch(
+        `${BACKEND_URL}/api/auth/telegram`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            initData:
+              telegramInitData
+          })
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if (
+      !response.ok ||
+      !data.success ||
+      !data.user
+    ) {
+      return false;
+    }
+
+    const user =
+      data.user;
+
+    currentUser = {
+
+      id: String(
+        user.telegram_id ||
+        telegramUser?.id ||
+        user.id ||
+        ""
+      ),
+
+      name:
+        user.full_name ||
+        telegramUser?.first_name ||
+        "",
+
       phone:
         user.phone ||
         "",
@@ -1885,8 +1939,6 @@ return false;
       )
     );
 
-    alert("AUTO LOGIN BERJAYA");
-    
     return true;
 
   } catch (error) {
@@ -1900,7 +1952,7 @@ return false;
 
   }
 
-  }
+}
 /* =========================================================
    PAGE NAVIGATION
 ========================================================= */
