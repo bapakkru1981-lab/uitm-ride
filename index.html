@@ -1760,7 +1760,112 @@ async function authenticateTelegram(
 
 }
 
+async function autoLoginTelegram() {
 
+  if (!telegramInitData) {
+    return false;
+  }
+
+  try {
+
+    const response =
+      await fetch(
+        `${BACKEND_URL}/api/auth/telegram`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            initData:
+              telegramInitData
+          })
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if (
+      !response.ok ||
+      !data.success ||
+      !data.user
+    ) {
+      return false;
+    }
+
+    const user =
+      data.user;
+
+    currentUser = {
+
+      id: String(
+        user.telegram_id ||
+        telegramUser?.id ||
+        user.id ||
+        ""
+      ),
+
+      name:
+        user.full_name ||
+        telegramUser?.first_name ||
+        "",
+
+      phone:
+        user.phone ||
+        "",
+
+      userStatus:
+        user.user_status ||
+        user.account_status ||
+        "",
+
+      campus:
+        user.campus ||
+        "",
+
+      roles:
+        user.roles ||
+        ["passenger"],
+
+      driverApproved:
+        Boolean(
+          user.driverApproved ??
+          user.driver_approved ??
+          false
+        ),
+
+      driverStatus:
+        user.driverStatus ||
+        user.driver_status ||
+        null
+
+    };
+
+    localStorage.setItem(
+      "uitmRideUser",
+      JSON.stringify(
+        currentUser
+      )
+    );
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      "Auto-login error:",
+      error
+    );
+
+    return false;
+
+  }
+
+  }
 /* =========================================================
    PAGE NAVIGATION
 ========================================================= */
