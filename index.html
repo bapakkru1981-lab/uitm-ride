@@ -6241,17 +6241,34 @@ updateLanguageButton();
 refreshOptionalCharge();
 
 
-if (currentUser) {
+(async function () {
 
-  showMain();
+  if (currentUser) {
 
-} else {
+    showMain();
 
-  showPage(
-    "registerPage"
-  );
+    return;
 
-}
+  }
+
+
+  const loggedIn =
+    await autoLoginTelegram();
+
+
+  if (loggedIn) {
+
+    showMain();
+
+  } else {
+
+    showPage(
+      "registerPage"
+    );
+
+  }
+
+})();
 
 </script>
 
